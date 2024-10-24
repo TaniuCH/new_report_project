@@ -46,7 +46,6 @@ def index():
     return render_template('index.html', style_sheet_content=style_sheet_content, **translations)
 
 
-
 def get_report_variables():
     """Return common variables including images for report rendering."""
     # Get the absolute URL for static image resources
@@ -138,7 +137,6 @@ def get_lesion_shapes(opacities, birads_list_opac):
 
     # Join all the divs into a single string
     return ''.join(lesion_shapes)
-
 
 def _get_lesion_shapes(lesion_list, birads_type):
     if not lesion_list:
