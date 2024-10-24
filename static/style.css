@@ -1,0 +1,269 @@
+.body-style {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #2f2f2f;
+  min-width: 1400px;
+  height: auto;
+  width: 100vw;
+}
+
+.header-container {
+  width: 100%;
+  margin: 20px auto;
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 5px;
+  border: 1px dashed pink;
+  height: auto;
+  overflow: visible;
+}
+
+.header-title {
+  background-color: #555555;
+  padding: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border: 1px solid green;
+}
+
+.patient-info {
+  width: 40%;
+}
+
+.exam-info {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.exam-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.density-module {
+  width: 20%;
+  text-align: right;
+}
+
+.density-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.density-circle {
+  background-color: #333333;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #00ff00;
+}
+
+.risk-info {
+  border: 1px dashed blue;
+  display: flex;
+}
+
+.risk-label {
+  width: 10%;
+}
+
+.risk-details {
+  border: 1px dashed blueviolet;
+  width: 70%;
+}
+
+.risk-evaluation {
+  color: #00ff00;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.risk-icon {
+  font-size: 1.5em;
+}
+
+.risk-description {
+  color: #cccccc;
+}
+
+.header-font {
+  font-size: 1.5em;
+}
+
+.quality-container {
+  width: 100%;
+  margin: 20px auto;
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  border: 1px solid red;
+  flex-direction: column;
+}
+
+.quality-row {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+}
+
+.quality-section {
+  border: 1px dashed blue;
+  width: 25%;
+  padding: 20px;
+}
+
+.quality-label {
+  text-align: center;
+}
+
+.label-text {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.quality-badge {
+  border-radius: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.quality-badge.orange {
+  background-color: orange;
+}
+
+.quality-badge.green {
+  background-color: green;
+}
+
+.badge-text {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 5px;
+}
+
+.quality-details {
+  margin-top: 20px;
+}
+
+.explanation-box {
+  border: 1px solid #ffcc00;
+  padding: 10px;
+  color: white;
+}
+
+.quality-images-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px dashed red;
+  background-color: black;
+  height: 800px;
+  display: flex;
+  border-radius: 5px;
+  position: relative;
+}
+
+.quality-images-right {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.quality-images-left {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.projection_image{
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+}
+
+
+.density_chip{
+  background: green;
+  margin: 4px;
+  top: 4px;
+  height:34px;
+  width:34px;
+  z-index: 9;
+  position: absolute;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.dens-right{
+  right: 1px;
+}
+
+.dens-left{
+  left: 1px;
+}
+
+
+.values {
+  color: white;
+}
+
+.perfect {
+  color: green;
+}
+
+.insufficient {
+  color: red;
+}
+
+.moderate {
+  color: orange;
+}
+
+.footer-info {
+  border: 1px solid green;
+  padding: 10px;
+}
+
+
+.disclaimer{
+  font-style: italic;
+  color: gray;
+  font-size: 12px;
+}
+
