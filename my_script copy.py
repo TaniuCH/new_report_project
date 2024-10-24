@@ -47,28 +47,57 @@ def index():
 
 
 def get_report_variables():
-    """Return common variables including images for report rendering."""
-    # Get the absolute URL for static image resources
-    base_url = request.url_root  # get the base URL
+    """Return common variables including images and quality shapes for report rendering."""
+    base_url = request.url_root
 
-    # Absolute URLs for images
     rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
     lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
     rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
     lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png')  
-
+    # TODO: Obtain image width and height dynamically per projection 
+    img_width= 443
+    img_height= 545
     translations = get_translations_dict('en')
+
     with open('results.json') as f:
         results = json.load(f)
+    
+    # Fetch opacities for lesions
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
     opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
     opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
     opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+
+    # Fetch quality indicators for each projection
+    quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
+    quality_lcc = results.get('quality', {}).get('bbox', {}).get('lcc', {})
+    quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
+    quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
+
     lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    
+    # Get lesion shapes for each projection
     rectangles_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
     rectangles_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
     rectangles_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
     rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+
+    # Fetch quality shapes (parenchyma, pectoralis, skin folds) for each projection
+    parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_rcc = get_quality_shapes(quality_rcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_rcc = get_quality_shapes(quality_rcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_lcc = get_quality_shapes(quality_lcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_lcc = get_quality_shapes(quality_lcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_lcc = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_rmlo = get_quality_shapes(quality_rmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_rmlo = get_quality_shapes(quality_rmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_rmlo = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_lmlo = get_quality_shapes(quality_lmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
 
     variables = {
         "rcc_proj_img" : rcc_proj_img,
@@ -80,10 +109,23 @@ def get_report_variables():
         'rectangles_rcc' : rectangles_rcc,
         "rectangles_lcc": rectangles_lcc,
         "rectangles_rmlo" : rectangles_rmlo,
-        "rectangles_lmlo" : rectangles_lmlo
+        "rectangles_lmlo" : rectangles_lmlo,
+        "parenchyma_rcc": parenchyma_rcc,
+        "pectoralis_rcc": pectoralis_rcc,
+        "skin_folds_rcc": skin_folds_rcc,
+        "parenchyma_lcc": parenchyma_lcc,
+        "pectoralis_lcc": pectoralis_lcc,
+        "skin_folds_lcc": skin_folds_lcc,
+        "parenchyma_rmlo": parenchyma_rmlo,
+        "pectoralis_rmlo": pectoralis_rmlo,
+        "skin_folds_rmlo": skin_folds_rmlo,
+        "parenchyma_lmlo": parenchyma_lmlo,
+        "pectoralis_lmlo": pectoralis_lmlo,
+        "skin_folds_lmlo": skin_folds_lmlo,
     }
 
     return {**translations, **variables}
+
 
 def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
     """
@@ -191,6 +233,61 @@ def _get_lesion_shapes(lesion_list, birads_type):
 
     return shapes
 
+def get_quality_shapes(shapes_list, shape_type, img_width, img_height):
+    """
+    Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
+    Handles both bounding boxes and contours.
+    """
+
+    quality_shapes = []
+    
+    colors = {
+        'parenchyma': 'blue',
+        'pectoralis': 'purple',
+        'skinFolds': 'yellow',
+    }
+
+    for shape in shapes_list:
+        box = shape.get('box', [])
+        contours = shape.get('contours', [])
+
+
+        # If there is a bounding box, draw it
+        if box:
+            div = f'''
+            <div style="
+                position: absolute;
+                top: {box[1] * 100}%;
+                left: {box[0] * 100}%;
+                width: {box[2] * 100}%;
+                height: {box[3] * 100}%;
+                border: 2px solid {colors.get(shape_type, 'black')};
+                border-radius: inherit;
+                font-size: 10px;
+                z-index: 200;
+                color: {colors.get(shape_type, 'black')};
+            ">
+                {shape_type.capitalize()}
+            </div>
+            '''
+            quality_shapes.append(div)
+
+        # when contours, generate an SVG path to draw the shape
+        if contours:
+            # Iterate over the contour points 
+            for contour in contours:
+                points = " ".join([f"{x * img_width},{y * img_height}" for x, y in contour])
+                svg = f'''
+               <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+                    <polygon points="{points}" style="fill: none; stroke: {colors.get(shape_type, 'black')}; stroke-width: 2;"/>
+                </svg>
+                '''
+
+                # <svg style="position: absolute;  top: {box[1] * 100}%; left: {box[0] * 100}%; width: {box[2] * 100}%; height: {box[3] * 100}%; z-index: 220; border: 1px solid white;">
+                quality_shapes.append(svg)
+
+    return ''.join(quality_shapes)
+
 @app.route('/generate-image')
 def generate_image():
     with open('results.json') as f:
@@ -254,7 +351,6 @@ def generate_image_spire():
     document.Close()
     return send_file(image_file_path, as_attachment=True)
 
-
 # Pyppeteer Route
 @app.route('/pyppeteer-html-to-image')
 def generate_image_pyppeteer():
@@ -291,6 +387,7 @@ def generate_image_pyppeteer():
         return f"An error occurred: {e.stderr.decode()}", 500
 
     return send_file(output_path, as_attachment=True)
+
 
 
 # WeasyPrint Route

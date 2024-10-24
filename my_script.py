@@ -331,26 +331,6 @@ def generate_image_html2image():
     return send_file('quality_report_image_html2image.png', as_attachment=True)
 
 
-# Spire Route
-@app.route('/spire-html-to-image')
-def generate_image_spire():
-    """Convert HTML to Image using Spire.Doc."""
-    with open(os.path.join('static', 'style.css')) as f:
-        style_sheet_content = f.read()
-
-    html_string = render_template('report_quality.html', style_sheet_content=style_sheet_content)
-    html_file_path = os.path.join(os.getcwd(), 'templates', 'report_quality.html')
-    document = Document()
-    document.LoadFromFile(html_file_path, FileFormat.Html, XHTMLValidationType.none)
-    imageStream = document.SaveImageToStreams(0, ImageType.Bitmap)
-    output_dir = os.path.join(os.getcwd(), 'output')
-    os.makedirs(output_dir, exist_ok=True)
-    image_file_path = os.path.join(output_dir, 'HtmlToImage_Spire.png')
-    with open(image_file_path, 'wb') as imageFile:
-        imageFile.write(imageStream.ToArray())
-    document.Close()
-    return send_file(image_file_path, as_attachment=True)
-
 # Pyppeteer Route
 @app.route('/pyppeteer-html-to-image')
 def generate_image_pyppeteer():
@@ -387,82 +367,6 @@ def generate_image_pyppeteer():
         return f"An error occurred: {e.stderr.decode()}", 500
 
     return send_file(output_path, as_attachment=True)
-
-
-
-# WeasyPrint Route
-@app.route('/weasy-html-to-image')
-def generate_image_weasyprint():
-    """Generate an image from HTML using WeasyPrint and CairoSVG."""
-    with open(os.path.join('static', 'style.css')) as f:
-        style_sheet_content = f.read()
-
-    html_string = render_template('report_quality.html', style_sheet_content=style_sheet_content)
-    svg_output_path = os.path.join(os.getcwd(), 'quality_report_svg_weasyprint.svg')
-    png_output_path = os.path.join(os.getcwd(), 'quality_report_image_weasyprint.png')
-
-    HTML(string=html_string).write_pdf(svg_output_path)
-    cairosvg.svg2png(url=svg_output_path, write_to=png_output_path)
-
-    return send_file(png_output_path, as_attachment=True)
-
-# Selenium Route
-def html_to_image_selenium(html_file_path, output_path):
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')  # Run in headless mode (no visible window)
-    options.add_argument('--disable-gpu')
-
-    # Create a service object with ChromeDriverManager
-    service = Service(ChromeDriverManager().install())
-
-    # Pass the service object to Chrome
-    driver = webdriver.Chrome(service=service, options=options)
-
-    # Load the temporary HTML file
-    driver.get(f"file://{html_file_path}")  # Load the HTML file in the browser
-
-    # Wait for the body to be fully loaded
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-
-    driver.execute_script("document.body.style.overflow = 'hidden';")
-
-    total_height = driver.execute_script("return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)")
-    total_height += 100  
-    driver.set_window_size(1280, total_height)
-    driver.execute_script("window.scrollTo(0, 0);")
-    driver.implicitly_wait(1)
-    driver.save_screenshot(output_path)
-    driver.quit()
-
-
-@app.route('/selenium-html-to-image')
-def generate_image_selenium():
-    """Generate an image from rendered HTML using Selenium."""
-    
-    translations = get_translations_dict('en')  # Assuming 'en' is the language selected
-
-    with open(os.path.join('static', 'style.css')) as f:
-        style_sheet_content = f.read()
-
-    # Render the HTML with dynamic translations and styles
-    html_string = render_template('report_quality.html', 
-                                  style_sheet_content=style_sheet_content,
-                                  **translations)
-
-    output_path = os.path.join(os.getcwd(), 'quality_report_image_selenium.png')
-
-    # Write the HTML to a temporary file for Selenium
-    with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as temp_html_file:
-        temp_html_file.write(html_string.encode('utf-8'))
-        temp_html_path = temp_html_file.name
-
-    # Use Selenium to load the temp HTML file and capture the screenshot
-    html_to_image_selenium(temp_html_path, output_path)
-
-    os.remove(temp_html_path)
-
-    return send_file(output_path, as_attachment=True)
-
 
 
 @app.route('/report')
