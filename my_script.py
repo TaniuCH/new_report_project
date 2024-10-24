@@ -1,22 +1,11 @@
 from flask import Flask, render_template, send_file, url_for
 from html2image import Html2Image
 from pyppeteer import launch
-from selenium import webdriver
-from weasyprint import HTML
-from spire.doc import Document, FileFormat, XHTMLValidationType, ImageType
 import os
 import json
 import nest_asyncio
-import asyncio
 import subprocess
-from PIL import Image
-import cairosvg
-from selenium.webdriver.chrome.service import Service
 import tempfile
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from flask import request
 
 
