@@ -93,6 +93,9 @@
             </div>
             <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
             {{rectangles_rcc|safe}} 
+            {{ parenchyma_rcc|safe }}
+            {{ pectoralis_rcc|safe }}
+            {{ skin_folds_rcc|safe }}
           </div>
           <div class="quality-images-left">
             <div class="density_chip dens-right">
@@ -101,6 +104,9 @@
             <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
             <div class="lesion-shapes">
               {{ rectangles_lcc|safe }}
+              {{ parenchyma_lcc|safe }}
+              {{ pectoralis_lcc|safe }}
+              {{ skin_folds_lcc|safe }}
             </div>            
           </div>
         </div>
@@ -172,6 +178,9 @@
             </div>
             <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
             {{rectangles_rmlo|safe}} 
+            {{ parenchyma_rmlo|safe }}
+            {{ pectoralis_rmlo|safe }}
+            {{ skin_folds_rmlo|safe }}
 
           </div>
           <div class="quality-images-left">
@@ -181,6 +190,9 @@
             <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
             <div class="lesion-shapes">
               {{ rectangles_lmlo|safe }}
+              {{ parenchyma_lmlo|safe }}
+              {{ pectoralis_lmlo|safe }}
+              {{ skin_folds_lmlo|safe }}
             </div>
           
 
