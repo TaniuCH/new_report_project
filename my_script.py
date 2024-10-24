@@ -53,10 +53,7 @@ def get_report_variables():
     rmlo_proj_img = url_for('static', filename='images/rmlo.png')  
     lmlo_proj_img = url_for('static', filename='images/lmlo.png')  
 
-
-    # Load translations and other common variables
     translations = get_translations_dict('en')
-        # Load the JSON result
     with open('results.json') as f:
         results = json.load(f)
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
