@@ -3,9 +3,12 @@ Python small project with Report V2
 Libraries integration:
 
 - HTML2Image
-- Selenium
 - Pyppeteer
+
+Discard:
+
+- Selenium
 - Spire
 - WeasyPrint
 
-pip install flask html2image pyppeteer selenium weasyprint spire.doc pillow cairosvg webdriver-manager nest_asyncio asyncio
+pip install flask html2image pyppeteer pillow cairosvg nest_asyncio
