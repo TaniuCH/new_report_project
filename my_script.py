@@ -73,18 +73,24 @@ def generate_image():
 @app.route('/html-2-img-html-to-image')
 def generate_image_html2image():
     """Generate an image using HTML2Image."""
-
-    # Load the CSS content
+    
+    # Load the CSS content from the external file
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
 
+    # Get variables needed for rendering
     variables = get_report_variables()
 
-    html_string = render_template('report_quality.html', **variables)
+    # Embed the CSS directly into the HTML string
+    html_string = render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
 
+    # Create an Html2Image instance
     hti = Html2Image()
     hti.output_path = os.getcwd()
+
+    # Generate the image
     hti.screenshot(html_str=html_string, save_as='quality_report_image_html2image.png', size=(1280, 2000))
+
     return send_file('quality_report_image_html2image.png', as_attachment=True)
 
 # Spire Route

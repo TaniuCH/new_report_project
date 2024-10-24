@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        .body-style {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #2f2f2f;
+  min-width: 1400px;
+  height: auto;
+  width: 100vw;
+}
+
+.header-container {
+  width: 100%;
+  margin: 20px auto;
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 5px;
+  border: 1px dashed pink;
+  height: auto;
+  overflow: visible;
+}
+
+.header-title {
+  background-color: #555555;
+  padding: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border: 1px solid green;
+}
+
+.patient-info {
+  width: 40%;
+}
+
+.exam-info {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.exam-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.density-module {
+  width: 20%;
+  text-align: right;
+}
+
+.density-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.density-circle {
+  background-color: #333333;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #00ff00;
+}
+
+.risk-info {
+  border: 1px dashed blue;
+  display: flex;
+}
+
+.risk-label {
+  width: 10%;
+}
+
+.risk-details {
+  border: 1px dashed blueviolet;
+  width: 70%;
+}
+
+.risk-evaluation {
+  color: #00ff00;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.risk-icon {
+  font-size: 1.5em;
+}
+
+.risk-description {
+  color: #cccccc;
+}
+
+.header-font {
+  font-size: 1.5em;
+}
+
+.quality-container {
+  width: 100%;
+  margin: 20px auto;
+  background-color: #4a4a4a;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  border: 1px solid red;
+  flex-direction: column;
+}
+
+.quality-row {
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+}
+
+.quality-section {
+  border: 1px dashed blue;
+  width: 25%;
+  padding: 20px;
+}
+
+.quality-label {
+  text-align: center;
+}
+
+.label-text {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.quality-badge {
+  border-radius: 5px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.quality-badge.orange {
+  background-color: orange;
+}
+
+.quality-badge.green {
+  background-color: green;
+}
+
+.badge-text {
+  color: white;
+  padding: 2px 10px;
+  border-radius: 5px;
+}
+
+.quality-details {
+  margin-top: 20px;
+}
+
+.explanation-box {
+  border: 1px solid #ffcc00;
+  padding: 10px;
+  color: white;
+}
+
+.quality-images-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px dashed red;
+  background-color: black;
+  height: 800px;
+  display: flex;
+  border-radius: 5px;
+  position: relative;
+}
+
+.quality-images-right {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.quality-images-left {
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.projection_image{
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+}
+
+
+.density_chip{
+  background: green;
+  margin: 4px;
+  top: 4px;
+  height:34px;
+  width:34px;
+  z-index: 9;
+  position: absolute;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.dens-right{
+  right: 1px;
+}
+
+.dens-left{
+  left: 1px;
+}
+
+
+.values {
+  color: white;
+}
+
+.perfect {
+  color: green;
+}
+
+.insufficient {
+  color: red;
+}
+
+.moderate {
+  color: orange;
+}
+
+.footer-info {
+  border: 1px solid green;
+  padding: 10px;
+}
+
+
+.disclaimer{
+  font-style: italic;
+  color: gray;
+  font-size: 12px;
+}
+
+
+    </style>
+</head>
+  <body class="body-style">
+    <!-- Header with patient and exam info -->
+    <div class="header-container">
+      <div class="header-title">Quality Report for </div>
+      <div class="header-info">
+        
+        <!-- Patient info -->
+        <div class="patient-info">
+          <p><strong>Patient Name:</strong> </p>
+          <p><strong>Birth Date:</strong> </p>
+          <p><strong>Examination Date:</strong> </p>
+          <p>
+            <strong>Quality System:</strong>  []
+          </p>
+        </div>
+        <!-- Middle Column more exam info-->
+        <div class="exam-info">
+            <p><strong>Examination Type:</strong> </p>
+            <p><strong>Referring Physician:</strong> </p>
+            <p><strong>Performing Operator:</strong> </p>
+        </div>
+        <!-- Right Column (density and module status) -->
+        <div class="density-module">
+          <div class="density-status">
+            <p><strong>Overall Density</strong></p>
+            <div class="density-circle"></div>
+          </div>
+          <p><strong>Density:</strong>  &#8635;</p>
+          <p><strong>Quality:</strong>  &#8635;</p>
+        </div>
+        
+      </div>
+      <!-- Risk -->
+      <div class="risk-info">
+        <p class="risk-label"><strong>Risk:</strong></p>
+        <div class="risk-details">
+          <p class="risk-evaluation">
+            <span class="risk-icon">&#128994;</span>&nbsp;
+          </p>
+          <p class="risk-description"></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="header-font"></p>
+
+    <!-- Quality Feats  -->
+    <div class="quality-container">
+      <!-- CC Main row container  -->
+      <div class="quality-row">
+        <!-- RCC Section -->
+        <div class="quality-section">
+          <div class="quality-label">
+            <span class="label-text">RCC</span><br />
+            <div class="quality-badge orange">
+              <span class="badge-text"></span>
+            </div>
+          </div>
+          <div class="quality-details">
+            <p><strong>Quality explanation:</strong></p>
+            <div class="explanation-box"></div>
+            <p><strong>Compression:</strong> <span class="green"> N</span></p>
+            <p><strong>Symmetry:</strong> <span class="green"></span></p>
+            <p><strong>Blur:</strong> <span class="green"></span></p>
+            <p><strong>PNL:</strong> <span class="green"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL Difference:</strong> <span class="green"></span></p>
+            <p><strong>Mamilla Deviation:</strong> <span class="orange"></span></p>
+            <p><strong>Mamilla Profile:</strong> <span class="red"></span></p>
+            <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Pectoralis:</strong> <span class="red"></span></p>
+            <p><strong>Skin Folds:</strong> <span class="green"></span></p>
+            <p><strong>Breast volume:</strong>  cm³</p>
+            <p><strong>Dose:</strong> </p>
+            <p><strong>Post-surgery:</strong> </p>
+          </div>
+        </div>
+
+        <!-- CC proj Images -->
+        <div class="quality-images-container">
+          <div class="quality-images-right">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/r_proj_img.png" alt="Breast Projection Image" class="projection_image" />
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-left">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/l_proj_img.png" alt="Breast Projection Image" class="projection_image" />
+          </div>
+        </div>
+
+        <!-- LCC Section-->
+        <div class="quality-section">
+          <div class="quality-label">
+            <span class="label-text">LCC</span><br />
+            <div class="quality-badge green">
+              <span class="badge-text"></span>
+            </div>
+          </div>
+          <div class="quality-details">
+            <p><strong>Quality explanation:</strong></p>
+            <div class="explanation-box"></div>
+            <p><strong>Compression:</strong> <span class="green"> N</span></p>
+            <p><strong>Symmetry:</strong> <span class="green"></span></p>
+            <p><strong>Blur:</strong> <span class="green"></span></p>
+            <p><strong>PNL:</strong> <span class="red"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL Difference:</strong> <span class="red"></span></p>
+            <p><strong>Mamilla Deviation:</strong> <span class="green"></span></p>
+            <p><strong>Mamilla Profile:</strong> <span class="orange"></span></p>
+            <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Pectoralis:</strong> <span class="green"></span></p>
+            <p><strong>Skin Folds:</strong> <span class="green"></span></p>
+            <p><strong>Breast volume:</strong>  cm³</p>
+            <p><strong>Dose:</strong> </p>
+            <p><strong>Post-surgery:</strong> </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MLO Main row container  -->
+      <div class="quality-row">
+        <!-- RMLO Section -->
+        <div class="quality-section">
+          <div class="quality-label">
+            <span class="label-text">RMLO</span><br />
+            <div class="quality-badge orange">
+              <span class="badge-text"></span>
+            </div>
+          </div>
+          <div class="quality-details">
+            <p><strong>Quality explanation:</strong></p>
+            <div class="explanation-box"></div>
+            <p><strong>Compression:</strong> <span class="green"> N</span></p>
+            <p><strong>Symmetry:</strong> <span class="green"></span></p>
+            <p><strong>Blur:</strong> <span class="green"></span></p>
+            <p><strong>PNL:</strong> <span class="green"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL Difference:</strong> <span class="green"></span></p>
+            <p><strong>Mamilla Deviation:</strong> <span class="orange"></span></p>
+            <p><strong>Mamilla Profile:</strong> <span class="red"></span></p>
+            <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Pectoralis:</strong> <span class="red"></span></p>
+            <p><strong>Skin Folds:</strong> <span class="green"></span></p>
+            <p><strong>Breast volume:</strong>  cm³</p>
+            <p><strong>Dose:</strong> </p>
+            <p><strong>Post-surgery:</strong> </p>
+          </div>
+        </div>
+
+        <!-- MLO proj Images -->
+        <div class="quality-images-container">
+          <div class="quality-images-right">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/r_proj_img.png" alt="Breast Projection Image" class="projection_image"/>
+             
+
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-left">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/l_proj_img.png" alt="Breast Projection Image" class="projection_image"/>   
+            <div class="lesion-shapes">
+              
+          </div>
+          
+
+          </div>
+        </div>
+
+        <!-- LMLO Section-->
+        <div class="quality-section">
+          <div class="quality-label">
+            <span class="label-text">LMLO</span><br />
+            <div class="quality-badge green">
+              <span class="badge-text"></span>
+            </div>
+          </div>
+          <div class="quality-details">
+            <p><strong>Quality explanation:</strong></p>
+            <div class="explanation-box"></div>
+            <p><strong>Compression:</strong> <span class="green"> N</span></p>
+            <p><strong>Symmetry:</strong> <span class="green"></span></p>
+            <p><strong>Blur:</strong> <span class="green"></span></p>
+            <p><strong>PNL:</strong> <span class="red"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL Difference:</strong> <span class="red"></span></p>
+            <p><strong>Mamilla Deviation:</strong> <span class="green"></span></p>
+            <p><strong>Mamilla Profile:</strong> <span class="orange"></span></p>
+            <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Pectoralis:</strong> <span class="green"></span></p>
+            <p><strong>Skin Folds:</strong> <span class="green"></span></p>
+            <p><strong>Breast volume:</strong>  cm³</p>
+            <p><strong>Dose:</strong> </p>
+            <p><strong>Post-surgery:</strong> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-info">
+        <p>UDI <strong></strong></p>
+        <p class="disclaimer">DISCLAIMER</p>
+        <p class="disclaimer">This report was generated by the b-rayZ b-box plus application.</p>
+        <p class="disclaimer">The b-box plus is a stand-alone software intended to determine the breast density classification from mammography data and to classify mammography data with respect to their diagnostic quality. The results are provided to the qualified medical user who shall decide about further steps. The intended patient group includes women of all ethnicities with a medical indication for digital mammography, as well as asymptomatic female population involved in organized digital mammography-based breast cancer screening programs.</p>
+      </div>
+    </div>
+  </body>
+</html>
