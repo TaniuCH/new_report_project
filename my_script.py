@@ -48,8 +48,10 @@ def index():
 def get_report_variables():
     
     """Return common variables including images for report rendering."""
-    r_proj_img = url_for('static', filename='images/r_proj_img.png')  
-    l_proj_img = url_for('static', filename='images/l_proj_img.png')  
+    rcc_proj_img = url_for('static', filename='images/rcc.png')  
+    lcc_proj_img = url_for('static', filename='images/lcc.png')  
+    rmlo_proj_img = url_for('static', filename='images/rmlo.png')  
+    lmlo_proj_img = url_for('static', filename='images/lmlo.png')  
 
 
     # Load translations and other common variables
@@ -68,8 +70,10 @@ def get_report_variables():
     rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
 
     variables = {
-        'r_proj_img': r_proj_img,
-        'l_proj_img': l_proj_img,
+        "rcc_proj_img" : rcc_proj_img,
+        "lcc_proj_img" : lcc_proj_img,
+        "rmlo_proj_img" : rmlo_proj_img,
+        "lmlo_proj_img" : lmlo_proj_img,
         'breast_image_alt': "Breast Projection Image",
         'report_title': "Mammography Report",
         'rectangles_rcc' : rectangles_rcc,
