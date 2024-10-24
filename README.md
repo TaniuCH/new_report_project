@@ -7,3 +7,5 @@ Libraries integration:
 - Pyppeteer
 - Spire
 - WeasyPrint
+
+pip install flask html2image pyppeteer selenium weasyprint spire.doc pillow cairosvg webdriver-manager nest_asyncio asyncio
