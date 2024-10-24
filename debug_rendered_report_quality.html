@@ -194,22 +194,31 @@
   max-width: 100%;
   max-height: 100%;
   z-index: 1;
-  display: block;
+  /* display: block; */
   object-fit: contain;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: relative
 }
 
 .quality-images-left {
   max-width: 100%;
   max-height: 100%;
   z-index: 1;
-  display: block;
-  object-fit: contain;
+  /* display: block; */
+  /* object-fit: contain; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+}
+.lesion-shapes{
+  border:1px solid rgb(2, 255, 15);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 200;
 }
 
 .projection_image{
@@ -357,16 +366,80 @@
         <!-- CC proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
-            </div>
-            <img src="/static/images/r_proj_img.png" alt="Breast Projection Image" class="projection_image" />
-          </div>
-          <div class="quality-images-left">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="/static/images/l_proj_img.png" alt="Breast Projection Image" class="projection_image" />
+            <img src="/static/images/rcc.png" alt="Breast Projection Image" class="projection_image"/>
+            
+    <div style="
+        position: absolute;
+        top: 47.499290914247894%;
+        left: 30.55800914013595%;
+        width: 16.03479247423656%;
+        height: 7.373555052037329%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+    <div style="
+        position: absolute;
+        top: 34.187387728089256%;
+        left: 50.46660778063674%;
+        width: 14.522076203082158%;
+        height: 12.289258420062211%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+     
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/lcc.png" alt="Breast Projection Image" class="projection_image"/>   
+            <div class="lesion-shapes">
+              
+    <div style="
+        position: absolute;
+        top: 14.985345561123193%;
+        left: 32.27850531894466%;
+        width: 16.034792474236554%;
+        height: 9.831406736049768%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+    <div style="
+        position: absolute;
+        top: 52.500709085752106%;
+        left: 54.1533853066554%;
+        width: 8.773754372695464%;
+        height: 14.009754598870927%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+            </div>            
           </div>
         </div>
 
@@ -432,21 +505,81 @@
         <!-- MLO proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
-            </div>
-            <img src="/static/images/r_proj_img.png" alt="Breast Projection Image" class="projection_image"/>
-             
-
-          </div>
-          <div class="quality-images-left">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="/static/images/l_proj_img.png" alt="Breast Projection Image" class="projection_image"/>   
+            <img src="/static/images/rmlo.png" alt="Breast Projection Image" class="projection_image"/>
+            
+    <div style="
+        position: absolute;
+        top: 37.817906778859786%;
+        left: 53.22016974538193%;
+        width: 19.66531152500709%;
+        height: 7.865125388839811%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+    <div style="
+        position: absolute;
+        top: 60.50865084617566%;
+        left: 66.49256883904911%;
+        width: 29.649238914626075%;
+        height: 21.629094819309504%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+     
+
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="/static/images/lmlo.png" alt="Breast Projection Image" class="projection_image"/>   
             <div class="lesion-shapes">
               
-          </div>
+    <div style="
+        position: absolute;
+        top: 43.42441145882575%;
+        left: 45.35504435654211%;
+        width: 13.916989694620408%;
+        height: 7.61934022043857%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+    <div style="
+        position: absolute;
+        top: 3.1861586461189377%;
+        left: 62.805791313030454%;
+        width: 38.422993287321546%;
+        height: 15.730250777679633%;
+        border: 2px solid red;
+        border-radius: inherit;
+        font-size: 10px;
+        color: red;
+        z-index:200
+    ">
+        None
+    </div>
+    
+            </div>
           
 
           </div>
