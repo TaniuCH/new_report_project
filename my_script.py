@@ -47,28 +47,49 @@ def index():
 
 
 def get_report_variables():
-    """Return common variables including images for report rendering."""
-    # Get the absolute URL for static image resources
-    base_url = request.url_root  # get the base URL
+    """Return common variables including images and quality shapes for report rendering."""
+    base_url = request.url_root
 
-    # Absolute URLs for images
     rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
     lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
     rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
     lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png')  
 
     translations = get_translations_dict('en')
+
     with open('results.json') as f:
         results = json.load(f)
+    
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
     opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
     opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
     opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+    
+    # Get quality indicators for each projection, and handle None values
+    quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
+    quality_lcc = results.get('quality', {}).get('bbox', {}).get('lcc', {})
+    quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
+    quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
+
     lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     rectangles_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
     rectangles_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
     rectangles_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
     rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+
+    # Fetch the quality shapes, defaulting to empty lists if None
+    parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma')
+    pectoralis_rcc = get_quality_shapes(quality_rcc.get('pectoralis', []) or [], 'pectoralis')
+    skin_folds_rcc = get_quality_shapes(quality_rcc.get('skinFolds', []) or [], 'skinFolds')
+    parenchyma_lcc  = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds')
+    pectoralis_lcc  = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds')
+    skin_folds_lcc  = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds')
+    parenchyma_rmlo  = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds')
+    pectoralis_rmlo  = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds')
+    skin_folds_rmlo  = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds')
+    parenchyma_lmlo  = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds')
+    pectoralis_lmlo  = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds')
+    skin_folds_lmlo  = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds')
 
     variables = {
         "rcc_proj_img" : rcc_proj_img,
@@ -80,10 +101,23 @@ def get_report_variables():
         'rectangles_rcc' : rectangles_rcc,
         "rectangles_lcc": rectangles_lcc,
         "rectangles_rmlo" : rectangles_rmlo,
-        "rectangles_lmlo" : rectangles_lmlo
+        "rectangles_lmlo" : rectangles_lmlo,
+        "parenchyma_rcc": parenchyma_rcc,
+        "pectoralis_rcc": pectoralis_rcc,
+        "skin_folds_rcc": skin_folds_rcc,
+        "parenchyma_lcc": parenchyma_lcc,
+        "pectoralis_lcc": pectoralis_lcc,
+        "skin_folds_lcc": skin_folds_lcc,
+        "parenchyma_rmlo": parenchyma_rmlo,
+        "pectoralis_rmlo": pectoralis_rmlo,
+        "skin_folds_rmlo": skin_folds_rmlo,
+        "parenchyma_lmlo": parenchyma_lmlo,
+        "pectoralis_lmlo": pectoralis_lmlo,
+        "skin_folds_lmlo": skin_folds_lmlo,
     }
 
     return {**translations, **variables}
+
 
 def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
     """
@@ -191,6 +225,46 @@ def _get_lesion_shapes(lesion_list, birads_type):
 
     return shapes
 
+def get_quality_shapes(shapes_list, shape_type):
+    """
+    Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
+    """
+
+    
+    quality_shapes = []
+    
+    colors = {
+        'parenchyma': 'blue',
+        'pectoralis': 'purple',
+        'skinFolds': 'yellow',
+    }
+
+    for shape in shapes_list:
+        box = shape.get('box', [])
+        if not box:
+            continue
+
+        # Generate the div for the quality shape
+        div = f'''
+        <div style="
+            position: absolute;
+            top: {box[1] * 100}%;
+            left: {box[0] * 100}%;
+            width: {box[2] * 100}%;
+            height: {box[3] * 100}%;
+            border: 2px solid {colors.get(shape_type, 'black')};
+            border-radius: inherit;
+            font-size: 10px;
+            color: {colors.get(shape_type, 'black')};
+        ">
+            {shape_type.capitalize()}
+        </div>
+        '''
+        quality_shapes.append(div)
+
+    return ''.join(quality_shapes)
+
+
 @app.route('/generate-image')
 def generate_image():
     with open('results.json') as f:
@@ -254,7 +328,6 @@ def generate_image_spire():
     document.Close()
     return send_file(image_file_path, as_attachment=True)
 
-
 # Pyppeteer Route
 @app.route('/pyppeteer-html-to-image')
 def generate_image_pyppeteer():
@@ -291,6 +364,7 @@ def generate_image_pyppeteer():
         return f"An error occurred: {e.stderr.decode()}", 500
 
     return send_file(output_path, as_attachment=True)
+
 
 
 # WeasyPrint Route
