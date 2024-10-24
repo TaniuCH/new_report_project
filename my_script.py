@@ -17,6 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from flask import request
 
 
 app = Flask(__name__)
@@ -45,13 +46,17 @@ def index():
     return render_template('index.html', style_sheet_content=style_sheet_content, **translations)
 
 
+
 def get_report_variables():
-    
     """Return common variables including images for report rendering."""
-    rcc_proj_img = url_for('static', filename='images/rcc.png')  
-    lcc_proj_img = url_for('static', filename='images/lcc.png')  
-    rmlo_proj_img = url_for('static', filename='images/rmlo.png')  
-    lmlo_proj_img = url_for('static', filename='images/lmlo.png')  
+    # Get the absolute URL for static image resources
+    base_url = request.url_root  # get the base URL
+
+    # Absolute URLs for images
+    rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
+    lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
+    rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
+    lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png')  
 
     translations = get_translations_dict('en')
     with open('results.json') as f:
@@ -74,8 +79,8 @@ def get_report_variables():
         'breast_image_alt': "Breast Projection Image",
         'report_title': "Mammography Report",
         'rectangles_rcc' : rectangles_rcc,
-        "rectangles_lcc":rectangles_lcc,
-        "rectangles_rmlo" :rectangles_rmlo,
+        "rectangles_lcc": rectangles_lcc,
+        "rectangles_rmlo" : rectangles_rmlo,
         "rectangles_lmlo" : rectangles_lmlo
     }
 
