@@ -188,11 +188,12 @@
   max-width: 100%;
   max-height: 100%;
   z-index: 1;
-  display: block;
+  /* display: block; */
   object-fit: contain;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: relative
 }
 
 .quality-images-left {
@@ -267,3 +268,10 @@
   font-size: 12px;
 }
 
+.lesion-shapes{
+  border:2px solid rgb(2, 255, 15);
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  z-index: 200;
+}

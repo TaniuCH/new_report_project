@@ -88,16 +88,20 @@
         <!-- CC proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
-            </div>
-            <img src="{{ r_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
-          </div>
-          <div class="quality-images-left">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="{{ l_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            <img src="{{ r_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
+            {{rectangles_rcc|safe}} 
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="{{ l_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
+            <div class="lesion-shapes">
+              {{ rectangles_lcc|safe }}
+            </div>            
           </div>
         </div>
 
@@ -163,21 +167,21 @@
         <!-- MLO proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-right">
+            <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
             <img src="{{ r_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
-            {{rectangles_rcc|safe}} {{circles_rcc|safe}}
+            {{rectangles_rmlo|safe}} 
 
           </div>
           <div class="quality-images-left">
-            <div class="density_chip dens-left">
+            <div class="density_chip dens-right">
               <p><strong>D</strong></p>
             </div>
             <img src="{{ l_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
             <div class="lesion-shapes">
-              {{ rectangles_rcc | safe }}
-          </div>
+              {{ rectangles_lmlo|safe }}
+            </div>
           
 
           </div>
