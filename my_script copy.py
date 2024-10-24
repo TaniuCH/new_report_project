@@ -17,6 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from flask import request
 
 
 app = Flask(__name__)
@@ -46,48 +47,43 @@ def index():
 
 
 def get_report_variables():
-    
     """Return common variables including images for report rendering."""
-    r_proj_img = url_for('static', filename='images/r_proj_img.png')  
-    l_proj_img = url_for('static', filename='images/l_proj_img.png')  
+    # Get the absolute URL for static image resources
+    base_url = request.url_root  # get the base URL
 
+    # Absolute URLs for images
+    rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
+    lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
+    rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
+    lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png')  
 
-    # Load translations and other common variables
     translations = get_translations_dict('en')
-        # Load the JSON result
     with open('results.json') as f:
         results = json.load(f)
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
-    rectangles_rcc = get_lesion_shapes(opacities_rcc, ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown'])
-
+    opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
+    opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
+    opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+    lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    rectangles_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
+    rectangles_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
+    rectangles_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
+    rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
 
     variables = {
-        'r_proj_img': r_proj_img,
-        'l_proj_img': l_proj_img,
+        "rcc_proj_img" : rcc_proj_img,
+        "lcc_proj_img" : lcc_proj_img,
+        "rmlo_proj_img" : rmlo_proj_img,
+        "lmlo_proj_img" : lmlo_proj_img,
         'breast_image_alt': "Breast Projection Image",
         'report_title': "Mammography Report",
-        'rectangles_rcc' : rectangles_rcc
+        'rectangles_rcc' : rectangles_rcc,
+        "rectangles_lcc": rectangles_lcc,
+        "rectangles_rmlo" : rectangles_rmlo,
+        "rectangles_lmlo" : rectangles_lmlo
     }
 
     return {**translations, **variables}
-
-def get_lesion_shapes(opacities, birads_list_opac):
-    """
-    Extracts the lesion shapes for the given opacities (projections) and BI-RADS categories.
-    """
-    lesion_shapes = {}
-
-    # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
-    for projection, lesions in opacities.get('bbox', {}).items():
-        # For each projection, process the BI-RADS categories
-        lesion_shapes[projection] = {}
-        
-        for birads_type in birads_list_opac:
-            if lesions.get(birads_type):
-                # Call the refactored _get_lesion_shapes method to get the shapes for this BI-RADS type
-                lesion_shapes[projection][birads_type] = _get_lesion_shapes(lesions, birads_type)
-    
-    return lesion_shapes
 
 def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
     """
@@ -106,66 +102,92 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
         border-radius: {border_radius};
         font-size: {font_size};
         color: {color};
+        z-index:{200}
     ">
         {label_mapping.get(birads)}
     </div>
     '''
     return div
 
-def _get_lesion_shapes(result, *lesion_types, microcalc=False):
-    if not result:
+def get_lesion_shapes(opacities, birads_list_opac):
+    """
+    Extracts the lesion shapes for the given opacities (projections) and BI-RADS categories.
+    Returns a single string with all the divs.
+    """
+    lesion_shapes = []
+
+    # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
+    for projection, projection_lesions in opacities.items():
+        print(f"Processing projection: {projection}")
+
+        # Check if projection_lesions is a dictionary (expected structure)
+        if isinstance(projection_lesions, dict):
+            for birads_type in birads_list_opac:
+                lesion_list = projection_lesions.get(birads_type)
+                if isinstance(lesion_list, list) and lesion_list:
+                    print(f"Found lesions for {birads_type}: {lesion_list}")
+                    # Append the divs to the lesion_shapes list
+                    lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type))
+                else:
+                    print(f"No lesions found for {birads_type}.")
+        elif isinstance(projection_lesions, list):  # If projection_lesions is a list
+            # Process all lesions as a list
+            print(f"Unexpected structure for projection lesions: {projection_lesions}")
+            lesion_shapes.append(_get_lesion_shapes(projection_lesions, 'lesion'))
+
+    # Join all the divs into a single string
+    return ''.join(lesion_shapes)
+
+def _get_lesion_shapes(lesion_list, birads_type):
+    if not lesion_list:
         return ''
 
+    print(f"DIV: {birads_type}")  # Debugging
     # Define colors for the BI-RADS and other lesion types
     colors = {
-        'birads2': 'rgb(96, 170, 77)',
-        'birads3': '#ff9800',
-        'birads4': '#ff6b00',
-        'birads5': 'rgb(221, 48, 47)',
-        'benign': '#ff9800',
-        'malignant': 'rgb(221, 47, 47)',
-        'lesionKnown': '#5da4b8'
+        'birads2': 'green',
+        'birads3': 'orange',
+        'birads4': '#f14b16',
+        'birads5': 'red',
+        'lesionKnown': 'cyan'
     }
 
-    shapes = ''  # Initialize the string that will store the shapes
-    
-    # Iterate over each lesion type (e.g., birads2, birads3, etc.)
-    for lesion_type in lesion_types:
-        lesion_list = result.get(lesion_type)  # Get the list of lesions for this type
-        if not lesion_list:
+    shapes = ''  
+
+    border_radius = 'inherit'  
+    border_style = 'solid'  
+    font_size = '10px'
+
+    # Define label mapping for the lesions (making sure to handle BI-RADS labels)
+    label_mapping = {
+        'birads2': 'BI-RADS_2',
+        'birads3': 'BI-RADS_3',
+        'birads4': 'BI-RADS_4',
+        'birads5': 'BI-RADS_5',
+        'lesionKnown': 'Known'
+    }
+
+    print(f"START LOOP: {lesion_list}")  # Debugging
+
+    # Loop through the lesions in the lesion list
+    for lesion in lesion_list:
+        print(f"Processing lesion: {lesion}")  # Debugging
+        box = lesion.get('box')
+        if not box:
+            print(f"No box found for lesion {lesion}")
             continue
 
-        border_radius = 'inherit'  # Default border radius
-
-        # Map BI-RADS types for display
-        if 'birads' in lesion_type.lower():
-            birads = lesion_type[-1]  # Extract BI-RADS level (e.g., 2, 3, 4, 5)
-        elif 'lesion' in lesion_type.lower():
-            birads = 'known'
-        else:
-            birads = ''
-        
-        border_style = 'dashed' if microcalc else 'solid'  # Dashed border for microcalc
-
-        # Font size for lesions
-        font_size = '10px' if microcalc and "2" in lesion_type else '14px'
-
-        # Define label mapping for the lesions
-        label_mapping = {
-            '2': 'BI-RADS_2',
-            '3': 'BI-RADS_3',
-            '4': 'BI-RADS_4',
-            '5': 'BI-RADS_5',
-            'known': 'Known'
-        }
-
-        # Loop through the lesions in the lesion list
-        for lesion in lesion_list:
-            score = None if microcalc and birads == '2' else lesion.get('score')
-            box = lesion.get('box')  # Get the bounding box for the lesion
-
-            # Call the method to generate the div for the lesion
-            shapes += get_lesion_div(box, colors.get(lesion_type), border_radius, birads, score, font_size, border_style, label_mapping)
+        # Generate the div for this lesion
+        shapes += get_lesion_div(
+            box, 
+            colors.get(birads_type, 'red'), 
+            border_radius, 
+            label_mapping.get(birads_type, 'Unknown'),  # Use label mapping here
+            lesion.get('score'), 
+            font_size, 
+            border_style, 
+            label_mapping
+        )
 
     return shapes
 
@@ -210,6 +232,7 @@ def generate_image_html2image():
     hti.screenshot(html_str=html_string, save_as='quality_report_image_html2image.png', size=(1280, 2000))
 
     return send_file('quality_report_image_html2image.png', as_attachment=True)
+
 
 # Spire Route
 @app.route('/spire-html-to-image')
@@ -342,6 +365,7 @@ def generate_image_selenium():
     os.remove(temp_html_path)
 
     return send_file(output_path, as_attachment=True)
+
 
 
 @app.route('/report')
