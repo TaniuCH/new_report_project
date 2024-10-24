@@ -228,9 +228,9 @@ def _get_lesion_shapes(lesion_list, birads_type):
 def get_quality_shapes(shapes_list, shape_type):
     """
     Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
+    Handles both bounding boxes and contours.
     """
 
-    
     quality_shapes = []
     
     colors = {
@@ -241,29 +241,41 @@ def get_quality_shapes(shapes_list, shape_type):
 
     for shape in shapes_list:
         box = shape.get('box', [])
-        if not box:
-            continue
+        contours = shape.get('contours', [])
 
-        # Generate the div for the quality shape
-        div = f'''
-        <div style="
-            position: absolute;
-            top: {box[1] * 100}%;
-            left: {box[0] * 100}%;
-            width: {box[2] * 100}%;
-            height: {box[3] * 100}%;
-            border: 2px solid {colors.get(shape_type, 'black')};
-            border-radius: inherit;
-            font-size: 10px;
-            color: {colors.get(shape_type, 'black')};
-        ">
-            {shape_type.capitalize()}
-        </div>
-        '''
-        quality_shapes.append(div)
+        # If there is a bounding box, draw it
+        if box:
+            div = f'''
+            <div style="
+                position: absolute;
+                top: {box[1] * 100}%;
+                left: {box[0] * 100}%;
+                width: {box[2] * 100}%;
+                height: {box[3] * 100}%;
+                border: 2px solid {colors.get(shape_type, 'black')};
+                border-radius: inherit;
+                font-size: 10px;
+                z-index: 200;
+                color: {colors.get(shape_type, 'black')};
+            ">
+                {shape_type.capitalize()}
+            </div>
+            '''
+            quality_shapes.append(div)
+
+        # when contours, generate an SVG path to draw the shape
+        if contours:
+            # Iterate over the contour points (multiple contours may exist)
+            for contour in contours:
+                points = " ".join([f"{x * 100} , {y * 100}" for x, y in contour])
+                svg = f'''
+                <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 220; border: 2px solid white;">
+                    <polygon points="{points}" style="fill:red ; stroke: {colors.get(shape_type, 'blue')}; stroke-width: 2;"/>
+                </svg>
+                '''
+                quality_shapes.append(svg)
 
     return ''.join(quality_shapes)
-
 
 @app.route('/generate-image')
 def generate_image():
