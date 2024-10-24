@@ -120,15 +120,14 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
     """
     Generate a div for a lesion based on its bounding box and properties.
     """
-    top, left, width, height = box
 
     div = f'''
     <div style="
         position: absolute;
-        top: {top * 100}%;
-        left: {left * 100}%;
-        width: {width * 100}%;
-        height: {height * 100}%;
+        left: {100 * box[0]}%;
+        top: {100 * box[1]}%;
+        width: {100 * box[2]}%;
+        height: {100 * box[3]}%;
         border: 2px {border_style} {color};
         border-radius: {border_radius};
         font-size: {font_size};
@@ -173,7 +172,6 @@ def _get_lesion_shapes(lesion_list, birads_type):
     if not lesion_list:
         return ''
 
-    print(f"DIV: {birads_type}")  # Debugging
     # Define colors for the BI-RADS and other lesion types
     colors = {
         'birads2': 'green',
@@ -198,11 +196,8 @@ def _get_lesion_shapes(lesion_list, birads_type):
         'lesionKnown': 'Known'
     }
 
-    print(f"START LOOP: {lesion_list}")  # Debugging
-
     # Loop through the lesions in the lesion list
     for lesion in lesion_list:
-        print(f"Processing lesion: {lesion}")  # Debugging
         box = lesion.get('box')
         if not box:
             print(f"No box found for lesion {lesion}")
@@ -213,7 +208,7 @@ def _get_lesion_shapes(lesion_list, birads_type):
             box, 
             colors.get(birads_type, 'red'), 
             border_radius, 
-            label_mapping.get(birads_type, 'Unknown'),  # Use label mapping here
+            label_mapping.get(birads_type, 'Unknown'),  
             lesion.get('score'), 
             font_size, 
             border_style, 

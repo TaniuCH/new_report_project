@@ -14,7 +14,6 @@
   background-color: #4a4a4a;
   color: white;
   border-radius: 5px;
-  border: 1px dashed pink;
   height: auto;
   overflow: visible;
 }
@@ -75,7 +74,6 @@
 }
 
 .risk-info {
-  border: 1px dashed blue;
   display: flex;
 }
 
@@ -84,7 +82,6 @@
 }
 
 .risk-details {
-  border: 1px dashed blueviolet;
   width: 70%;
 }
 
@@ -114,7 +111,6 @@
   color: white;
   border-radius: 5px;
   display: flex;
-  border: 1px solid red;
   flex-direction: column;
 }
 
@@ -125,7 +121,6 @@
 }
 
 .quality-section {
-  border: 1px dashed blue;
   width: 25%;
   padding: 20px;
 }
@@ -203,13 +198,6 @@
   align-items: center;
   position: relative;
 }
-.lesion-shapes{
-  border:1px solid rgb(2, 255, 15);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 180;
-}
 
 .projection_image{
   max-width: 100%;
@@ -242,7 +230,6 @@
 .dens-left{
   left: 1px;
 }
-
 
 .values {
   color: white;
