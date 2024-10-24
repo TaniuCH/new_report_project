@@ -46,26 +46,162 @@ def index():
 
 
 def get_report_variables():
+    
     """Return common variables including images for report rendering."""
     r_proj_img = url_for('static', filename='images/r_proj_img.png')  
     l_proj_img = url_for('static', filename='images/l_proj_img.png')  
 
+
     # Load translations and other common variables
     translations = get_translations_dict('en')
-    
+        # Load the JSON result
+    with open('results.json') as f:
+        results = json.load(f)
+    opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
+    opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
+    opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
+    opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+    lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    rectangles_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
+    rectangles_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
+    rectangles_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
+    rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+
     variables = {
         'r_proj_img': r_proj_img,
         'l_proj_img': l_proj_img,
         'breast_image_alt': "Breast Projection Image",
         'report_title': "Mammography Report",
+        'rectangles_rcc' : rectangles_rcc,
+        "rectangles_lcc":rectangles_lcc,
+        "rectangles_rmlo" :rectangles_rmlo,
+        "rectangles_lmlo" : rectangles_lmlo
     }
 
     return {**translations, **variables}
 
+def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
+    """
+    Generate a div for a lesion based on its bounding box and properties.
+    """
+    top, left, width, height = box
+
+    div = f'''
+    <div style="
+        position: absolute;
+        top: {top * 100}%;
+        left: {left * 100}%;
+        width: {width * 100}%;
+        height: {height * 100}%;
+        border: 2px {border_style} {color};
+        border-radius: {border_radius};
+        font-size: {font_size};
+        color: {color};
+        z-index:{200}
+    ">
+        {label_mapping.get(birads)}
+    </div>
+    '''
+    return div
+
+def get_lesion_shapes(opacities, birads_list_opac):
+    """
+    Extracts the lesion shapes for the given opacities (projections) and BI-RADS categories.
+    Returns a single string with all the divs.
+    """
+    lesion_shapes = []
+
+    # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
+    for projection, projection_lesions in opacities.items():
+        print(f"Processing projection: {projection}")
+
+        # Check if projection_lesions is a dictionary (expected structure)
+        if isinstance(projection_lesions, dict):
+            for birads_type in birads_list_opac:
+                lesion_list = projection_lesions.get(birads_type)
+                if isinstance(lesion_list, list) and lesion_list:
+                    print(f"Found lesions for {birads_type}: {lesion_list}")
+                    # Append the divs to the lesion_shapes list
+                    lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type))
+                else:
+                    print(f"No lesions found for {birads_type}.")
+        elif isinstance(projection_lesions, list):  # If projection_lesions is a list
+            # Process all lesions as a list
+            print(f"Unexpected structure for projection lesions: {projection_lesions}")
+            lesion_shapes.append(_get_lesion_shapes(projection_lesions, 'lesion'))
+
+    # Join all the divs into a single string
+    return ''.join(lesion_shapes)
+
+
+def _get_lesion_shapes(lesion_list, birads_type):
+    if not lesion_list:
+        return ''
+
+    print(f"DIV: {birads_type}")  # Debugging
+    # Define colors for the BI-RADS and other lesion types
+    colors = {
+        'birads2': 'green',
+        'birads3': 'orange',
+        'birads4': '#f14b16',
+        'birads5': 'red',
+        'lesionKnown': 'cyan'
+    }
+
+    shapes = ''  
+
+    border_radius = 'inherit'  
+    border_style = 'solid'  
+    font_size = '10px'
+
+    # Define label mapping for the lesions (making sure to handle BI-RADS labels)
+    label_mapping = {
+        'birads2': 'BI-RADS_2',
+        'birads3': 'BI-RADS_3',
+        'birads4': 'BI-RADS_4',
+        'birads5': 'BI-RADS_5',
+        'lesionKnown': 'Known'
+    }
+
+    print(f"START LOOP: {lesion_list}")  # Debugging
+
+    # Loop through the lesions in the lesion list
+    for lesion in lesion_list:
+        print(f"Processing lesion: {lesion}")  # Debugging
+        box = lesion.get('box')
+        if not box:
+            print(f"No box found for lesion {lesion}")
+            continue
+
+        # Generate the div for this lesion
+        shapes += get_lesion_div(
+            box, 
+            colors.get(birads_type, 'red'), 
+            border_radius, 
+            label_mapping.get(birads_type, 'Unknown'),  # Use label mapping here
+            lesion.get('score'), 
+            font_size, 
+            border_style, 
+            label_mapping
+        )
+
+    return shapes
 
 @app.route('/generate-image')
 def generate_image():
-    variables = get_report_variables()  
+    with open('results.json') as f:
+        results = json.load(f)
+    
+    # Define the list of BI-RADS categories you're interested in
+    birads_list_opac = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+
+    # Extract the lesion shapes for each projection
+    opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
+    rectangles_rcc = get_lesion_shapes(opacities_rcc, birads_list_opac)
+    # Pass lesion shapes to the template as needed
+    variables = get_report_variables()
+    variables['rectangles_rcc'] = rectangles_rcc
+
     return render_template('report_quality.html', **variables)
 
 
@@ -92,6 +228,7 @@ def generate_image_html2image():
     hti.screenshot(html_str=html_string, save_as='quality_report_image_html2image.png', size=(1280, 2000))
 
     return send_file('quality_report_image_html2image.png', as_attachment=True)
+
 
 # Spire Route
 @app.route('/spire-html-to-image')
@@ -224,6 +361,7 @@ def generate_image_selenium():
     os.remove(temp_html_path)
 
     return send_file(output_path, as_attachment=True)
+
 
 
 @app.route('/report')
