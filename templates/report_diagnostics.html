@@ -61,15 +61,26 @@
         </div>
       </div>
     </div>
-  
-    <p class="header-font">{{quality}}</p>
-  
-    <!-- Quality Feats  -->
-    <div class="quality-container">
-      <!-- CC Main row container  -->
+    
+    <!-- Diagnostics Feats  -->
+    <div class="main-features-container">
+      <div class="labels-section">
+        <div>
+          <h2>{{ rcc_label }}</h2>
+          <div class="labels-findings">
+            <p><strong>{{ opacities_label }}:</strong> {{ rcc_opacities }}</p>
+            <p><strong>{{ microcalc_label }}:</strong> {{ rcc_microcalc }}</p>
+          </div>
+        </div>
+        <div>
+          <h2>{{ lcc_label }}</h2>
+          <div class="labels-findings">
+            <p><strong>{{ opacities_label }}:</strong> {{ lcc_opacities }}</p>
+            <p><strong>{{ microcalc_label }}:</strong> {{ lcc_microcalc }}</p>
+          </div>
+        </div>
+      </div>
       <div class="quality-row">
-        <!-- RCC Section -->
-
         <div class="diagnostics-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
@@ -90,12 +101,24 @@
 
       </div>
   
-      <!-- MLO Main row container  -->
+      <!-- RMLO Section -->
+      <div class="labels-section">
+        <div>
+          <h2>{{ rmlo_label }}</h2>
+          <div class="labels-findings">
+            <p><strong>{{ opacities_label }}:</strong> {{ rmlo_opacities }}</p>
+            <p><strong>{{ microcalc_label }}:</strong> {{ rmlo_microcalc }}</p>
+          </div>
+        </div>
+        <div>
+          <h2>{{ lmlo_label }}</h2>
+          <div class="labels-findings">
+            <p><strong>{{ opacities_label }}:</strong> {{ lmlo_opacities }}</p>
+            <p><strong>{{ microcalc_label }}:</strong> {{ lmlo_microcalc }}</p>
+          </div>
+        </div>
+      </div>
       <div class="quality-row">
-        <!-- RMLO Section -->
-
-  
-        <!-- MLO proj Images -->
         <div class="diagnostics-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
