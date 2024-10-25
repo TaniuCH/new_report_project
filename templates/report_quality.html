@@ -24,18 +24,25 @@
         </div>
         <!-- Middle Column more exam info-->
         <div class="exam-info">
-            <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
-            <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
-            <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
+          <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
+          <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
+          <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
         </div>
+        <!-- Quality Module -->
+        <div class="quality-module">
+          <p><strong>{{ overall_quality_label }}</strong></p>
+          <div class="quality-circle-container">
+            <div class="quality-circle moderate_color">{{ overall_quality }}</div>
+          </div>
+  
+          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} &#8635;</p>
+        </div>
+  
         <!-- Right Column (density and module status) -->
         <div class="density-module">
-          <div class="density-status">
-            <p><strong>{{ overall_density_label }}</strong></p>
-            <div class="density-circle">{{ overall_dens }}</div>
-          </div>
+          <p><strong>{{ overall_density_label }}</strong></p>
+          <div class="density-circle perfect_color">{{ overall_dens }}</div>
           <p><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
-          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} &#8635;</p>
         </div>
         {% endif %}
       </div>
@@ -50,9 +57,9 @@
         </div>
       </div>
     </div>
-
+  
     <p class="header-font">{{quality}}</p>
-
+  
     <!-- Quality Feats  -->
     <div class="quality-container">
       <!-- CC Main row container  -->
@@ -71,12 +78,14 @@
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ rcc_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ rcc_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ rcc_blur }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_rcc}}</span> <span class="values">{{pnl_rcc}}&nbsp;mm</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_rcc}}</span> <span
+                class="values">{{pnl_rcc}}&nbsp;mm</span></p>
             <p><strong>{{ pnl_diff_label }}:</strong> <span class="green">{{ rcc_pnl_diff }}</span></p>
             <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="orange">{{ rcc_nipple_centered }}</span></p>
             <p><strong>{{ mamilla_profile_label }}:</strong> <span class="red">{{ rcc_nipple }}</span></p>
             <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="green">{{ rcc_medial_parenchyma }}</span></p>
-            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ rcc_lateral_parenchyma }}</span></p>
+            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ rcc_lateral_parenchyma }}</span>
+            </p>
             <p><strong>{{ pectoralis_label }}:</strong> <span class="red">{{ rcc_pectMuscle }}</span></p>
             <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ rcc_skin_folds }}</span></p>
             <p><strong>{{ breast_volume_label }}:</strong> {{ rcc_breast_volume }} cm³</p>
@@ -84,15 +93,15 @@
             <p><strong>{{ post_surgery_label }}:</strong> {{ rcc_post_surgery }}</p>
           </div>
         </div>
-
+  
         <!-- CC proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
-            {{rectangles_rcc|safe}} 
+            <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{rectangles_rcc|safe}}
             {{ parenchyma_rcc|safe }}
             {{ pectoralis_rcc|safe }}
             {{ skin_folds_rcc|safe }}
@@ -101,14 +110,14 @@
             <div class="density_chip dens-right">
               <p><strong>D</strong></p>
             </div>
-            <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
-              {{ rectangles_lcc|safe }}
-              {{ parenchyma_lcc|safe }}
-              {{ pectoralis_lcc|safe }}
-              {{ skin_folds_lcc|safe }}
+            <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{ rectangles_lcc|safe }}
+            {{ parenchyma_lcc|safe }}
+            {{ pectoralis_lcc|safe }}
+            {{ skin_folds_lcc|safe }}
           </div>
         </div>
-
+  
         <!-- LCC Section-->
         <div class="quality-section">
           <div class="quality-label">
@@ -123,12 +132,14 @@
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ lcc_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ lcc_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ lcc_blur }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="red">{{ pnl_class_lcc }}</span> <span class="values">{{pnl_lcc}}&nbsp;mm</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="red">{{ pnl_class_lcc }}</span> <span
+                class="values">{{pnl_lcc}}&nbsp;mm</span></p>
             <p><strong>{{ pnl_diff_label }}:</strong> <span class="red">{{ lcc_pnl_diff }}</span></p>
             <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="green">{{ lcc_nipple_centered }}</span></p>
             <p><strong>{{ mamilla_profile_label }}:</strong> <span class="orange">{{ lcc_nipple }}</span></p>
             <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="green">{{ lcc_medial_parenchyma }}</span></p>
-            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ lcc_lateral_parenchyma }}</span></p>
+            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ lcc_lateral_parenchyma }}</span>
+            </p>
             <p><strong>{{ pectoralis_label }}:</strong> <span class="green">{{ lcc_pectMuscle }}</span></p>
             <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ lcc_skin_folds }}</span></p>
             <p><strong>{{ breast_volume_label }}:</strong> {{ lcc_breast_volume }} cm³</p>
@@ -137,7 +148,7 @@
           </div>
         </div>
       </div>
-
+  
       <!-- MLO Main row container  -->
       <div class="quality-row">
         <!-- RMLO Section -->
@@ -154,12 +165,14 @@
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ rmlo_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ rmlo_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ rmlo_blur }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_rmlo }}</span> <span class="values">{{pnl_rmlo}}&nbsp;mm</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_rmlo }}</span> <span
+                class="values">{{pnl_rmlo}}&nbsp;mm</span></p>
             <p><strong>{{ pnl_diff_label }}:</strong> <span class="green">{{ rmlo_pnl_diff }}</span></p>
             <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="orange">{{ rmlo_nipple_centered }}</span></p>
             <p><strong>{{ mamilla_profile_label }}:</strong> <span class="red">{{ rmlo_nipple }}</span></p>
             <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="green">{{ rmlo_medial_parenchyma }}</span></p>
-            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ rmlo_lateral_parenchyma }}</span></p>
+            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ rmlo_lateral_parenchyma }}</span>
+            </p>
             <p><strong>{{ pectoralis_label }}:</strong> <span class="red">{{ rmlo_pectMuscle }}</span></p>
             <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ rmlo_skin_folds }}</span></p>
             <p><strong>{{ breast_volume_label }}:</strong> {{ rmlo_breast_volume }} cm³</p>
@@ -167,32 +180,32 @@
             <p><strong>{{ post_surgery_label }}:</strong> {{ rmlo_post_surgery }}</p>
           </div>
         </div>
-
+  
         <!-- MLO proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>
-            {{rectangles_rmlo|safe}} 
+            <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{rectangles_rmlo|safe}}
             {{ parenchyma_rmlo|safe }}
             {{ pectoralis_rmlo|safe }}
             {{ skin_folds_rmlo|safe }}
-
+  
           </div>
           <div class="quality-images-left">
             <div class="density_chip dens-right">
               <p><strong>D</strong></p>
             </div>
-            <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image"/>   
-              {{ rectangles_lmlo|safe }}
-              {{ parenchyma_lmlo|safe }}
-              {{ pectoralis_lmlo|safe }}
-              {{ skin_folds_lmlo|safe }}          
+            <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{ rectangles_lmlo|safe }}
+            {{ parenchyma_lmlo|safe }}
+            {{ pectoralis_lmlo|safe }}
+            {{ skin_folds_lmlo|safe }}
           </div>
         </div>
-
+  
         <!-- LMLO Section-->
         <div class="quality-section">
           <div class="quality-label">
@@ -207,12 +220,14 @@
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ lmlo_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ lmlo_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ lmlo_blur }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="red">{{ pnl_class_lmlo }}</span> <span class="values">{{pnl_lmlo}}&nbsp;mm</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="red">{{ pnl_class_lmlo }}</span> <span
+                class="values">{{pnl_lmlo}}&nbsp;mm</span></p>
             <p><strong>{{ pnl_diff_label }}:</strong> <span class="red">{{ lmlo_pnl_diff }}</span></p>
             <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="green">{{ lmlo_nipple_centered }}</span></p>
             <p><strong>{{ mamilla_profile_label }}:</strong> <span class="orange">{{ lmlo_nipple }}</span></p>
             <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="green">{{ lmlo_medial_parenchyma }}</span></p>
-            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ lmlo_lateral_parenchyma }}</span></p>
+            <p><strong>{{ lateral_parenchyma_label }}:</strong> <span class="green">{{ lmlo_lateral_parenchyma }}</span>
+            </p>
             <p><strong>{{ pectoralis_label }}:</strong> <span class="green">{{ lmlo_pectMuscle }}</span></p>
             <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ lmlo_skin_folds }}</span></p>
             <p><strong>{{ breast_volume_label }}:</strong> {{ lmlo_breast_volume }} cm³</p>
@@ -221,7 +236,7 @@
           </div>
         </div>
       </div>
-
+  
       <div class="footer-info">
         <p>{{udi_title}} <strong>{{udi}}</strong></p>
         <p class="disclaimer">{{disclaimer}}</p>

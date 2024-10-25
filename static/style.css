@@ -33,11 +33,11 @@
 }
 
 .patient-info {
-  width: 40%;
+  width: 35%;
 }
 
 .exam-info {
-  width: 40%;
+  width: 35%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -50,7 +50,9 @@
 
 .density-module {
   width: 20%;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .density-status {
@@ -61,7 +63,6 @@
 }
 
 .density-circle {
-  background-color: #333333;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -70,7 +71,32 @@
   justify-content: center;
   font-size: 2em;
   margin-bottom: 10px;
-  color: #00ff00;
+  color: #333333;
+}
+
+.quality-circle-container{
+  height: 60px;
+  margin-bottom: 10px
+}
+
+.quality-circle {
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+
+.quality-module{
+display: flex;
+flex-direction: column;
+width: 10%;
+align-items: center;
+height: 100%;
 }
 
 .risk-info {
@@ -245,6 +271,19 @@
 
 .moderate {
   color: orange;
+}
+
+
+.perfect_color {
+  background: green;
+}
+
+.insufficient_color {
+  background: red;
+}
+
+.moderate_color {
+  background: orange;
 }
 
 .footer-info {
