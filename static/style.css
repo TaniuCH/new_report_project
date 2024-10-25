@@ -2,16 +2,20 @@
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #2f2f2f;
   min-width: 1400px;
   height: auto;
   width: 100vw;
+  background-color: #2f2f2f;
+
+}
+.report-main-container{
+  margin: 20px;
+  padding: 10px;
+  background-color: #4a4a4a;
 }
 
 .header-container {
   width: 100%;
-  margin: 20px auto;
-  background-color: #4a4a4a;
   color: white;
   border-radius: 5px;
   height: auto;
@@ -19,25 +23,29 @@
 }
 
 .header-title {
-  background-color: #555555;
-  padding: 20px;
+  padding: 20px 10px;
   font-size: 1.5em;
   font-weight: bold;
+  background: #5d5d5d;
+  margin: 10px 0;
+  border-radius: 5px;
 }
 
 .header-info {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  border: 1px solid green;
+  border: 3px solid #959595;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .patient-info {
-  width: 35%;
+  width: 30%;
 }
 
 .exam-info {
-  width: 35%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -311,8 +319,43 @@ height: 100%;
   overflow: hidden;
   border: 1px dashed rgb(30, 97, 82);
   background-color: black;
-  height: 800px;
+  max-height: 1800px;
   display: flex;
   border-radius: 5px;
   position: relative;
+}
+
+.diagnose-module{
+  display: flex;
+  width: 20%;
+  align-items: center;
+  height: 100%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.diagnose-modules-container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.diagnose-circle-container{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+
+}
+
+.diagnose-circle {
+  border-radius: 5px;
+  width: 80px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
 }

@@ -8,6 +8,7 @@
     </style>
 </head>
   <body class="body-style">
+    <div class="report-main-container">
     <!-- Header with patient and exam info -->
     <div class="header-container">
       <div class="header-title">{{ diagnostics_report }} {{for}} {{patient_name}}</div>
@@ -18,9 +19,6 @@
           <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
           <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
           <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
-          <p>
-            <strong>{{ quality_system_label }}:</strong> {{ quality_system_name }} [{{ quality_values }}]
-          </p>
         </div>
         <!-- Middle Column more exam info-->
         <div class="exam-info">
@@ -28,15 +26,21 @@
           <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
           <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
         </div>
-        <!-- Quality Module -->
-        <div class="quality-module">
-          <p><strong>{{ overall_quality_label }}</strong></p>
-          <div class="quality-circle-container">
-            <div class="quality-circle moderate_color">{{ overall_quality }}</div>
+        <!-- diagnose Module -->
+        <div class="diagnose-module">
+          <p><strong>{{ overall_diagnose_label }}</strong></p>
+
+          <div class="diagnose-modules-container">
+            <div class="diagnose-circle-container">
+              <div class="diagnose-circle moderate_color">{{ overall_diagnose }}</div>
+              <p><strong>{{ opacities_label }}:</strong> {{ opacities_confirmed }} &#8635;</p>
+            </div>
+            <div class="diagnose-circle-container">
+              <div class="diagnose-circle moderate_color">{{ overall_diagnose }}</div>
+              <p><strong>{{ microcalc_label }}:</strong> {{ microcalc_confirmed }} &#8635;</p>
+            </div>
           </div>
-  
-          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} &#8635;</p>
-        </div>
+      </div>
   
         <!-- Right Column (density and module status) -->
         <div class="density-module">
@@ -92,7 +96,7 @@
 
   
         <!-- MLO proj Images -->
-        <div class="quality-images-container">
+        <div class="diagnostics-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
@@ -128,4 +132,5 @@
       </div>
     </div>
   </body>
+</div>
 </html>
