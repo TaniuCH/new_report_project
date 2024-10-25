@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ report }}</title>
+    <style>
+        {{ style_sheet_content | safe }}
+    </style>
+</head>
+  <body class="body-style">
+    <!-- Header with patient and exam info -->
+    <div class="header-container">
+      <div class="header-title">{{ diagnostics_report }} {{for}} {{patient_name}}</div>
+      <div class="header-info">
+        {% if not anonimize %}
+        <!-- Patient info -->
+        <div class="patient-info">
+          <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
+          <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
+          <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
+          <p>
+            <strong>{{ quality_system_label }}:</strong> {{ quality_system_name }} [{{ quality_values }}]
+          </p>
+        </div>
+        <!-- Middle Column more exam info-->
+        <div class="exam-info">
+          <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
+          <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
+          <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
+        </div>
+        <!-- Quality Module -->
+        <div class="quality-module">
+          <p><strong>{{ overall_quality_label }}</strong></p>
+          <div class="quality-circle-container">
+            <div class="quality-circle moderate_color">{{ overall_quality }}</div>
+          </div>
+  
+          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} &#8635;</p>
+        </div>
+  
+        <!-- Right Column (density and module status) -->
+        <div class="density-module">
+          <p><strong>{{ overall_density_label }}</strong></p>
+          <div class="density-circle perfect_color">{{ overall_dens }}</div>
+          <p><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
+        </div>
+        {% endif %}
+      </div>
+      <!-- Risk -->
+      <div class="risk-info">
+        <p class="risk-label"><strong>{{ risk_label }}:</strong></p>
+        <div class="risk-details">
+          <p class="risk-evaluation">
+            <span class="risk-icon">&#128994;</span>&nbsp;{{ patient_risk_evaluation }}
+          </p>
+          <p class="risk-description">{{ risk_description }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <p class="header-font">{{quality}}</p>
+  
+    <!-- Quality Feats  -->
+    <div class="quality-container">
+      <!-- CC Main row container  -->
+      <div class="quality-row">
+        <!-- RCC Section -->
+
+        <div class="diagnostics-images-container">
+          <div class="quality-images-right">
+            <div class="density_chip dens-left">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{rectangles_rcc|safe}}
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{ rectangles_lcc|safe }}
+          </div>
+        </div>
+  
+
+      </div>
+  
+      <!-- MLO Main row container  -->
+      <div class="quality-row">
+        <!-- RMLO Section -->
+
+  
+        <!-- MLO proj Images -->
+        <div class="quality-images-container">
+          <div class="quality-images-right">
+            <div class="density_chip dens-left">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{rectangles_rmlo|safe}}
+           
+  
+          </div>
+          <div class="quality-images-left">
+            <div class="density_chip dens-right">
+              <p><strong>D</strong></p>
+            </div>
+            <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+            {{ rectangles_lmlo|safe }}
+    
+          </div>
+        </div>
+  
+ 
+      </div>
+
+      <div class="limitations-info">
+        <p><strong>{{ limitations_label }}:</strong></p>
+        <p>{{limitations}}</p>
+      </div>
+  
+      <div class="footer-info">
+        <p>{{udi_title}} <strong>{{udi}}</strong></p>
+        <p class="disclaimer">{{disclaimer}}</p>
+        <p class="disclaimer">{{disclaimer_text}}</p>
+        <p class="disclaimer">{{disclaimer_long}}</p>
+      </div>
+    </div>
+  </body>
+</html>
