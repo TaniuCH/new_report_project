@@ -8,16 +8,20 @@
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #2f2f2f;
   min-width: 1400px;
   height: auto;
   width: 100vw;
+  background-color: #2f2f2f;
+
+}
+.report-main-container{
+  margin: 20px;
+  padding: 10px;
+  background-color: #4a4a4a;
 }
 
 .header-container {
   width: 100%;
-  margin: 20px auto;
-  background-color: #4a4a4a;
   color: white;
   border-radius: 5px;
   height: auto;
@@ -25,25 +29,29 @@
 }
 
 .header-title {
-  background-color: #555555;
-  padding: 20px;
+  padding: 20px 10px;
   font-size: 1.5em;
   font-weight: bold;
+  background: #5d5d5d;
+  margin: 10px 0;
+  border-radius: 5px;
 }
 
 .header-info {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  border: 1px solid green;
+  border: 3px solid #959595;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .patient-info {
-  width: 40%;
+  width: 30%;
 }
 
 .exam-info {
-  width: 40%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -56,7 +64,9 @@
 
 .density-module {
   width: 20%;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .density-status {
@@ -67,7 +77,6 @@
 }
 
 .density-circle {
-  background-color: #333333;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -76,7 +85,32 @@
   justify-content: center;
   font-size: 2em;
   margin-bottom: 10px;
-  color: #00ff00;
+  color: #333333;
+}
+
+.quality-circle-container{
+  height: 60px;
+  margin-bottom: 10px
+}
+
+.quality-circle {
+  border-radius: 5px;
+  width: 60px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+
+.quality-module{
+display: flex;
+flex-direction: column;
+width: 10%;
+align-items: center;
+height: 100%;
 }
 
 .risk-info {
@@ -253,6 +287,23 @@
   color: orange;
 }
 
+
+.perfect_color {
+  background: green;
+}
+
+.insufficient_color {
+  background: red;
+}
+
+.moderate_color {
+  background: orange;
+}
+
+.limitations-info{
+  margin-left: 20px;
+}
+
 .footer-info {
   border: 1px solid green;
   padding: 10px;
@@ -266,12 +317,61 @@
 }
 
 
+.diagnostics-images-container{
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px dashed rgb(30, 97, 82);
+  background-color: black;
+  max-height: 1800px;
+  display: flex;
+  border-radius: 5px;
+  position: relative;
+}
+
+.diagnose-module{
+  display: flex;
+  width: 20%;
+  align-items: center;
+  height: 100%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.diagnose-modules-container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.diagnose-circle-container{
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+
+}
+
+.diagnose-circle {
+  border-radius: 5px;
+  width: 80px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
     </style>
 </head>
   <body class="body-style">
+    <div class="report-main-container">
     <!-- Header with patient and exam info -->
     <div class="header-container">
-      <div class="header-title">Quality Report for </div>
+      <div class="header-title">b-Quality Report for </div>
       <div class="header-info">
         
         <!-- Patient info -->
@@ -285,18 +385,25 @@
         </div>
         <!-- Middle Column more exam info-->
         <div class="exam-info">
-            <p><strong>Examination Type:</strong> </p>
-            <p><strong>Referring Physician:</strong> </p>
-            <p><strong>Performing Operator:</strong> </p>
+          <p><strong>Examination Type:</strong> </p>
+          <p><strong>Referring Physician:</strong> </p>
+          <p><strong>Performing Operator:</strong> </p>
         </div>
+        <!-- Quality Module -->
+        <div class="quality-module">
+          <p><strong>Overall Quality</strong></p>
+          <div class="quality-circle-container">
+            <div class="quality-circle moderate_color"></div>
+          </div>
+  
+          <p><strong>Quality:</strong>  &#8635;</p>
+        </div>
+  
         <!-- Right Column (density and module status) -->
         <div class="density-module">
-          <div class="density-status">
-            <p><strong>Overall Density</strong></p>
-            <div class="density-circle"></div>
-          </div>
+          <p><strong>Overall Density</strong></p>
+          <div class="density-circle perfect_color"></div>
           <p><strong>Density:</strong>  &#8635;</p>
-          <p><strong>Quality:</strong>  &#8635;</p>
         </div>
         
       </div>
@@ -311,9 +418,9 @@
         </div>
       </div>
     </div>
-
+  
     <p class="header-font"></p>
-
+  
     <!-- Quality Feats  -->
     <div class="quality-container">
       <!-- CC Main row container  -->
@@ -332,12 +439,14 @@
             <p><strong>Compression:</strong> <span class="green"> N</span></p>
             <p><strong>Symmetry:</strong> <span class="green"></span></p>
             <p><strong>Blur:</strong> <span class="green"></span></p>
-            <p><strong>PNL:</strong> <span class="green"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL:</strong> <span class="green"></span> <span
+                class="values">&nbsp;mm</span></p>
             <p><strong>PNL Difference:</strong> <span class="green"></span></p>
             <p><strong>Mamilla Deviation:</strong> <span class="orange"></span></p>
             <p><strong>Mamilla Profile:</strong> <span class="red"></span></p>
             <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
-            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span>
+            </p>
             <p><strong>Pectoralis:</strong> <span class="red"></span></p>
             <p><strong>Skin Folds:</strong> <span class="green"></span></p>
             <p><strong>Breast volume:</strong>  cm³</p>
@@ -345,45 +454,14 @@
             <p><strong>Post-surgery:</strong> </p>
           </div>
         </div>
-
+  
         <!-- CC proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="http://127.0.0.1:5001//static/images/rcc.png" alt="Breast Projection Image" class="projection_image"/>
-            
-    <div style="
-        position: absolute;
-        left: 47.499290914247894%;
-        top: 30.55800914013595%;
-        width: 16.03479247423656%;
-        height: 7.373555052037329%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-    <div style="
-        position: absolute;
-        left: 34.187387728089256%;
-        top: 50.46660778063674%;
-        width: 14.522076203082158%;
-        height: 12.289258420062211%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-     
+            <img src="http://127.0.0.1:5001//static/images/rcc.png" alt="Breast Projection Image" class="projection_image" />
             
             <div style="
                 position: absolute;
@@ -430,39 +508,8 @@
             <div class="density_chip dens-right">
               <p><strong>D</strong></p>
             </div>
-            <img src="http://127.0.0.1:5001//static/images/lcc.png" alt="Breast Projection Image" class="projection_image"/>   
-              
-    <div style="
-        position: absolute;
-        left: 14.985345561123193%;
-        top: 32.27850531894466%;
-        width: 16.034792474236554%;
-        height: 9.831406736049768%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-    <div style="
-        position: absolute;
-        left: 52.500709085752106%;
-        top: 54.1533853066554%;
-        width: 8.773754372695464%;
-        height: 14.009754598870927%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-              
+            <img src="http://127.0.0.1:5001//static/images/lcc.png" alt="Breast Projection Image" class="projection_image" />
+            
             <div style="
                 position: absolute;
                 top: 28.515625%;
@@ -482,8 +529,8 @@
                     <polygon points="78.81513717025746,155.41015625 76.68499832781806,157.5390625 68.1644429580605,157.5390625 68.1644429580605,159.66796875 61.77402643074233,166.0546875 61.77402643074233,170.3125 59.643887588302945,172.44140625 59.643887588302945,176.69921875 57.51374874586355,178.828125 59.643887588302945,180.95703125 59.643887588302945,236.30859375 61.77402643074233,238.4375 61.77402643074233,240.56640625 63.904165273181725,242.6953125 63.904165273181725,257.59765625 66.03430411562111,259.7265625 66.03430411562111,266.11328125 68.1644429580605,268.2421875 68.1644429580605,274.62890625 70.2945818004999,276.7578125 70.2945818004999,289.53125 72.42472064293929,291.66015625 72.42472064293929,293.7890625 74.55485948537869,295.91796875 74.55485948537869,308.69140625 76.68499832781806,310.8203125 76.68499832781806,317.20703125 78.81513717025746,319.3359375 78.81513717025746,329.98046875 76.68499832781806,332.109375 76.68499832781806,334.23828125 74.55485948537869,336.3671875 74.55485948537869,349.140625 72.42472064293929,351.26953125 74.55485948537869,353.3984375 74.55485948537869,393.84765625 76.68499832781806,395.9765625 76.68499832781806,400.234375 74.55485948537869,402.36328125 76.68499832781806,402.36328125 78.81513717025746,404.4921875 78.81513717025746,406.62109375 80.94527601269685,408.75 80.94527601269685,415.13671875 87.33569254001502,421.5234375 89.46583138245443,421.5234375 91.59597022489382,423.65234375 93.7261090673332,423.65234375 95.85624790977258,425.78125 102.24666443709076,425.78125 104.37680327953015,427.91015625 121.41791401904528,427.91015625 125.67819170392406,432.16796875 127.80833054636345,432.16796875 129.93846938880284,434.296875 136.328885916121,434.296875 138.45902475856042,436.42578125 146.97958012831796,436.42578125 149.10971897075737,434.296875 151.23985781319675,434.296875 153.36999665563613,432.16796875 168.2809685527119,432.16796875 170.41110739515125,434.296875 172.54124623759066,434.296875 174.67138508003003,432.16796875 178.93166276490885,432.16796875 178.93166276490885,430.0390625 181.0618016073482,427.91015625 185.32207929222702,427.91015625 187.4522181346664,425.78125 189.58235697710583,425.78125 193.8426346619846,421.5234375 200.23305118930273,421.5234375 202.36319003174214,419.39453125 206.62346771662092,419.39453125 213.0138842439391,413.0078125 217.27416192881785,413.0078125 219.40430077125725,410.87890625 221.53443961369666,410.87890625 227.9248561410148,404.4921875 227.9248561410148,402.36328125 230.0549949834542,400.234375 232.1851338258936,400.234375 234.315272668333,398.10546875 234.315272668333,395.9765625 240.7056891956512,389.58984375 240.7056891956512,387.4609375 242.83582803809057,385.33203125 242.83582803809057,383.203125 244.96596688052992,381.07421875 244.96596688052992,374.6875 247.09610572296933,372.55859375 247.09610572296933,370.4296875 249.2262445654087,368.30078125 249.2262445654087,361.9140625 251.3563834078481,359.78515625 251.3563834078481,357.65625 253.48652225028752,355.52734375 253.48652225028752,353.3984375 251.3563834078481,351.26953125 251.3563834078481,347.01171875 253.48652225028752,344.8828125 253.48652225028752,329.98046875 255.6166610927269,327.8515625 255.6166610927269,319.3359375 253.48652225028752,317.20703125 253.48652225028752,312.94921875 251.3563834078481,310.8203125 251.3563834078481,298.046875 249.2262445654087,295.91796875 249.2262445654087,289.53125 244.96596688052992,285.2734375 244.96596688052992,278.88671875 242.83582803809057,276.7578125 242.83582803809057,274.62890625 240.7056891956512,272.5 240.7056891956512,268.2421875 238.57555035321178,266.11328125 238.57555035321178,261.85546875 236.4454115107724,259.7265625 236.4454115107724,255.46875 232.1851338258936,251.2109375 232.1851338258936,249.08203125 230.0549949834542,249.08203125 221.53443961369666,240.56640625 221.53443961369666,238.4375 215.14402308637847,232.05078125 215.14402308637847,229.921875 213.0138842439391,229.921875 210.88374540149968,227.79296875 210.88374540149968,225.6640625 208.7536065590603,223.53515625 206.62346771662092,223.53515625 200.23305118930273,217.1484375 198.10291234686335,217.1484375 195.97277350442397,215.01953125 195.97277350442397,212.890625 193.8426346619846,212.890625 191.71249581954515,210.76171875 191.71249581954515,208.6328125 178.93166276490885,195.859375 176.80152392246944,195.859375 174.67138508003003,193.73046875 172.54124623759066,193.73046875 166.1508297102725,187.34375 159.76041318295432,187.34375 155.50013549807554,183.0859375 151.23985781319675,183.0859375 149.10971897075737,180.95703125 149.10971897075737,178.828125 142.71930244343918,178.828125 140.5891636009998,176.69921875 138.45902475856042,176.69921875 136.328885916121,174.5703125 134.19874707368163,174.5703125 132.06860823124222,172.44140625 129.93846938880284,172.44140625 127.80833054636345,170.3125 123.54805286148466,170.3125 121.41791401904528,168.18359375 119.28777517660589,168.18359375 117.1576363341665,166.0546875 104.37680327953015,166.0546875 100.11652559465136,161.796875 87.33569254001502,161.796875 85.20555369757562,159.66796875 85.20555369757562,157.5390625 80.94527601269685,157.5390625" style="fill: none; stroke: blue; stroke-width: 2;"/>
                 </svg>
                 
-              
-              
+            
+            
             <div style="
                 position: absolute;
                 top: 60.23915847515649%;
@@ -505,7 +552,7 @@
                 
           </div>
         </div>
-
+  
         <!-- LCC Section-->
         <div class="quality-section">
           <div class="quality-label">
@@ -520,12 +567,14 @@
             <p><strong>Compression:</strong> <span class="green"> N</span></p>
             <p><strong>Symmetry:</strong> <span class="green"></span></p>
             <p><strong>Blur:</strong> <span class="green"></span></p>
-            <p><strong>PNL:</strong> <span class="red"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL:</strong> <span class="red"></span> <span
+                class="values">&nbsp;mm</span></p>
             <p><strong>PNL Difference:</strong> <span class="red"></span></p>
             <p><strong>Mamilla Deviation:</strong> <span class="green"></span></p>
             <p><strong>Mamilla Profile:</strong> <span class="orange"></span></p>
             <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
-            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span>
+            </p>
             <p><strong>Pectoralis:</strong> <span class="green"></span></p>
             <p><strong>Skin Folds:</strong> <span class="green"></span></p>
             <p><strong>Breast volume:</strong>  cm³</p>
@@ -534,7 +583,7 @@
           </div>
         </div>
       </div>
-
+  
       <!-- MLO Main row container  -->
       <div class="quality-row">
         <!-- RMLO Section -->
@@ -551,12 +600,14 @@
             <p><strong>Compression:</strong> <span class="green"> N</span></p>
             <p><strong>Symmetry:</strong> <span class="green"></span></p>
             <p><strong>Blur:</strong> <span class="green"></span></p>
-            <p><strong>PNL:</strong> <span class="green"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL:</strong> <span class="green"></span> <span
+                class="values">&nbsp;mm</span></p>
             <p><strong>PNL Difference:</strong> <span class="green"></span></p>
             <p><strong>Mamilla Deviation:</strong> <span class="orange"></span></p>
             <p><strong>Mamilla Profile:</strong> <span class="red"></span></p>
             <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
-            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span>
+            </p>
             <p><strong>Pectoralis:</strong> <span class="red"></span></p>
             <p><strong>Skin Folds:</strong> <span class="green"></span></p>
             <p><strong>Breast volume:</strong>  cm³</p>
@@ -564,45 +615,14 @@
             <p><strong>Post-surgery:</strong> </p>
           </div>
         </div>
-
+  
         <!-- MLO proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
               <p><strong>D</strong></p>
             </div>
-            <img src="http://127.0.0.1:5001//static/images/rmlo.png" alt="Breast Projection Image" class="projection_image"/>
-            
-    <div style="
-        position: absolute;
-        left: 37.817906778859786%;
-        top: 53.22016974538193%;
-        width: 19.66531152500709%;
-        height: 7.865125388839811%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-    <div style="
-        position: absolute;
-        left: 60.50865084617566%;
-        top: 66.49256883904911%;
-        width: 29.649238914626075%;
-        height: 21.629094819309504%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-     
+            <img src="http://127.0.0.1:5001//static/images/rmlo.png" alt="Breast Projection Image" class="projection_image" />
             
             <div style="
                 position: absolute;
@@ -644,45 +664,14 @@
                 </svg>
                 
             
-
+  
           </div>
           <div class="quality-images-left">
             <div class="density_chip dens-right">
               <p><strong>D</strong></p>
             </div>
-            <img src="http://127.0.0.1:5001//static/images/lmlo.png" alt="Breast Projection Image" class="projection_image"/>   
-              
-    <div style="
-        position: absolute;
-        left: 43.42441145882575%;
-        top: 45.35504435654211%;
-        width: 13.916989694620408%;
-        height: 7.61934022043857%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-    <div style="
-        position: absolute;
-        left: 3.1861586461189377%;
-        top: 62.805791313030454%;
-        width: 38.422993287321546%;
-        height: 15.730250777679633%;
-        border: 2px solid red;
-        border-radius: inherit;
-        font-size: 10px;
-        color: red;
-        z-index:200
-    ">
-        None
-    </div>
-    
-              
+            <img src="http://127.0.0.1:5001//static/images/lmlo.png" alt="Breast Projection Image" class="projection_image" />
+            
             <div style="
                 position: absolute;
                 top: 46.09375%;
@@ -702,7 +691,7 @@
                     <polygon points="181.06192672586346,251.2109375 178.93178641144152,253.33984375 174.67150578259768,253.33984375 172.54136546817577,255.46875 170.41122515375383,255.46875 164.02080421048808,261.85546875 159.76052358164424,261.85546875 157.63038326722233,263.984375 146.9796816951127,263.984375 144.84954138069077,261.85546875 142.71940106626886,263.984375 140.58926075184692,263.984375 138.459120437425,266.11328125 134.19883980858114,266.11328125 132.06869949415923,268.2421875 129.9385591797373,268.2421875 123.54813823647154,274.62890625 117.15771729320576,274.62890625 112.89743666436192,278.88671875 110.76729634994,278.88671875 100.1165947778304,289.53125 97.98645446340846,289.53125 95.85631414898654,291.66015625 91.59603352014267,291.66015625 89.46589320572075,293.7890625 85.20561257687692,293.7890625 85.20561257687692,298.046875 80.94533194803307,302.3046875 80.94533194803307,308.69140625 74.5549110047673,315.078125 74.5549110047673,317.20703125 72.42477069034538,319.3359375 68.16449006150154,319.3359375 68.16449006150154,338.49609375 66.03434974707962,340.625 63.904209432657694,340.625 63.904209432657694,344.8828125 59.64392880381385,349.140625 46.86308691728232,349.140625 46.86308691728232,353.3984375 44.73294660286037,355.52734375 42.60280628843846,355.52734375 42.60280628843846,359.78515625 40.472665974016536,361.9140625 38.342525659594614,361.9140625 40.472665974016536,364.04296875 40.472665974016536,378.9453125 42.60280628843846,381.07421875 42.60280628843846,383.203125 44.73294660286037,385.33203125 46.86308691728232,385.33203125 53.25350786054808,391.71875 55.38364817497,391.71875 57.51378848939192,393.84765625 59.64392880381385,393.84765625 63.904209432657694,398.10546875 66.03434974707962,398.10546875 68.16449006150154,400.234375 76.68505131918923,400.234375 78.81519163361116,402.36328125 83.075472262455,402.36328125 85.20561257687692,404.4921875 87.33575289129882,404.4921875 89.46589320572075,406.62109375 95.85631414898654,406.62109375 97.98645446340846,408.75 100.1165947778304,408.75 102.24673509225232,410.87890625 112.89743666436192,410.87890625 115.02757697878384,413.0078125 121.41799792204961,413.0078125 123.54813823647154,415.13671875 142.71940106626886,415.13671875 144.84954138069077,417.265625 146.9796816951127,417.265625 149.1098220095346,419.39453125 151.23996232395655,419.39453125 153.37010263837846,421.5234375 155.5002429528004,421.5234375 157.63038326722233,423.65234375 164.02080421048808,423.65234375 166.15094452491,425.78125 168.2810848393319,425.78125 172.54136546817577,421.5234375 181.06192672586346,421.5234375 183.1920670402854,423.65234375 185.3222073547073,423.65234375 185.3222073547073,421.5234375 187.45234766912924,419.39453125 198.10304924123884,419.39453125 202.36332987008268,415.13671875 206.62361049892655,415.13671875 210.8838911277704,410.87890625 213.01403144219233,410.87890625 217.27431207103615,406.62109375 217.27431207103615,404.4921875 221.53459269988,400.234375 223.66473301430193,400.234375 223.66473301430193,398.10546875 225.79487332872384,395.9765625 225.79487332872384,393.84765625 227.92501364314577,391.71875 230.05515395756768,391.71875 232.18529427198962,389.58984375 232.18529427198962,387.4609375 238.5757152152554,381.07421875 240.7058555296773,381.07421875 240.7058555296773,376.81640625 242.83599584409922,374.6875 242.83599584409922,370.4296875 247.0962764729431,366.171875 249.226416787365,366.171875 251.3565571017869,364.04296875 251.3565571017869,355.52734375 253.4866974162088,353.3984375 253.4866974162088,347.01171875 255.61683773063078,344.8828125 255.61683773063078,340.625 257.7469780450527,338.49609375 257.7469780450527,308.69140625 253.4866974162088,304.43359375 253.4866974162088,302.3046875 251.3565571017869,302.3046875 249.226416787365,300.17578125 249.226416787365,295.91796875 247.0962764729431,293.7890625 247.0962764729431,291.66015625 240.7058555296773,285.2734375 240.7058555296773,281.015625 238.5757152152554,278.88671875 238.5757152152554,274.62890625 236.44557490083344,274.62890625 232.18529427198962,270.37109375 230.05515395756768,270.37109375 227.92501364314577,268.2421875 225.79487332872384,268.2421875 223.66473301430193,266.11328125 223.66473301430193,263.984375 221.53459269988,263.984375 215.14417175661424,257.59765625 206.62361049892655,257.59765625 204.49347018450462,255.46875 198.10304924123884,255.46875 195.97290892681693,253.33984375 189.58248798355115,253.33984375 187.45234766912924,251.2109375" style="fill: none; stroke: blue; stroke-width: 2;"/>
                 </svg>
                 
-              
+            
             <div style="
                 position: absolute;
                 top: 0%;
@@ -722,10 +711,10 @@
                     <polygon points="0,0 0,278.88671875 2.130140314421923,278.88671875 4.260280628843845,276.7578125 4.260280628843845,274.62890625 6.390420943265769,272.5 6.390420943265769,270.37109375 8.52056125768769,268.2421875 8.52056125768769,266.11328125 10.650701572109615,263.984375 10.650701572109615,261.85546875 12.780841886531539,259.7265625 12.780841886531539,255.46875 14.910982200953462,253.33984375 14.910982200953462,249.08203125 17.04112251537538,246.953125 17.04112251537538,242.6953125 19.171262829797307,240.56640625 19.171262829797307,234.1796875 21.30140314421923,232.05078125 21.30140314421923,227.79296875 23.431543458641155,225.6640625 23.431543458641155,219.27734375 25.561683773063077,217.1484375 25.561683773063077,210.76171875 27.691824087485,208.6328125 27.691824087485,200.1171875 29.821964401906925,197.98828125 29.821964401906925,193.73046875 31.952104716328847,191.6015625 31.952104716328847,185.21484375 34.08224503075077,183.0859375 34.08224503075077,176.69921875 36.21238534517269,174.5703125 36.21238534517269,157.5390625 38.342525659594614,155.41015625 38.342525659594614,142.63671875 40.472665974016536,140.5078125 40.472665974016536,119.21875 42.60280628843846,117.08984375 42.60280628843846,108.57421875 44.73294660286037,106.4453125 44.73294660286037,95.80078125 46.86308691728232,93.671875 46.86308691728232,87.28515625 48.99322723170424,85.15625 48.99322723170424,74.51171875 51.12336754612616,72.3828125 51.12336754612616,61.73828125 53.25350786054808,59.609375 53.25350786054808,53.22265625 55.38364817497,51.09375 55.38364817497,42.578125 57.51378848939192,40.44921875 57.51378848939192,34.0625 59.64392880381385,31.93359375 59.64392880381385,23.41796875 61.77406911823577,0 61.77406911823577,0" style="fill: none; stroke: purple; stroke-width: 2;"/>
                 </svg>
                 
-                        
+            
           </div>
         </div>
-
+  
         <!-- LMLO Section-->
         <div class="quality-section">
           <div class="quality-label">
@@ -740,12 +729,14 @@
             <p><strong>Compression:</strong> <span class="green"> N</span></p>
             <p><strong>Symmetry:</strong> <span class="green"></span></p>
             <p><strong>Blur:</strong> <span class="green"></span></p>
-            <p><strong>PNL:</strong> <span class="red"></span> <span class="values">&nbsp;mm</span></p>
+            <p><strong>PNL:</strong> <span class="red"></span> <span
+                class="values">&nbsp;mm</span></p>
             <p><strong>PNL Difference:</strong> <span class="red"></span></p>
             <p><strong>Mamilla Deviation:</strong> <span class="green"></span></p>
             <p><strong>Mamilla Profile:</strong> <span class="orange"></span></p>
             <p><strong>Medial Parenchyma:</strong> <span class="green"></span></p>
-            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span></p>
+            <p><strong>Lateral Parenchyma:</strong> <span class="green"></span>
+            </p>
             <p><strong>Pectoralis:</strong> <span class="green"></span></p>
             <p><strong>Skin Folds:</strong> <span class="green"></span></p>
             <p><strong>Breast volume:</strong>  cm³</p>
@@ -755,6 +746,11 @@
         </div>
       </div>
 
+      <div class="limitations-info">
+        <p><strong>Limitations:</strong></p>
+        <p></p>
+      </div>
+  
       <div class="footer-info">
         <p>UDI <strong></strong></p>
         <p class="disclaimer">DISCLAIMER</p>
@@ -762,5 +758,6 @@
         <p class="disclaimer">The b-box plus is a stand-alone software intended to determine the breast density classification from mammography data and to classify mammography data with respect to their diagnostic quality. The results are provided to the qualified medical user who shall decide about further steps. The intended patient group includes women of all ethnicities with a medical indication for digital mammography, as well as asymptomatic female population involved in organized digital mammography-based breast cancer screening programs.</p>
       </div>
     </div>
+  </div>
   </body>
 </html>
