@@ -286,6 +286,10 @@ height: 100%;
   background: orange;
 }
 
+.limitations-info{
+  margin-left: 20px;
+}
+
 .footer-info {
   border: 1px solid green;
   padding: 10px;
