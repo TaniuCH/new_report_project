@@ -367,5 +367,18 @@ def report():
     return render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
 
 
+@app.route('/diagnostics-report')
+def diagnostics():
+    """Render the report_diagnostics.html with necessary variables."""
+    translations = get_translations_dict('en')
+
+    with open(os.path.join('static', 'style.css')) as f:
+        style_sheet_content = f.read()
+
+    variables = get_report_variables()
+
+    return render_template('report_diagnostics.html', style_sheet_content=style_sheet_content, **variables)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

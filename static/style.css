@@ -302,3 +302,17 @@ height: 100%;
   font-size: 12px;
 }
 
+
+.diagnostics-images-container{
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px dashed rgb(30, 97, 82);
+  background-color: black;
+  height: 800px;
+  display: flex;
+  border-radius: 5px;
+  position: relative;
+}

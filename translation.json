@@ -1,6 +1,7 @@
 {
   "en": {
-    "quality_report": "Quality Report",
+    "quality_report": "b-Quality Report",
+    "diagnostics_report": "b-Diagnostics Report",
     "for": "for",
     "patient_name_label": "Patient Name",
     "birth_date_label": "Birth Date",
