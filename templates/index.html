@@ -5,37 +5,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate Report</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .column {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+
+        button {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Generate Report Image</h1>
 
-    <p>Best options</p>
-    <!-- HTML2Image -->
-    <form action="/html-2-img-html-to-image" method="get">
-        <button type="submit">HTML2Image</button>
-    </form>
+    <div class="container">
+        <!-- Quality Section -->
+        <div class="column">
+            <h2>b-QUALITY</h2>
+            <!-- HTML2Image -->
+            <form action="/html-2-img-html-to-image" method="get">
+                <button type="submit">Quality HTML2Image</button>
+            </form>
+            <!-- Pyppeteer -->
+            <form action="/pyppeteer-html-to-image" method="get">
+                <button type="submit">Quality Pyppeteer</button>
+            </form>
+            <p>b-QUALITY Report layout</p>
+            <!-- Report html -->
+            <form action="/report" target="_blank">
+                <button type="submit">Quality Report html</button>
+            </form>
+        </div>
 
-
-    <!-- Pyppeteer -->
-    <form action="/pyppeteer-html-to-image" method="get">
-        <button type="submit">Pyppeteer</button>
-    </form>
-
-
-    </br>
-    <p>b-QUALITY Report layout</p>
-    <!-- Report html -->
-    <form action="/report" target="_blank">
-        <button type="submit">Quality Report html</button>
-    </form>
-
-    </br>
-    <p>b-DIAGNOSTICS Report layout</p>
-    <!-- Report html -->
-    <form action="/diagnostics-report" target="_blank">
-        <button type="submit">Diagnostics Report html</button>
-    </form>
+        <!-- Diagnostics Section -->
+        <div class="column">
+            <h2>b-DIAGNOSTICS</h2>
+            <!-- HTML2Image -->
+            <form action="/html-2-img-diagnostics" method="get">
+                <button type="submit">Diagnostics HTML2Image</button>
+            </form>
+            <!-- Pyppeteer -->
+            <form action="/pyppeteer-diagnostics" method="get">
+                <button type="submit">Diagnostics Pyppeteer</button>
+            </form>
+            <p>b-DIAGNOSTICS Report layout</p>
+            <!-- Report html -->
+            <form action="/diagnostics-report" target="_blank">
+                <button type="submit">Diagnostics Report html</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
