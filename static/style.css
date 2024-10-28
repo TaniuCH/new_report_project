@@ -42,6 +42,10 @@
 
 .patient-info {
   width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .exam-info {
@@ -49,6 +53,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
 }
 
 .exam-details {
@@ -109,6 +114,11 @@ height: 100%;
 
 .risk-info {
   display: flex;
+  padding: 4px 10px;
+  background: #5d5d5d;
+  border-radius: 5px;
+  margin: 8px 0;
+  align-items: center;
 }
 
 .risk-label {
@@ -341,7 +351,6 @@ height: 100%;
 }
 
 .diagnose-circle-container{
-  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -357,13 +366,20 @@ height: 100%;
   align-items: center;
   justify-content: center;
   font-size: 2em;
-  margin-bottom: 10px;
 }
 
-.labels-section{
+.labels-section-container{
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding-left: 10px;
+}
+.labels-section{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .labels-findings{
