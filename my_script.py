@@ -322,32 +322,28 @@ def generate_image_html2image_diagnostics():
     return generate_image_html2image('report_diagnostics.html', 'diagnostics_report_image_html2image.png', variables)
 
 
-# Quality Pyppeteer Route
-@app.route('/pyppeteer-html-to-image')
-def generate_image_pyppeteer():
-    """Generate an image from rendered HTML using Pyppeteer."""
+# Pyppeteer 
+# Helper function to generate image using Pyppeteer
+def generate_image_with_pyppeteer(template_name, output_file_name, variables):
+    """Generate an image from HTML using Pyppeteer with the specified template and variables."""
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
 
-    variables = get_report_variables()
+    # Render the HTML string with variables
+    html_string = render_template(template_name, style_sheet_content=style_sheet_content, **variables)
 
-    html_string = render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
-
-    with open('debug_rendered_report_quality.html', 'w') as debug_file:
-        debug_file.write(html_string)
-
-    output_path = os.path.abspath('quality_report_image_pyppeteer.png')
-
+    # Write the rendered HTML to a temporary file
     with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as temp_html_file:
         temp_html_file.write(html_string.encode('utf-8'))
         temp_html_path = os.path.abspath(temp_html_file.name)
 
     print(f"Temp HTML file path: {temp_html_path}")
-    print(f"Output image path: {output_path}")
+    print(f"Output image path: {output_file_name}")
 
+    # Run the Pyppeteer script as a subprocess to generate the image
     try:
         result = subprocess.run(
-            ['python', 'pyppeteer_capture.py', temp_html_path, output_path],
+            ['python', 'pyppeteer_capture.py', temp_html_path, output_file_name],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             check=True
@@ -357,7 +353,26 @@ def generate_image_pyppeteer():
         print(f"Subprocess failed: {e.stderr.decode()}")
         return f"An error occurred: {e.stderr.decode()}", 500
 
-    return send_file(output_path, as_attachment=True)
+    return send_file(output_file_name, as_attachment=True)
+
+# Pyppeteer Route for Quality and Diagnostics
+@app.route('/pyppeteer-html-to-image')
+def generate_image_pyppeteer():
+    """Generate an image from rendered HTML for either Quality or Diagnostics report using Pyppeteer."""
+    report_type = request.args.get('report_type', 'quality')
+    
+    # Set template and output file name based on report type
+    if report_type == 'diagnostics':
+        template_name = 'report_diagnostics.html'
+        output_file_name = 'diagnostics_report_image_pyppeteer.png'
+    else:
+        template_name = 'report_quality.html'
+        output_file_name = 'quality_report_image_pyppeteer.png'
+
+    variables = get_report_variables()
+
+    return generate_image_with_pyppeteer(template_name, output_file_name, variables)
+
 
 
 # Quality report HTML

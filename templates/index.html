@@ -50,6 +50,7 @@
             </form>
             <!-- Pyppeteer -->
             <form action="/pyppeteer-html-to-image" method="get">
+                <input type="hidden" name="report_type" value="quality">
                 <button type="submit">Quality Pyppeteer</button>
             </form>
             <p>b-QUALITY Report layout</p>
@@ -67,7 +68,8 @@
                 <button type="submit">Diagnostics HTML2Image</button>
             </form>
             <!-- Pyppeteer -->
-            <form action="/pyppeteer-diagnostics" method="get">
+            <form action="/pyppeteer-html-to-image" method="get">
+                <input type="hidden" name="report_type" value="diagnostics">
                 <button type="submit">Diagnostics Pyppeteer</button>
             </form>
             <p>b-DIAGNOSTICS Report layout</p>
@@ -78,5 +80,7 @@
         </div>
     </div>
 </body>
+
+
 
 </html>
