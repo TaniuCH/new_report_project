@@ -9,151 +9,193 @@
 </head>
   <body class="body-style">
     <div class="report-main-container">
-    <!-- Header with patient and exam info -->
-    <div class="header-container">
-      <div class="header-title">{{ diagnostics_report }} {{for}} {{patient_name}}</div>
-      <div class="header-info">
-        {% if not anonimize %}
-        <!-- Patient info -->
-        <div class="patient-info">
-          <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
-          <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
-          <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
-        </div>
-        <!-- Middle Column more exam info-->
-        <div class="exam-info">
-          <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
-          <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
-          <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
-        </div>
-        <!-- diagnose Module -->
-        <div class="diagnose-module">
-          <p><strong>{{ overall_diagnose_label }}</strong></p>
+      <!-- Header with patient and exam info -->
+      <div class="header-container">
+        <div class="header-title">{{ diagnostics_report }} {{for}} {{patient_name}}</div>
+        <div class="header-info">
+          {% if not anonimize %}
+          <!-- Patient info -->
+          <div class="patient-info">
+            <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
+            <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
+            <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
+          </div>
+          <!-- Middle Column more exam info-->
+          <div class="exam-info">
+            <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
+            <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
+            <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
+          </div>
+          <!-- diagnose Module -->
+          <div class="diagnose-module">
+            <p class="no-padding-texts"><strong>{{ overall_diagnose_label }}</strong></p>
+          
+            <!-- <div class="diagnose-modules-container">
+                        <div class="diagnose-general-container">
+                          <div class="diagnose-general {{right_breast_opacities}}">{{ overall_diagnose }}</div>
+                        
+                        </div>
+                        <div class="diagnose-general-container">
+                          <div class="diagnose-general {{microcalc_general}}">{{ overall_diagnose }}</div>
+                        </div>
+                      </div> -->
+          
+            <div class="findings">
+              <div class="column">
+                <h5 class="no-padding-texts">Opacities</h5>
+                <div class="general-findings-box">
+                  <div class="box {{right_breast_opacities}}">
+                    <span class="label">R</span>
+                    <p class="text">{{empty_lesions_right}}</p>
+                  </div>
+          
+                  <div class="box {{left_breast_opacities}} insufficient_color">
+                    <span class="label">L</span>
+                    <div class="finding-big highlight-red">5</div>
+                    <p class="birads-box">BI-RADS</p>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <h5 class="no-padding-texts">Microcalcifications</h5>
+                <div class="general-findings-box">
+          
+                  <div class="box {{left_breast_opacities}}">
+                    <span class="label">R</span>
+                    <div class="finding-big moderate">4</div>
+                    <p class="birads-box moderate">BI-RADS</p>
+                  </div>
+                  <div class="box">
+                    <span class="label">L</span>
+                    <p class="text">{{empty_lesions_left}}</p>
+                  </div>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+  
+          <!-- Right Column (density and module status) -->
+          <div class="density-module">
+            <p class="no-padding-texts"><strong>{{ overall_density_label }}</strong></p>
+            <div class="density-circle perfect_color">{{ overall_dens }}</div>
+            <p class="no-padding-texts"><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
+            <p class="no-padding-texts"><strong>{{ opacities_label }}:</strong> {{ opacities_confirmed }} &#8635;</p>
+            <p class="no-padding-texts"><strong>{{ microcalc_label }}:</strong> {{ microcalc_confirmed }} &#8635;</p>
 
-          <div class="diagnose-modules-container">
-            <div class="diagnose-circle-container">
-              <div class="diagnose-circle moderate_color">{{ overall_diagnose }}</div>
-              <p><strong>{{ opacities_label }}:</strong> {{ opacities_confirmed }} &#8635;</p>
-            </div>
-            <div class="diagnose-circle-container">
-              <div class="diagnose-circle moderate_color">{{ overall_diagnose }}</div>
-              <p><strong>{{ microcalc_label }}:</strong> {{ microcalc_confirmed }} &#8635;</p>
-            </div>
           </div>
+          {% endif %}
+        </div>
+        <!-- Risk -->
+        <div class="risk-info">
+          <p class="risk-label"><strong>{{ risk_label }}:</strong></p>
+          <div class="risk-details">
+            <p class="risk-evaluation">
+              <span class="risk-icon">&#128994;</span>&nbsp;{{ patient_risk_evaluation }}
+            </p>
+            <p class="risk-description">{{ risk_description }}</p>
+          </div>
+        </div>
       </div>
   
-        <!-- Right Column (density and module status) -->
-        <div class="density-module">
-          <p><strong>{{ overall_density_label }}</strong></p>
-          <div class="density-circle perfect_color">{{ overall_dens }}</div>
-          <p><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
-        </div>
-        {% endif %}
-      </div>
-      <!-- Risk -->
-      <div class="risk-info">
-        <p class="risk-label"><strong>{{ risk_label }}:</strong></p>
-        <div class="risk-details">
-          <p class="risk-evaluation">
-            <span class="risk-icon">&#128994;</span>&nbsp;{{ patient_risk_evaluation }}
-          </p>
-          <p class="risk-description">{{ risk_description }}</p>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Diagnostics Feats  -->
-    <div class="main-features-container">
-      <div class="labels-section-container"> 
-        <div class="labels-section">
-          <h2>{{ rcc_label }}</h2>
-          <div class="labels-findings">
-            <p><strong>{{ opacities_label }}:</strong> {{ rcc_opacities }}</p>
-            <p><strong>{{ microcalc_label }}:</strong> {{ rcc_microcalc }}</p>
-          </div>
-        </div>
-        <div class="labels-section">
-          <h2>{{ lcc_label }}</h2>
-          <div class="labels-findings">
-            <p><strong>{{ opacities_label }}:</strong> {{ lcc_opacities }}</p>
-            <p><strong>{{ microcalc_label }}:</strong> {{ lcc_microcalc }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="quality-row">
-        <div class="diagnostics-images-container">
-          <div class="quality-images-right">
-            <div class="density_chip dens-left">
-              <p><strong>D</strong></p>
+      <!-- Diagnostics Feats  -->
+      <div class="main-features-container">
+        <div class="labels-section-container">
+          <div class="labels-section">
+            <div class="label-center">
+              <h2>{{ rcc_label }}</h2>
             </div>
-            <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
-            {{rectangles_rcc|safe}}
-          </div>
-          <div class="quality-images-left">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
+            <div class="labels-findings">
+              <p><strong>{{ opacities_label }}:</strong> {{ rcc_opacities }}</p>
+              <p><strong>{{ microcalc_label }}:</strong> {{ rcc_microcalc }}</p>
             </div>
-            <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
-            {{ rectangles_lcc|safe }}
+          </div>
+          <div class="labels-section">
+            <div class="label-center">
+              <h2>{{ lcc_label }}</h2>
+            </div>
+            <div class="labels-findings">
+              <p><strong>{{ opacities_label }}:</strong> {{ lcc_opacities }}</p>
+              <p><strong>{{ microcalc_label }}:</strong> {{ lcc_microcalc }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="quality-row">
+          <div class="diagnostics-images-container">
+            <div class="quality-images-right">
+              <div class="density_chip dens-left">
+                <p><strong>D</strong></p>
+              </div>
+              <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+              {{rectangles_rcc|safe}}
+            </div>
+            <div class="quality-images-left">
+              <div class="density_chip dens-right">
+                <p><strong>D</strong></p>
+              </div>
+              <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+              {{ rectangles_lcc|safe }}
+            </div>
           </div>
         </div>
   
-
-      </div>
-  
-      <!-- RMLO Section -->
-      <div class="labels-section-container"> 
-        <div class="labels-section">
-          <h2>{{ rmlo_label }}</h2>
-          <div class="labels-findings">
-            <p><strong>{{ opacities_label }}:</strong> {{ rmlo_opacities }}</p>
-            <p><strong>{{ microcalc_label }}:</strong> {{ rmlo_microcalc }}</p>
-          </div>
-        </div>
-        <div class="labels-section">
-          <h2>{{ lmlo_label }}</h2>
-          <div class="labels-findings">
-            <p><strong>{{ opacities_label }}:</strong> {{ lmlo_opacities }}</p>
-            <p><strong>{{ microcalc_label }}:</strong> {{ lmlo_microcalc }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="quality-row">
-        <div class="diagnostics-images-container">
-          <div class="quality-images-right">
-            <div class="density_chip dens-left">
-              <p><strong>D</strong></p>
+        <!-- RMLO Section -->
+        <div class="labels-section-container">
+          <div class="labels-section">
+            <div class="label-center">
+              <h2>{{ rmlo_label }}</h2>
             </div>
-            <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
-            {{rectangles_rmlo|safe}}
-           
-  
-          </div>
-          <div class="quality-images-left">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
+            <div class="labels-findings">
+              <p><strong>{{ opacities_label }}:</strong> {{ rmlo_opacities }}</p>
+              <p><strong>{{ microcalc_label }}:</strong> {{ rmlo_microcalc }}</p>
             </div>
-            <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
-            {{ rectangles_lmlo|safe }}
-    
+          </div>
+          <div class="labels-section">
+            <div class="label-center">
+              <h2>{{ lmlo_label }}</h2>
+            </div>
+            <div class="labels-findings">
+              <p><strong>{{ opacities_label }}:</strong> {{ lmlo_opacities }}</p>
+              <p><strong>{{ microcalc_label }}:</strong> {{ lmlo_microcalc }}</p>
+            </div>
           </div>
         </div>
+        <div class="quality-row">
+          <div class="diagnostics-images-container">
+            <div class="quality-images-right">
+              <div class="density_chip dens-left">
+                <p><strong>D</strong></p>
+              </div>
+              <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+              {{rectangles_rmlo|safe}}
   
- 
-      </div>
-
-      <div class="limitations-info">
-        <p><strong>{{ limitations_label }}:</strong></p>
-        <p>{{limitations}}</p>
-      </div>
   
-      <div class="footer-info">
-        <p>{{udi_title}} <strong>{{udi}}</strong></p>
-        <p class="disclaimer">{{disclaimer}}</p>
-        <p class="disclaimer">{{disclaimer_text}}</p>
-        <p class="disclaimer">{{disclaimer_long}}</p>
+            </div>
+            <div class="quality-images-left">
+              <div class="density_chip dens-right">
+                <p><strong>D</strong></p>
+              </div>
+              <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
+              {{ rectangles_lmlo|safe }}
+  
+            </div>
+          </div>
+  
+  
+        </div>
+  
+        <div class="limitations-info">
+          <p><strong>{{ limitations_label }}:</strong></p>
+          <p>{{limitations}}</p>
+        </div>
+  
+        <div class="footer-info">
+          <p>{{udi_title}} <strong>{{udi}}</strong></p>
+          <p class="disclaimer">{{disclaimer}}</p>
+          <p class="disclaimer">{{disclaimer_text}}</p>
+          <p class="disclaimer">{{disclaimer_long}}</p>
+        </div>
       </div>
-    </div>
   </body>
 </div>
 </html>
