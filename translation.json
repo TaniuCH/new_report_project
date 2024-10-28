@@ -54,6 +54,8 @@
     "breast_volume": "Breast Volume",
     "pnl": "PNL",
     "nipple_centered": "Nipple Centered",
+    "empty_lesions_right": "no lesions found in the right breast",
+    "empty_lesions_left": "no lesions found in the right breast",
     "confirmation": "CONFIRMATION",
     "disclaimer": "DISCLAIMER",
     "pect_shape": "Pect. Shape",
