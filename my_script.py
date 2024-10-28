@@ -22,11 +22,12 @@ def get_translations_dict(lang):
         translations = json.load(f)
         return translations.get(lang, {})
     
+translations = get_translations_dict('en')
+
 @app.route('/')
 
 def index():
     """Render index.html with translations for English."""
-    translations = get_translations_dict('en')
 
     # Load the CSS content
     with open(os.path.join('static', 'style.css')) as f:
@@ -46,7 +47,6 @@ def get_report_variables():
     # TODO: Obtain image width and height dynamically per projection 
     img_width= 443
     img_height= 545
-    translations = get_translations_dict('en')
 
     with open('results.json') as f:
         results = json.load(f)
@@ -114,7 +114,6 @@ def get_report_variables():
     }
 
     return {**translations, **variables}
-
 
 def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
     """
@@ -290,32 +289,40 @@ def generate_image():
     return render_template('report_quality.html', **variables)
 
 
-# HTML2Image Route
-@app.route('/html-2-img-html-to-image')
-def generate_image_html2image():
+def generate_image_html2image(template_name, output_file_name, variables):
     """Generate an image using HTML2Image."""
-    
-    # Load the CSS content from the external file
+    # Load the CSS content
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
 
-    # Get variables needed for rendering
-    variables = get_report_variables()
-
-    # Embed the CSS directly into the HTML string
-    html_string = render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
+    # Render the template with given variables
+    html_string = render_template(template_name, style_sheet_content=style_sheet_content, **variables)
 
     # Create an Html2Image instance
     hti = Html2Image()
     hti.output_path = os.getcwd()
 
     # Generate the image
-    hti.screenshot(html_str=html_string, save_as='quality_report_image_html2image.png', size=(1280, 2000))
+    hti.screenshot(html_str=html_string, save_as=output_file_name, size=(1280, 2000))
 
-    return send_file('quality_report_image_html2image.png', as_attachment=True)
+    return send_file(output_file_name, as_attachment=True)
 
 
-# Pyppeteer Route
+# Quality HTML2Image Route
+@app.route('/html-2-img-html-to-image')
+def generate_image_html2image_quality():
+    variables = get_report_variables()
+    return generate_image_html2image('report_quality.html', 'quality_report_image_html2image.png', variables)
+
+
+# Diagnostics HTML2Image Route
+@app.route('/html-2-img-diagnostics')
+def generate_image_html2image_diagnostics():
+    variables = get_report_variables()
+    return generate_image_html2image('report_diagnostics.html', 'diagnostics_report_image_html2image.png', variables)
+
+
+# Quality Pyppeteer Route
 @app.route('/pyppeteer-html-to-image')
 def generate_image_pyppeteer():
     """Generate an image from rendered HTML using Pyppeteer."""
@@ -353,10 +360,10 @@ def generate_image_pyppeteer():
     return send_file(output_path, as_attachment=True)
 
 
+# Quality report HTML
 @app.route('/report')
 def report():
     """Render the report_quality.html with necessary variables."""
-    translations = get_translations_dict('en')
 
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
@@ -366,11 +373,10 @@ def report():
 
     return render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
 
-
+# Diagnostics report HTML
 @app.route('/diagnostics-report')
 def diagnostics():
     """Render the report_diagnostics.html with necessary variables."""
-    translations = get_translations_dict('en')
 
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
