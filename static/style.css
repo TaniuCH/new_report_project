@@ -8,7 +8,8 @@
   background-color: #2f2f2f;
 
 }
-.report-main-container{
+
+.report-main-container {
   margin: 20px;
   padding: 10px;
   background-color: #4a4a4a;
@@ -41,7 +42,7 @@
 }
 
 .patient-info {
-  width: 30%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -49,7 +50,7 @@
 }
 
 .exam-info {
-  width: 30%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -87,7 +88,7 @@
   color: #333333;
 }
 
-.quality-circle-container{
+.quality-circle-container {
   height: 60px;
   margin-bottom: 10px
 }
@@ -104,12 +105,12 @@
 }
 
 
-.quality-module{
-display: flex;
-flex-direction: column;
-width: 10%;
-align-items: center;
-height: 100%;
+.quality-module {
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  align-items: center;
+  height: 100%;
 }
 
 .risk-info {
@@ -243,7 +244,7 @@ height: 100%;
   position: relative;
 }
 
-.projection_image{
+.projection_image {
   max-width: 100%;
   max-height: 100%;
   z-index: 1;
@@ -252,12 +253,12 @@ height: 100%;
 }
 
 
-.density_chip{
+.density_chip {
   background: green;
   margin: 4px;
   top: 4px;
-  height:34px;
-  width:34px;
+  height: 34px;
+  width: 34px;
   z-index: 9;
   position: absolute;
   cursor: default;
@@ -267,11 +268,11 @@ height: 100%;
   border-radius: 50%;
 }
 
-.dens-right{
+.dens-right {
   right: 1px;
 }
 
-.dens-left{
+.dens-left {
   left: 1px;
 }
 
@@ -304,7 +305,7 @@ height: 100%;
   background: orange;
 }
 
-.limitations-info{
+.limitations-info {
   margin-left: 20px;
 }
 
@@ -314,14 +315,14 @@ height: 100%;
 }
 
 
-.disclaimer{
+.disclaimer {
   font-style: italic;
   color: gray;
   font-size: 12px;
 }
 
 
-.diagnostics-images-container{
+.diagnostics-images-container {
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -335,22 +336,23 @@ height: 100%;
   position: relative;
 }
 
-.diagnose-module{
+.diagnose-module {
   display: flex;
-  width: 20%;
+  width: 30%;
   align-items: center;
   height: 100%;
   justify-content: space-around;
   flex-direction: column;
 }
-.diagnose-modules-container{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+
+.diagnose-modules-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.diagnose-circle-container{
+.diagnose-general-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -358,23 +360,112 @@ height: 100%;
 
 }
 
-.diagnose-circle {
+.diagnose-general {
   border-radius: 5px;
-  width: 80px;
-  height: 60px;
+  width: 70%;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2em;
+  border:1px solid gray
 }
 
-.labels-section-container{
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.findings {
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.box {
+  width: 100px;
+  height: 110px;
+  border: 2px solid #888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  font-size: 16px;  
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+}
+
+.birads-box{
+  font-size: 12px;
+  color: #cccccc;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.finding-big{
+  font-size: 80px;
+  font-weight: bold;
+}
+
+.text{
+  color: #cccccc;
+}
+
+.label {
+  font-size: 10px;
+  color: #cccccc;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.general-findings-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.no-padding-texts{
+  padding: 4px 0;
+  margin: 0 4px;
+}
+
+
+/* ******************* */
+
+.label-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.labels-section-container {
   display: flex;
   width: 100%;
   justify-content: space-between;
   padding-left: 10px;
 }
-.labels-section{
+
+.labels-section {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -382,7 +473,7 @@ height: 100%;
   justify-content: center;
 }
 
-.labels-findings{
+.labels-findings {
   display: flex;
   flex-direction: column;
 }
