@@ -16,7 +16,6 @@ def get_translations_dict(lang):
     """Fetch translations based on the language."""
     path = os.path.join(os.getcwd(), 'translation.json')
     if not os.path.isfile(path):
-        print('Translations not found.')
         return {}
     with open(path) as f:
         translations = json.load(f)
@@ -146,57 +145,56 @@ def get_lesion_div(box, color,  birads, score, font_size, border_style, label_ma
         top: {100 * box[1]}%;
         width: {100 * box[2]}%;
         height: {100 * box[3]}%;
-        border: 2px {border_style} {color};
+        border: 4px {border_style} {color};
         font-size: {font_size};
         color: {color};
         z-index:{200}
     ">
-        {label_mapping.get(birads)}
+         <p style="left: 0;
+                    top: 0;
+                    position: absolute;
+                    color: black;
+                    text-shadow: 2px 0px 3px rgb(215 215 215);
+                    margin: 0;
+                    padding: 0 2px;
+                    background: {color};
+            ">
+            {birads}
+        </p>
     </div>
     '''
     return div
 
 
-def get_lesion_shapes(finding, birads_list_opac, microcalc=False):
+def get_lesion_shapes(proj_findings, birads_list, microcalc=False):
     """
-    Extracts the lesion shapes for the given finding (projections) and BI-RADS categories.
+    Extracts the lesion shapes for the given proj_findings (lesion classes) and BI-RADS categories.
     Returns a single string with all the divs.
     """
     lesion_shapes = []
 
-    # Check if finding is structured as expected
-    if not isinstance(finding, dict):
-        print("Unexpected structure for finding. Expected a dictionary.")
+    if not isinstance(proj_findings, dict):
+        print("Unexpected structure.")
         return ''
 
-    # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
-    for projection, projection_lesions in finding.items():
-        if isinstance(projection_lesions, dict):
-            for birads_type in birads_list_opac:
-                lesion_list = projection_lesions.get(birads_type)
-                if isinstance(lesion_list, list) and lesion_list:
-                    print(f"Found {microcalc} lesions for {birads_type}: {lesion_list}")
-                    lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type, microcalc))
-                else:
-                    print(f"No lesions found for {birads_type}.")
-        elif isinstance(projection_lesions, list):
-            # Use a default birads_type if structure is a list and no type information is available
-            default_birads_type = 'lesionKnown'  # Default type if none specified
-            print(f"Unexpected list structure in {projection} lesions: {projection_lesions}")
-            lesion_shapes.append(_get_lesion_shapes(projection_lesions, default_birads_type, microcalc))
+    # Iterate through each lesion class
+    for birads_type in birads_list:
+        lesion_list = proj_findings.get(birads_type)
+        if isinstance(lesion_list, list) and lesion_list:
+            lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type, microcalc))
+        else:
+            print(f"No lesions found for {birads_type}.")
 
     # Join all the divs into a single string
     return ''.join(lesion_shapes)
 
+
 def _get_lesion_shapes(lesion_list, birads_type, microcalc):
     """
-    Generates divs for each lesion in the lesion list based on BI-RADS type and if microcalc is specified.
+    Generates divs for each lesion in the lesion list based on BI-RADS type 
     """
     if not lesion_list:
-        return ''
-
-    print(f"Defining box for BI-RADS type: {birads_type}")
-    
+        return ''    
     # Define colors and styles based on BI-RADS and lesion types
     colors = {
         'vessels': 'gray',
@@ -224,7 +222,6 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
     for lesion in lesion_list:
         box = lesion.get('box')
         if not box:
-            print(f"No box found for lesion: {lesion}")
             continue
 
         # Generate the div for this lesion
@@ -366,7 +363,6 @@ def generate_image_with_pyppeteer(template_name, output_file_name, variables):
             check=True
         )
     except subprocess.CalledProcessError as e:
-        print(f"Subprocess failed: {e.stderr.decode()}")
         return f"An error occurred: {e.stderr.decode()}", 500
 
     return send_file(output_file_name, as_attachment=True)
