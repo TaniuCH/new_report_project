@@ -51,11 +51,17 @@ def get_report_variables():
     with open('results.json') as f:
         results = json.load(f)
     
-    # Fetch opacities for lesions
+    # Fetch opacities lesions
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
     opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
     opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
     opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+
+    # Fetch microcalc lesions 
+    microcalc_rcc = results.get('microcalc', {}).get('bbox', {}).get('rcc', {})
+    microcalc_lcc = results.get('microcalc', {}).get('bbox', {}).get('lcc', {})
+    microcalc_rmlo = results.get('microcalc', {}).get('bbox', {}).get('rmlo', {})
+    microcalc_lmlo = results.get('microcalc', {}).get('bbox', {}).get('lmlo', {})
 
     # Fetch quality indicators for each projection
     quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
@@ -66,10 +72,15 @@ def get_report_variables():
     lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     
     # Get lesion shapes for each projection
-    rectangles_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
-    rectangles_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
-    rectangles_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
-    rectangles_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+    opacities_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
+    opacities_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
+    opacities_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
+    opacities_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+
+    microcalc_rcc = get_lesion_shapes(microcalc_rcc, lesion_types)
+    microcalc_lcc = get_lesion_shapes(microcalc_lcc, lesion_types)
+    microcalc_rmlo = get_lesion_shapes(microcalc_rmlo, lesion_types)
+    microcalc_lmlo = get_lesion_shapes(microcalc_lmlo, lesion_types)
 
     # Fetch quality shapes (parenchyma, pectoralis, skin folds) for each projection
     parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
@@ -95,10 +106,14 @@ def get_report_variables():
         "lmlo_proj_img" : lmlo_proj_img,
         'breast_image_alt': "Breast Projection Image",
         'report_title': "Mammography Report",
-        'rectangles_rcc' : rectangles_rcc,
-        "rectangles_lcc": rectangles_lcc,
-        "rectangles_rmlo" : rectangles_rmlo,
-        "rectangles_lmlo" : rectangles_lmlo,
+        'opacities_rcc' : opacities_rcc,
+        "opacities_lcc": opacities_lcc,
+        "opacities_rmlo" : opacities_rmlo,
+        "opacities_lmlo" : opacities_lmlo,
+        'microcalc_rcc' : microcalc_rcc,
+        "microcalc_lcc": microcalc_lcc,
+        "microcalc_rmlo" : microcalc_rmlo,
+        "microcalc_lmlo" : microcalc_lmlo,
         "parenchyma_rcc": parenchyma_rcc,
         "pectoralis_rcc": pectoralis_rcc,
         "skin_folds_rcc": skin_folds_rcc,
@@ -119,7 +134,7 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
     """
     Generate a div for a lesion based on its bounding box and properties.
     """
-
+    print(f"GENERATE DIVS {color}, {border_radius}, {birads}, {border_style}")
     div = f'''
     <div style="
         position: absolute;
@@ -138,17 +153,15 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
     '''
     return div
 
-def get_lesion_shapes(opacities, birads_list_opac):
+def get_lesion_shapes(finding, birads_list_opac):
     """
-    Extracts the lesion shapes for the given opacities (projections) and BI-RADS categories.
+    Extracts the lesion shapes for the given finding (projections) and BI-RADS categories.
     Returns a single string with all the divs.
     """
     lesion_shapes = []
 
     # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
-    for projection, projection_lesions in opacities.items():
-        print(f"Processing projection: {projection}")
-
+    for projection, projection_lesions in finding.items():
         # Check if projection_lesions is a dictionary (expected structure)
         if isinstance(projection_lesions, dict):
             for birads_type in birads_list_opac:
@@ -171,6 +184,7 @@ def _get_lesion_shapes(lesion_list, birads_type):
     if not lesion_list:
         return ''
 
+    print(f"DEFINE BOX birads_type: {birads_type}")
     # Define colors for the BI-RADS and other lesion types
     colors = {
         'birads2': 'green',
@@ -205,7 +219,7 @@ def _get_lesion_shapes(lesion_list, birads_type):
         # Generate the div for this lesion
         shapes += get_lesion_div(
             box, 
-            colors.get(birads_type, 'red'), 
+            colors.get(birads_type, 'cyan'), 
             border_radius, 
             label_mapping.get(birads_type, 'Unknown'),  
             lesion.get('score'), 
@@ -276,15 +290,8 @@ def generate_image():
     with open('results.json') as f:
         results = json.load(f)
     
-    # Define the list of BI-RADS categories you're interested in
-    birads_list_opac = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
-
-    # Extract the lesion shapes for each projection
-    opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
-    rectangles_rcc = get_lesion_shapes(opacities_rcc, birads_list_opac)
     # Pass lesion shapes to the template as needed
     variables = get_report_variables()
-    variables['rectangles_rcc'] = rectangles_rcc
 
     return render_template('report_quality.html', **variables)
 
@@ -337,8 +344,6 @@ def generate_image_with_pyppeteer(template_name, output_file_name, variables):
         temp_html_file.write(html_string.encode('utf-8'))
         temp_html_path = os.path.abspath(temp_html_file.name)
 
-    print(f"Temp HTML file path: {temp_html_path}")
-    print(f"Output image path: {output_file_name}")
 
     # Run the Pyppeteer script as a subprocess to generate the image
     try:
@@ -348,7 +353,6 @@ def generate_image_with_pyppeteer(template_name, output_file_name, variables):
             stderr=subprocess.PIPE,
             check=True
         )
-        print(result.stdout.decode())
     except subprocess.CalledProcessError as e:
         print(f"Subprocess failed: {e.stderr.decode()}")
         return f"An error occurred: {e.stderr.decode()}", 500
