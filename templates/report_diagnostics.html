@@ -44,30 +44,29 @@
               <div class="column">
                 <h5 class="no-padding-texts">Opacities</h5>
                 <div class="general-findings-box">
-                  <div class="box {{right_breast_opacities}}">
-                    <span class="label">R</span>
-                    <p class="text">{{empty_lesions_right}}</p>
+                  <div class="box right-box">
+                    <span class="label right">R</span>
+                    <p class="text">{{right_breast_opacities}}</p>
                   </div>
           
-                  <div class="box {{left_breast_opacities}} insufficient_color">
-                    <span class="label">L</span>
-                    <div class="finding-big highlight-red">5</div>
-                    <p class="birads-box">BI-RADS</p>
+                  <div class="box left-box">
+                    <span class="label left">L</span>
+                    <div class="finding-big insufficient">5</div>
+                    <p class="birads-box ">BI-RADS {{left_breast_opacities}}</p>
                   </div>
                 </div>
               </div>
               <div class="column">
                 <h5 class="no-padding-texts">Microcalcifications</h5>
                 <div class="general-findings-box">
-          
-                  <div class="box {{left_breast_opacities}}">
-                    <span class="label">R</span>
+                  <div class="box right-box">
+                    <span class="label right">R</span>
                     <div class="finding-big moderate">4</div>
-                    <p class="birads-box moderate">BI-RADS</p>
+                    <p class="birads-box moderate">BI-RADS {{right_breast_microcalc}}</p>
                   </div>
-                  <div class="box">
-                    <span class="label">L</span>
-                    <p class="text">{{empty_lesions_left}}</p>
+                  <div class="box left-box">
+                    <span class="label left">L</span>
+                    <p class="text">{{microcalc_left}}</p>
                   </div>
                 </div>
           
