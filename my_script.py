@@ -69,18 +69,20 @@ def get_report_variables():
     quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
     quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
 
-    lesion_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    # **TODO: obtain the ones we need to show from env file 
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5', ]
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     
     # Get lesion shapes for each projection
-    opacities_rcc = get_lesion_shapes(opacities_rcc, lesion_types)
-    opacities_lcc = get_lesion_shapes(opacities_lcc, lesion_types)
-    opacities_rmlo = get_lesion_shapes(opacities_rmlo, lesion_types)
-    opacities_lmlo = get_lesion_shapes(opacities_lmlo, lesion_types)
+    opacities_rcc = get_lesion_shapes(opacities_rcc, opacities_types)
+    opacities_lcc = get_lesion_shapes(opacities_lcc, opacities_types)
+    opacities_rmlo = get_lesion_shapes(opacities_rmlo, opacities_types)
+    opacities_lmlo = get_lesion_shapes(opacities_lmlo, opacities_types)
 
-    microcalc_rcc = get_lesion_shapes(microcalc_rcc, lesion_types)
-    microcalc_lcc = get_lesion_shapes(microcalc_lcc, lesion_types)
-    microcalc_rmlo = get_lesion_shapes(microcalc_rmlo, lesion_types)
-    microcalc_lmlo = get_lesion_shapes(microcalc_lmlo, lesion_types)
+    microcalc_rcc = get_lesion_shapes(microcalc_rcc, microcalc_types, microcalc=True)
+    microcalc_lcc = get_lesion_shapes(microcalc_lcc, microcalc_types, microcalc=True)
+    microcalc_rmlo = get_lesion_shapes(microcalc_rmlo, microcalc_types, microcalc=True)
+    microcalc_lmlo = get_lesion_shapes(microcalc_lmlo, microcalc_types, microcalc=True)
 
     # Fetch quality shapes (parenchyma, pectoralis, skin folds) for each projection
     parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
@@ -130,11 +132,13 @@ def get_report_variables():
 
     return {**translations, **variables}
 
-def get_lesion_div(box, color, border_radius, birads, score, font_size, border_style, label_mapping):
+
+# Diagnose boxes 
+def get_lesion_div(box, color,  birads, score, font_size, border_style, label_mapping):
     """
     Generate a div for a lesion based on its bounding box and properties.
     """
-    print(f"GENERATE DIVS {color}, {border_radius}, {birads}, {border_style}")
+    print(f"GENERATE DIVS {color},  {birads}, {border_style}")
     div = f'''
     <div style="
         position: absolute;
@@ -143,7 +147,6 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
         width: {100 * box[2]}%;
         height: {100 * box[3]}%;
         border: 2px {border_style} {color};
-        border-radius: {border_radius};
         font-size: {font_size};
         color: {color};
         z-index:{200}
@@ -153,55 +156,62 @@ def get_lesion_div(box, color, border_radius, birads, score, font_size, border_s
     '''
     return div
 
-def get_lesion_shapes(finding, birads_list_opac):
+
+def get_lesion_shapes(finding, birads_list_opac, microcalc=False):
     """
     Extracts the lesion shapes for the given finding (projections) and BI-RADS categories.
     Returns a single string with all the divs.
     """
     lesion_shapes = []
 
+    # Check if finding is structured as expected
+    if not isinstance(finding, dict):
+        print("Unexpected structure for finding. Expected a dictionary.")
+        return ''
+
     # Iterate through each projection (e.g., lmlo, lcc, rmlo, rcc)
     for projection, projection_lesions in finding.items():
-        # Check if projection_lesions is a dictionary (expected structure)
         if isinstance(projection_lesions, dict):
             for birads_type in birads_list_opac:
                 lesion_list = projection_lesions.get(birads_type)
                 if isinstance(lesion_list, list) and lesion_list:
-                    print(f"Found lesions for {birads_type}: {lesion_list}")
-                    # Append the divs to the lesion_shapes list
-                    lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type))
+                    print(f"Found {microcalc} lesions for {birads_type}: {lesion_list}")
+                    lesion_shapes.append(_get_lesion_shapes(lesion_list, birads_type, microcalc))
                 else:
                     print(f"No lesions found for {birads_type}.")
-        elif isinstance(projection_lesions, list):  # If projection_lesions is a list
-            # Process all lesions as a list
-            print(f"Unexpected structure for projection lesions: {projection_lesions}")
-            lesion_shapes.append(_get_lesion_shapes(projection_lesions, 'lesion'))
+        elif isinstance(projection_lesions, list):
+            # Use a default birads_type if structure is a list and no type information is available
+            default_birads_type = 'lesionKnown'  # Default type if none specified
+            print(f"Unexpected list structure in {projection} lesions: {projection_lesions}")
+            lesion_shapes.append(_get_lesion_shapes(projection_lesions, default_birads_type, microcalc))
 
     # Join all the divs into a single string
     return ''.join(lesion_shapes)
 
-def _get_lesion_shapes(lesion_list, birads_type):
+def _get_lesion_shapes(lesion_list, birads_type, microcalc):
+    """
+    Generates divs for each lesion in the lesion list based on BI-RADS type and if microcalc is specified.
+    """
     if not lesion_list:
         return ''
 
-    print(f"DEFINE BOX birads_type: {birads_type}")
-    # Define colors for the BI-RADS and other lesion types
+    print(f"Defining box for BI-RADS type: {birads_type}")
+    
+    # Define colors and styles based on BI-RADS and lesion types
     colors = {
+        'vessels': 'gray',
         'birads2': 'green',
         'birads3': 'orange',
         'birads4': '#f14b16',
         'birads5': 'red',
         'lesionKnown': 'cyan'
     }
+    border_style = 'dashed' if microcalc else 'solid'
+    font_size = '10px' if microcalc and "2" in birads_type else '14px'
 
-    shapes = ''  
-
-    border_radius = 'inherit'  
-    border_style = 'solid'  
-    font_size = '10px'
-
-    # Define label mapping for the lesions (making sure to handle BI-RADS labels)
+    # Label mapping for display
     label_mapping = {
+        'vessels': 'gray',
         'birads2': 'BI-RADS_2',
         'birads3': 'BI-RADS_3',
         'birads4': 'BI-RADS_4',
@@ -209,18 +219,18 @@ def _get_lesion_shapes(lesion_list, birads_type):
         'lesionKnown': 'Known'
     }
 
-    # Loop through the lesions in the lesion list
+    shapes = ''  
+
     for lesion in lesion_list:
         box = lesion.get('box')
         if not box:
-            print(f"No box found for lesion {lesion}")
+            print(f"No box found for lesion: {lesion}")
             continue
 
         # Generate the div for this lesion
         shapes += get_lesion_div(
             box, 
             colors.get(birads_type, 'cyan'), 
-            border_radius, 
             label_mapping.get(birads_type, 'Unknown'),  
             lesion.get('score'), 
             font_size, 
@@ -230,6 +240,8 @@ def _get_lesion_shapes(lesion_list, birads_type):
 
     return shapes
 
+
+# Quality contours 
 def get_quality_shapes(shapes_list, shape_type, img_width, img_height):
     """
     Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
