@@ -87,6 +87,7 @@
   justify-content: center;
   font-size: 2em;
   margin-bottom: 10px;
+  border: 1px solid gray;
   color: #333333;
 }
 
@@ -104,6 +105,8 @@
   justify-content: center;
   font-size: 2em;
   margin-bottom: 10px;
+  border: 1px solid gray;
+
 }
 
 
