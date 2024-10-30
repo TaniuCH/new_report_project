@@ -1,5 +1,7 @@
 .body-style {
-  font-family: Arial, sans-serif;
+  /* font-family: Arial, sans-serif; */
+  /* font-family: 'Garamond', 'Georgia', serif; */
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   min-width: 1400px;
@@ -131,7 +133,6 @@
 }
 
 .risk-evaluation {
-  color: #00ff00;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -185,13 +186,6 @@
   display: inline-block;
 }
 
-.quality-badge.orange {
-  background-color: orange;
-}
-
-.quality-badge.green {
-  background-color: green;
-}
 
 .badge-text {
   color: white;
@@ -204,7 +198,6 @@
 }
 
 .explanation-box {
-  border: 1px solid #ffcc00;
   padding: 10px;
   color: white;
 }
@@ -216,7 +209,6 @@
   align-items: center;
   padding: 0px;
   overflow: hidden;
-  border: 1px dashed rgb(30, 97, 82);
   background-color: black;
   height: 800px;
   display: flex;
@@ -280,38 +272,13 @@
   color: white;
 }
 
-.perfect {
-  color: green;
-}
-
-.insufficient {
-  color: red;
-}
-
-.moderate {
-  color: orange;
-}
-
-
-.perfect_color {
-  background: green;
-}
-
-.insufficient_color {
-  background: red;
-}
-
-.moderate_color {
-  background: orange;
-}
 
 .limitations-info {
-  margin-left: 20px;
+  margin-left: 0;
 }
 
 .footer-info {
-  border: 1px solid green;
-  padding: 10px;
+  padding: 0;
 }
 
 
@@ -328,7 +295,6 @@
   align-items: center;
   padding: 0px;
   overflow: hidden;
-  border: 1px dashed rgb(30, 97, 82);
   background-color: black;
   max-height: 1800px;
   display: flex;
@@ -466,7 +432,19 @@ h1 {
 }
 
 
-/* ******************* */
+.proj-labels{
+  margin: 4px;
+  color: #cccccc;
+}
+
+.labels-section-container-mlo{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-left: 10px;
+  margin-top: 20px;
+}
+
 
 .label-center {
   display: flex;
@@ -493,4 +471,38 @@ h1 {
 .labels-findings {
   display: flex;
   flex-direction: column;
+}
+
+.opacities-module-labels{
+  margin: 0 8px;
+}
+
+.microcalc-module-labels{
+  margin: 8px;
+}
+
+
+/* QUALITY AND CLASSES COLORS */
+.perfect {
+  color: green;
+}
+
+.insufficient {
+  color: red;
+}
+
+.moderate {
+  color: orange;
+}
+
+.perfect_background {
+  background: green;
+}
+
+.insufficient_background {
+  background: red;
+}
+
+.moderate_background {
+  background: orange;
 }

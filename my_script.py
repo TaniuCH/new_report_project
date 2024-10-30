@@ -151,7 +151,8 @@ def get_lesion_div(box, color,  birads, score, font_size, border_style, label_ma
         z-index:{200}
     ">
          <p style="left: 0;
-                    top: 0;
+                    width: max-content;
+                    top: -12px;
                     position: absolute;
                     color: black;
                     text-shadow: 2px 0px 3px rgb(215 215 215);
@@ -209,11 +210,11 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
 
     # Label mapping for display
     label_mapping = {
-        'vessels': 'gray',
-        'birads2': 'BI-RADS_2',
-        'birads3': 'BI-RADS_3',
-        'birads4': 'BI-RADS_4',
-        'birads5': 'BI-RADS_5',
+        'vessels': 'Vessels',
+        'birads2': 'BI-RADS 2',
+        'birads3': 'BI-RADS 3',
+        'birads4': 'BI-RADS 4',
+        'birads5': 'BI-RADS 5',
         'lesionKnown': 'Known'
     }
 
