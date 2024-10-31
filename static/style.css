@@ -490,6 +490,34 @@ h1 {
   justify-content: space-around;
 }
 
+table {
+  width: 100%;
+  text-align: left;
+  background: #4a4a4a;
+  border: 1px solid #5a5a5a;
+  font-size: 18px;
+}
+
+table td, table th {
+  padding: 4px 12px;
+}
+
+table tr:nth-child(even) {
+  background: #616060;
+}
+
+table thead {
+  background: #808080;
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-transform: uppercase;  
+}
+
+table thead th:first-child {
+  border-left: none;
+}
+
 /* QUALITY AND CLASSES COLORS */
 .perfect {
   color: green;

@@ -302,18 +302,6 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
     return shapes
 
 # b-DIAGNOSTICS LESION TABLE 
-# Initialize the structures and define breast projections
-right_breast_projections = ['rcc', 'rmlo']
-left_breast_projections = ['lcc', 'lmlo']
-new_grouped_boxes = {"RightBreast": [], "LeftBreast": []}
-lesion_index_mapping = {}
-table_head = [
-    {"name": "index", "label": "Index", "align": "left"},
-    {"name": "type", "label": "Type", "align": "left"},
-    {"name": "cc_size", "label": "CC Size", "align": "center"},
-    {"name": "mlo_size", "label": "MLO Size", "align": "center"},
-    {"name": "extra", "label": "Extra", "align": "left"}
-]
 
 def group_lesions_by_projection(opacities_lesions):
     """
@@ -414,6 +402,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             
             rows += f"""
             <tr>
+                <td>{index1}</td>                
                 <td>{proj1}</td>
                 <td>{birads_key1}</td>
                 <td>{cc_size1 or ''}</td>
@@ -421,6 +410,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
                 <td>{extra1 or ''}</td>
             </tr>
             <tr>
+                <td>{index2}</td>                
                 <td>{proj2}</td>
                 <td>{birads_key2}</td>
                 <td>{cc_size2 or ''}</td>
@@ -431,6 +421,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
         else:
             rows += f"""
             <tr>
+                <td>{index1}</td>                
                 <td>{proj1}</td>
                 <td>{birads_key1}</td>
                 <td>{cc_size1 or ''}</td>
@@ -443,14 +434,17 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
 def create_breast_tables(new_grouped_boxes, opacities_lesions):
     """Generates HTML tables for Right Breast and Left Breast based on projection data."""
     table_template = """
-    <table border="1">
-        <tr>
-            <th>Projection</th>
-            <th>Class</th>
-            <th>CC Size</th>
-            <th>MLO Size</th>
-            <th>Extra Info</th>
-        </tr>
+    <table border="0">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Projection</th>
+                <th>Class</th>
+                <th>CC Size</th>
+                <th>MLO Size</th>
+                <th>Extra Info</th>
+            </tr>
+        </thead>
         {rows}
     </table>
     """
