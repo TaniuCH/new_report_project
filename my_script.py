@@ -35,6 +35,7 @@ def index():
     return render_template('index.html', style_sheet_content=style_sheet_content, **translations)
 
 
+# Variables 
 def get_report_variables():
     """Return common variables including images and quality shapes for report rendering."""
     base_url = request.url_root
@@ -136,8 +137,64 @@ def get_report_variables():
 
     return {**translations, **variables}
 
+# b-QUALITY contours 
+def get_quality_shapes(shapes_list, shape_type, img_width, img_height):
+    """
+    Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
+    Handles both bounding boxes and contours.
+    """
 
-# Diagnose boxes 
+    quality_shapes = []
+    
+    colors = {
+        'parenchyma': 'blue',
+        'pectoralis': 'purple',
+        'skinFolds': 'yellow',
+    }
+
+    for shape in shapes_list:
+        box = shape.get('box', [])
+        contours = shape.get('contours', [])
+
+
+        # If there is a bounding box, draw it
+        if box:
+            div = f'''
+            <div style="
+                position: absolute;
+                top: {box[1] * 100}%;
+                left: {box[0] * 100}%;
+                width: {box[2] * 100}%;
+                height: {box[3] * 100}%;
+                border: 2px solid {colors.get(shape_type, 'black')};
+                border-radius: inherit;
+                font-size: 10px;
+                z-index: 200;
+                color: {colors.get(shape_type, 'black')};
+            ">
+                {shape_type.capitalize()}
+            </div>
+            '''
+            quality_shapes.append(div)
+
+        # when contours, generate an SVG path to draw the shape
+        if contours:
+            # Iterate over the contour points 
+            for contour in contours:
+                points = " ".join([f"{x * img_width},{y * img_height}" for x, y in contour])
+                svg = f'''
+               <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
+                    <polygon points="{points}" style="fill: none; stroke: {colors.get(shape_type, 'black')}; stroke-width: 2;"/>
+                </svg>
+                '''
+
+                # <svg style="position: absolute;  top: {box[1] * 100}%; left: {box[0] * 100}%; width: {box[2] * 100}%; height: {box[3] * 100}%; z-index: 220; border: 1px solid white;">
+                quality_shapes.append(svg)
+
+    return ''.join(quality_shapes)
+
+
+# b-DIAGNOSTICS BOUNDING BOXES 
 def get_lesion_div(box, color,  birads,  font_size, border_style):
     """
     Generate a div for a lesion based on its bounding box and properties.
@@ -171,7 +228,6 @@ def get_lesion_div(box, color,  birads,  font_size, border_style):
     '''
     return div
 
-
 def get_lesion_shapes(proj_findings, birads_list, microcalc=False):
     """
     Extracts the lesion shapes for the given proj_findings (lesion classes) and BI-RADS categories.
@@ -193,7 +249,6 @@ def get_lesion_shapes(proj_findings, birads_list, microcalc=False):
 
     # Join all the divs into a single string
     return ''.join(lesion_shapes)
-
 
 def _get_lesion_shapes(lesion_list, birads_type, microcalc):
     """
@@ -241,7 +296,7 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
 
     return shapes
 
-
+# b-DIAGNOSTICS LESION TABLE 
 # Initialize the structures and define breast projections
 right_breast_projections = ['rcc', 'rmlo']
 left_breast_projections = ['lcc', 'lmlo']
@@ -415,62 +470,8 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions):
 
     return right_breast_table, left_breast_table
 
-# Quality contours 
-def get_quality_shapes(shapes_list, shape_type, img_width, img_height):
-    """
-    Generate divs for quality indicators such as parenchyma, pectoralis, and skin folds.
-    Handles both bounding boxes and contours.
-    """
 
-    quality_shapes = []
-    
-    colors = {
-        'parenchyma': 'blue',
-        'pectoralis': 'purple',
-        'skinFolds': 'yellow',
-    }
-
-    for shape in shapes_list:
-        box = shape.get('box', [])
-        contours = shape.get('contours', [])
-
-
-        # If there is a bounding box, draw it
-        if box:
-            div = f'''
-            <div style="
-                position: absolute;
-                top: {box[1] * 100}%;
-                left: {box[0] * 100}%;
-                width: {box[2] * 100}%;
-                height: {box[3] * 100}%;
-                border: 2px solid {colors.get(shape_type, 'black')};
-                border-radius: inherit;
-                font-size: 10px;
-                z-index: 200;
-                color: {colors.get(shape_type, 'black')};
-            ">
-                {shape_type.capitalize()}
-            </div>
-            '''
-            quality_shapes.append(div)
-
-        # when contours, generate an SVG path to draw the shape
-        if contours:
-            # Iterate over the contour points 
-            for contour in contours:
-                points = " ".join([f"{x * img_width},{y * img_height}" for x, y in contour])
-                svg = f'''
-               <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;">
-                    <polygon points="{points}" style="fill: none; stroke: {colors.get(shape_type, 'black')}; stroke-width: 2;"/>
-                </svg>
-                '''
-
-                # <svg style="position: absolute;  top: {box[1] * 100}%; left: {box[0] * 100}%; width: {box[2] * 100}%; height: {box[3] * 100}%; z-index: 220; border: 1px solid white;">
-                quality_shapes.append(svg)
-
-    return ''.join(quality_shapes)
-
+# GENERATE/EXTRACT REPORT FROM HTML FUNCTIONS 
 @app.route('/generate-image')
 def generate_image():
     with open('results.json') as f:
@@ -480,7 +481,6 @@ def generate_image():
     variables = get_report_variables()
 
     return render_template('report_quality.html', **variables)
-
 
 def generate_image_html2image(template_name, output_file_name, variables):
     """Generate an image using HTML2Image."""
@@ -500,7 +500,6 @@ def generate_image_html2image(template_name, output_file_name, variables):
 
     return send_file(output_file_name, as_attachment=True)
 
-
 # Quality HTML2Image Route
 @app.route('/html-2-img-html-to-image')
 def generate_image_html2image_quality():
@@ -513,7 +512,6 @@ def generate_image_html2image_quality():
 def generate_image_html2image_diagnostics():
     variables = get_report_variables()
     return generate_image_html2image('report_diagnostics.html', 'diagnostics_report_image_html2image.png', variables)
-
 
 # Pyppeteer 
 # Helper function to generate image using Pyppeteer
@@ -561,8 +559,6 @@ def generate_image_pyppeteer():
     variables = get_report_variables()
 
     return generate_image_with_pyppeteer(template_name, output_file_name, variables)
-
-
 
 # Quality report HTML
 @app.route('/report')
