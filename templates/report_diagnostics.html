@@ -186,11 +186,19 @@
           </div>
         </div>
 
-        <div>
-          <h4>{{opacities_label}}</h4>
-          {{opacities_table|safe}}
+        <div class="lesion-table-container">
+          <div>
+            <h4>Right Breast Findings</h4>
+            {{ right_breast_table|safe }}
+          </div>
+        
+          <div>
+            <div>
+              <h4>Left Breast Findings</h4>
+              {{ left_breast_table|safe }}
+            </div>
+          </div>
         </div>
-  
         <div class="limitations-info">
           <p><strong>{{ limitations_label }}:</strong></p>
           <p>{{limitations}}</p>

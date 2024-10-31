@@ -484,6 +484,11 @@ h1 {
   margin: 8px;
 }
 
+.lesion-table-container{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}
 
 /* QUALITY AND CLASSES COLORS */
 .perfect {
