@@ -103,7 +103,7 @@ def get_report_variables():
     pectoralis_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
     skin_folds_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
 
-    # Group the lesions by projection first
+    # Group the lesions by projection 
     opacities_lesion_table = group_lesions_by_projection(opacities_lesions)
     # Generate the tables for the right and left breasts
     right_breast_table, left_breast_table = create_breast_tables(opacities_lesion_table, opacities_lesions)
@@ -204,7 +204,7 @@ def get_lesion_div(box, color,  birads,  font_size, border_style):
     """
     Generate a div for a lesion based on its bounding box and properties.
     """
-    print(f"GENERATE DIVS {color},  {birads}, {border_style}")
+    print(f"Generate boxes: {color},  {birads}, {border_style}")
     div = f'''
     <div style="
         position: absolute;
@@ -305,7 +305,7 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
 
 def group_lesions_by_projection(opacities_lesions):
     """
-    Groups lesions by projection and breast side, matching opposite projections as required.
+    Groups lesions by projection and breast side, matching opposite projections
     """
     # Define which projections belong to each breast
     right_breast_projections = {'rcc', 'rmlo'}
@@ -315,9 +315,10 @@ def group_lesions_by_projection(opacities_lesions):
     new_grouped_boxes = {'RightBreast': [], 'LeftBreast': []}
     lesion_index_mapping = {}  # Keeps track of unmatched lesions for potential future matches
 
-    for projection, birads_data in opacities_lesions.items():
-        if isinstance(birads_data, dict):  # Ensure it's a dictionary
-            for birads_key, boxes in birads_data.items():
+    for projection, proj_lesions_data in opacities_lesions.items():
+        # print(f"Groups lesions projection: {projection} ---- Birads data: {proj_lesions_data}")
+        if isinstance(proj_lesions_data, dict):  # Ensure it's a dictionary
+            for birads_key, boxes in proj_lesions_data.items():
                 if isinstance(boxes, list):  # Ensure boxes is a list
                     for i, box in enumerate(boxes):
                         # Determine the breast side based on the projection
@@ -342,6 +343,7 @@ def process_projection(breast, grouped_boxes, projection, birads_key, box, index
     """
     Processes projections and updates `grouped_boxes` with matched or unmatched lesions.
     """
+    print(f"Processes projections and updates `grouped_boxes` {breast} ----- *** {grouped_boxes} ----- *** {projection} ----- *** {birads_key} ----- *** {box} ----- *** {index} ----- *** {lesion_mapping}")
     # Opposite proj for match
     opposite_projection = {
         'rcc': 'rmlo',
@@ -384,6 +386,7 @@ def get_size_and_extra(opacities_lesions, projection, birads_key, index):
         return size, extra_info
     return [None, None], ''
 
+# Re-do.. not working correctly :(
 def generate_rows(breast_side, grouped_boxes, opacities_lesions):
     """Creates HTML rows for each lesion based on projection, class, and size."""
     rows = ""
@@ -391,6 +394,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
         proj1, birads_key1, index1 = lesion[0]
         size1, extra1 = get_size_and_extra(opacities_lesions, proj1, birads_key1, index1)
         
+        # print(f"HTML rows for each lesion: {lesion} side: {breast_side} grouped boxes:{grouped_boxes}")
         cc_size1 = size1[0] if proj1 in ['rcc', 'lcc'] else None
         mlo_size1 = size1[1] if proj1 in ['rmlo', 'lmlo'] else None
         
