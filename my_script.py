@@ -108,7 +108,6 @@ def get_report_variables():
     # Generate the tables for the right and left breasts
     right_breast_table, left_breast_table = create_breast_tables(opacities_lesion_table, opacities_lesions)
 
-
     variables = {
         "rcc_proj_img" : rcc_proj_img,
         "lcc_proj_img" : lcc_proj_img,
@@ -302,42 +301,53 @@ def _get_lesion_shapes(lesion_list, birads_type, microcalc):
     return shapes
 
 # b-DIAGNOSTICS LESION TABLE 
+def process_cc_projection(breast, grouped_boxes, projection, birads_key, box, box_index, lesion_index_mapping):
+    matched_projection = 'rmlo' if projection == 'rcc' else 'lmlo'
+    current_index = len(grouped_boxes[breast]) + 1
+
+    matched_lesion = box.get('match')
+    lesion_entry = [
+        [projection, birads_key, box_index],
+        [matched_projection, matched_lesion[0], matched_lesion[1]] if matched_lesion else None
+    ]
+
+    grouped_boxes[breast].append(lesion_entry)
+    lesion_index_mapping[f"{projection},{birads_key},{box_index}"] = current_index
+
+    if matched_lesion:
+        lesion_index_mapping[f"{matched_projection},{matched_lesion[0]},{matched_lesion[1]}"] = current_index
+
+def process_mlo_projection(breast, grouped_boxes, projection, birads_key, box, box_index, lesion_index_mapping):
+    matched_lesion = box.get('match')
+
+    if not matched_lesion:
+        current_index = len(grouped_boxes[breast]) + 1
+        lesion_entry = [[projection, birads_key, box_index], None]
+        grouped_boxes[breast].append(lesion_entry)
+        lesion_index_mapping[f"{projection},{birads_key},{box_index}"] = current_index
 
 def group_lesions_by_projection(opacities_lesions):
-    """
-    Groups lesions by projection and breast side, matching opposite projections
-    """
-    # Define which projections belong to each breast
-    right_breast_projections = {'rcc', 'rmlo'}
-    left_breast_projections = {'lcc', 'lmlo'}
-    
-    # Initialize the storage for grouped lesions
-    new_grouped_boxes = {'RightBreast': [], 'LeftBreast': []}
-    lesion_index_mapping = {}  # Keeps track of unmatched lesions for potential future matches
+    grouped_boxes = {'RightBreast': [], 'LeftBreast': []}
+    lesion_index_mapping = {}
 
-    for projection, proj_lesions_data in opacities_lesions.items():
-        # print(f"Groups lesions projection: {projection} ---- Birads data: {proj_lesions_data}")
-        if isinstance(proj_lesions_data, dict):  # Ensure it's a dictionary
-            for birads_key, boxes in proj_lesions_data.items():
-                if isinstance(boxes, list):  # Ensure boxes is a list
-                    for i, box in enumerate(boxes):
-                        # Determine the breast side based on the projection
-                        is_right_breast = projection in right_breast_projections
-                        is_left_breast = projection in left_breast_projections
-                        
+    for projection, birads_data in opacities_lesions.items():
+        if isinstance(birads_data, dict):
+            for birads_key, boxes in birads_data.items():
+                if isinstance(boxes, list):
+                    for box_index, box in enumerate(boxes):
+                        # Determine right or left breast based on projection name
+                        is_right_breast = 'r' in projection.lower()
+                        is_left_breast = 'l' in projection.lower()
+
                         if is_right_breast or is_left_breast:
-                            breast = "RightBreast" if is_right_breast else "LeftBreast"
+                            breast = 'RightBreast' if is_right_breast else 'LeftBreast'
+                            process_projection = process_cc_projection if 'cc' in projection else process_mlo_projection
                             process_projection(
-                                breast,
-                                new_grouped_boxes,
-                                projection,
-                                birads_key,
-                                box,
-                                i,
-                                lesion_index_mapping
+                                breast, grouped_boxes, projection, birads_key, box, box_index, lesion_index_mapping
                             )
 
-    return new_grouped_boxes
+    print(f"grouped_boxes: {grouped_boxes} --- lesion_index_mapping: {lesion_index_mapping}")
+    return grouped_boxes
 
 def process_projection(breast, grouped_boxes, projection, birads_key, box, index, lesion_mapping):
     """
@@ -381,56 +391,55 @@ def get_size_and_extra(opacities_lesions, projection, birads_key, index):
     """Fetches the size and extra information from opacities_lesions for a lesion."""
     lesion_info = opacities_lesions.get(projection, {}).get(birads_key, [])[index]
     if lesion_info:
+        print(f"lesion_info:{lesion_info}")
         size = lesion_info.get('size', [None, None])
-        extra_info = lesion_info.get('extra', '')
+        extra_info = lesion_info.get('assigned', '')
         return size, extra_info
     return [None, None], ''
 
-# Re-do.. not working correctly :(
 def generate_rows(breast_side, grouped_boxes, opacities_lesions):
     """Creates HTML rows for each lesion based on projection, class, and size."""
     rows = ""
     for lesion in grouped_boxes[breast_side]:
+        # Extract first projection details
         proj1, birads_key1, index1 = lesion[0]
         size1, extra1 = get_size_and_extra(opacities_lesions, proj1, birads_key1, index1)
-        
-        # print(f"HTML rows for each lesion: {lesion} side: {breast_side} grouped boxes:{grouped_boxes}")
-        cc_size1 = size1[0] if proj1 in ['rcc', 'lcc'] else None
-        mlo_size1 = size1[1] if proj1 in ['rmlo', 'lmlo'] else None
-        
+        cc_size = size1[0] if proj1 in ['rcc', 'lcc'] else None
+        mlo_size = size1[1] if proj1 in ['rmlo', 'lmlo'] else None
+
+        # Check if there's a second matched lesion
         if lesion[1]:
             proj2, birads_key2, index2 = lesion[1]
             size2, extra2 = get_size_and_extra(opacities_lesions, proj2, birads_key2, index2)
-            cc_size2 = size2[0] if proj2 in ['rcc', 'lcc'] else None
-            mlo_size2 = size2[1] if proj2 in ['rmlo', 'lmlo'] else None
             
+            # Place sizes based on projections (CC or MLO)
+            if proj2 in ['rcc', 'lcc']:
+                cc_size = cc_size or size2[0]
+            elif proj2 in ['rmlo', 'lmlo']:
+                mlo_size = mlo_size or size2[1]
+                
+            extra_info = extra1 or extra2  # Combine extra info if available
+
+            # Create a row for matched lesions
             rows += f"""
             <tr>
-                <td>{index1}</td>                
-                <td>{proj1}</td>
+                <td>{index1}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size1 or ''}</td>
-                <td>{mlo_size1 or ''}</td>
-                <td>{extra1 or ''}</td>
-            </tr>
-            <tr>
-                <td>{index2}</td>                
-                <td>{proj2}</td>
-                <td>{birads_key2}</td>
-                <td>{cc_size2 or ''}</td>
-                <td>{mlo_size2 or ''}</td>
-                <td>{extra2 or ''}</td>
+                <td>{cc_size or ''}</td>
+                <td>{mlo_size or ''}</td>
+                <td>{extra_info or ''}</td>
             </tr>
             """
         else:
+            # Single entry, no matched lesion
+            extra_info = extra1
             rows += f"""
             <tr>
-                <td>{index1}</td>                
-                <td>{proj1}</td>
+                <td>{index1}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size1 or ''}</td>
-                <td>{mlo_size1 or ''}</td>
-                <td>{extra1 or ''}</td>
+                <td>{cc_size or ''}</td>
+                <td>{mlo_size or ''}</td>
+                <td>{extra_info or ''}</td>
             </tr>
             """
     return rows
@@ -462,7 +471,6 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions):
     left_breast_table = table_template.format(rows=left_breast_rows)
 
     return right_breast_table, left_breast_table
-
 
 # GENERATE/EXTRACT REPORT FROM HTML FUNCTIONS 
 @app.route('/generate-image')
@@ -581,4 +589,6 @@ def diagnostics():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
+
+
 
