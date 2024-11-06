@@ -1,4 +1,30 @@
 {
+  "patient_name": "--",
+  "patient_birth": "--",
+  "exam_date": "--",
+  "quality_system_name": "--",
+  "quality_values": "--",
+  "exam_type": "--",
+  "ref_phys": "--",
+  "operator_name": "--",
+  "overall_quality": "--",
+  "quality_confirmed": "--",
+  "overall_density": "--",
+  "density_confirmed": "--",
+  "patient_risk_evaluation": "--",
+  "risk_description": "--",
+  "UDI": "00",
+  "limitations": "Big breast",
+  "opacities_confirmed": "",
+  "microcalc_confirmed": "",
+  "density": {
+    "bbox": {
+      "rcc": { "density": "B" },
+      "lcc": { "density": "C" },
+      "rmlo": { "density": "B" },
+      "lmlo": { "density": "C" }
+    }
+  },
   "opacities": {
     "bbox": {
       "rcc": {
