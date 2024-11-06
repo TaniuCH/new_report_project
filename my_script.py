@@ -515,8 +515,7 @@ def generate_image_html2image(template_name, output_file_name, variables):
     hti.output_path = os.getcwd()
 
     # Generate the image
-    hti.screenshot(html_str=html_string, save_as=output_file_name, size=(1280, 2000))
-
+    hti.screenshot(html_str=html_string, save_as=output_file_name, size=(1280, 2300))  
     return send_file(output_file_name, as_attachment=True)
 
 # Quality HTML2Image Route
