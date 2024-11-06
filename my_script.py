@@ -104,9 +104,10 @@ def get_report_variables():
     skin_folds_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
 
     # Group the lesions by projection 
-    opacities_lesion_table = group_lesions_by_projection(opacities_lesions)
+    grouped_boxes, lesion_index_mapping = group_lesions_by_projection(opacities_lesions)
     # Generate the tables for the right and left breasts
-    right_breast_table, left_breast_table = create_breast_tables(opacities_lesion_table, opacities_lesions)
+    right_breast_table, left_breast_table = create_breast_tables(grouped_boxes, opacities_lesions)
+    print(f"Index map: {lesion_index_mapping}")
 
     variables = {
         "rcc_proj_img" : rcc_proj_img,
@@ -345,15 +346,12 @@ def group_lesions_by_projection(opacities_lesions):
                             process_projection(
                                 breast, grouped_boxes, projection, birads_key, box, box_index, lesion_index_mapping
                             )
-
-    print(f"grouped_boxes: {grouped_boxes} --- lesion_index_mapping: {lesion_index_mapping}")
-    return grouped_boxes
+    return grouped_boxes, lesion_index_mapping
 
 def process_projection(breast, grouped_boxes, projection, birads_key, box, index, lesion_mapping):
     """
     Processes projections and updates `grouped_boxes` with matched or unmatched lesions.
     """
-    print(f"Processes projections and updates `grouped_boxes` {breast} ----- *** {grouped_boxes} ----- *** {projection} ----- *** {birads_key} ----- *** {box} ----- *** {index} ----- *** {lesion_mapping}")
     # Opposite proj for match
     opposite_projection = {
         'rcc': 'rmlo',
@@ -391,9 +389,9 @@ def get_size_and_extra(opacities_lesions, projection, birads_key, index):
     """Fetches the size and extra information from opacities_lesions for a lesion."""
     lesion_info = opacities_lesions.get(projection, {}).get(birads_key, [])[index]
     if lesion_info:
-        print(f"lesion_info:{lesion_info}")
         size = lesion_info.get('size', [None, None])
         extra_info = lesion_info.get('assigned', '')
+        print(f"lesion_info:{lesion_info} {size} {extra_info}")
         return size, extra_info
     return [None, None], ''
 
@@ -425,9 +423,9 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             <tr>
                 <td>{index1}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size or ''}</td>
-                <td>{mlo_size or ''}</td>
-                <td>{extra_info or ''}</td>
+                <td>{cc_size or '-'}</td>
+                <td>{mlo_size or '-'}</td>
+                <td>{extra_info or '-'}</td>
             </tr>
             """
         else:
@@ -437,9 +435,9 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             <tr>
                 <td>{index1}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size or ''}</td>
-                <td>{mlo_size or ''}</td>
-                <td>{extra_info or ''}</td>
+                <td>{cc_size or '-'}</td>
+                <td>{mlo_size or '-'}</td>
+                <td>{extra_info or '-'}</td>
             </tr>
             """
     return rows
@@ -451,7 +449,6 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions):
         <thead>
             <tr>
                 <th>Index</th>
-                <th>Projection</th>
                 <th>Class</th>
                 <th>CC Size</th>
                 <th>MLO Size</th>
