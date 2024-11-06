@@ -106,7 +106,7 @@ def get_report_variables():
     # Group the lesions by projection 
     grouped_boxes, lesion_index_mapping = group_lesions_by_projection(opacities_lesions)
     # Generate the tables for the right and left breasts
-    right_breast_table, left_breast_table = create_breast_tables(grouped_boxes, opacities_lesions)
+    right_breast_table, left_breast_table = create_breast_tables(grouped_boxes, opacities_lesions, lesion_index_mapping)
     print(f"Index map: {lesion_index_mapping}")
 
     variables = {
@@ -390,12 +390,24 @@ def get_size_and_extra(opacities_lesions, projection, birads_key, index):
     lesion_info = opacities_lesions.get(projection, {}).get(birads_key, [])[index]
     if lesion_info:
         size = lesion_info.get('size', [None, None])
-        extra_info = lesion_info.get('assigned', '')
-        print(f"lesion_info:{lesion_info} {size} {extra_info}")
+        
+        # Determine extra_info based on the presence of specific keys
+        if 'reassigned' in lesion_info:
+            prev_class = lesion_info['reassigned'].get('prevClass', 'unknown')
+            extra_info = f"{projection} reassigned from {prev_class}"
+        elif 'predicted_class' in lesion_info:
+            predicted_class = lesion_info.get('predicted_class', 'unknown')
+            extra_info = f"Prev class {predicted_class}"
+        elif 'assigned' in lesion_info:
+            extra_info = "Revised"
+        else:
+            extra_info = ""
+        
+        print(f"lesion_info: {lesion_info}, size: {size}, extra_info: {extra_info}")
         return size, extra_info
     return [None, None], ''
 
-def generate_rows(breast_side, grouped_boxes, opacities_lesions):
+def generate_rows(breast_side, grouped_boxes, opacities_lesions, lesion_index_mapping):
     """Creates HTML rows for each lesion based on projection, class, and size."""
     rows = ""
     for lesion in grouped_boxes[breast_side]:
@@ -405,23 +417,26 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
         cc_size = size1[0] if proj1 in ['rcc', 'lcc'] else None
         mlo_size = size1[1] if proj1 in ['rmlo', 'lmlo'] else None
 
+        # Fetch the table index for the first lesion
+        table_index = lesion_index_mapping.get(f"{proj1},{birads_key1},{index1}", index1 + 1)
+
         # Check if there's a second matched lesion
         if lesion[1]:
             proj2, birads_key2, index2 = lesion[1]
             size2, extra2 = get_size_and_extra(opacities_lesions, proj2, birads_key2, index2)
             
-            # Sizes based on proj 
+            # Sizes based on projection 
             if proj2 in ['rcc', 'lcc']:
                 cc_size = cc_size or size2[0]
             elif proj2 in ['rmlo', 'lmlo']:
                 mlo_size = mlo_size or size2[1]
                 
-            extra_info = extra1 or extra2  
+            extra_info = extra1 or extra2  # Combine extra info if available
 
-            # Matched lesions
+            # Matched lesions in one row
             rows += f"""
             <tr>
-                <td>{index1}</td>
+                <td>{table_index}</td>
                 <td>{birads_key1}</td>
                 <td>{cc_size or '-'}</td>
                 <td>{mlo_size or '-'}</td>
@@ -433,7 +448,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             extra_info = extra1
             rows += f"""
             <tr>
-                <td>{index1}</td>
+                <td>{table_index}</td>
                 <td>{birads_key1}</td>
                 <td>{cc_size or '-'}</td>
                 <td>{mlo_size or '-'}</td>
@@ -442,7 +457,7 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             """
     return rows
 
-def create_breast_tables(new_grouped_boxes, opacities_lesions):
+def create_breast_tables(new_grouped_boxes, opacities_lesions, lesion_index_mapping):
     """Generates HTML tables for Right Breast and Left Breast based on projection data."""
     table_template = """
     <table border="0">
@@ -460,8 +475,8 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions):
     """
     
     # Generate rows for each breast side
-    right_breast_rows = generate_rows('RightBreast', new_grouped_boxes, opacities_lesions)
-    left_breast_rows = generate_rows('LeftBreast', new_grouped_boxes, opacities_lesions)
+    right_breast_rows = generate_rows('RightBreast', new_grouped_boxes, opacities_lesions, lesion_index_mapping)
+    left_breast_rows = generate_rows('LeftBreast', new_grouped_boxes, opacities_lesions, lesion_index_mapping)
 
     # Generate complete tables
     right_breast_table = table_template.format(rows=right_breast_rows)

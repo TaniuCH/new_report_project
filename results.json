@@ -10,7 +10,10 @@
             ],
             "size": [34.268596388389916, 19.39783248204616],
             "score": 1,
-            "assigned": true,
+            "reassigned": {
+              "prevClass": "birads3",
+              "prevType": "opacities"
+            },
             "match": ["birads2", 0]
           },
           {
@@ -31,7 +34,7 @@
             ],
             "size": [31.035709936655, 32.329720803410254],
             "score": 1,
-            "assigned": true
+            "assigned": false
           }
         ],
         "birads5": null
@@ -72,6 +75,7 @@
             "size": [41.36755601777441, 20.36619163562347],
             "score": 1,
             "assigned": true,
+            "predicted_class": "birads3",
             "match": ["birads2", 0]
           }
         ],
