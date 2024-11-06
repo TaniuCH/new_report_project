@@ -42,7 +42,7 @@
         <!-- Right Column (density and module status) -->
         <div class="density-module">
           <p><strong>{{ overall_density_label }}</strong></p>
-          <div class="density-circle perfect_color">{{ overall_dens }}</div>
+          <div class="density-circle perfect_color">{{ overall_density }}</div>
           <p><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
         </div>
         {% endif %}
@@ -75,7 +75,7 @@
           </div>
           <div class="quality-details">
             <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_rcc }}</div>
+            <div class="explanation-box">{{ rcc_quality_explanation }}</div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ rcc_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ rcc_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ rcc_blur }}</span></p>
@@ -99,7 +99,7 @@
         <div class="quality-images-container">
           <div class="quality-images-right">
             <div class="density_chip dens-left">
-              <p><strong>D</strong></p>
+              <p><strong>{{rcc_density}}</strong></p>
             </div>
             <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
             {{ parenchyma_rcc|safe }}
@@ -127,7 +127,7 @@
           </div>
           <div class="quality-details">
             <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_lcc }}</div>
+            <div class="explanation-box">{{ lcc_quality_explanation }}</div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ lcc_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ lcc_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ lcc_blur }}</span></p>
@@ -160,7 +160,7 @@
           </div>
           <div class="quality-details">
             <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_rmlo }}</div>
+            <div class="explanation-box">{{ rmlo_quality_explanation }}</div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ rmlo_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ rmlo_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ rmlo_blur }}</span></p>
@@ -213,7 +213,7 @@
           </div>
           <div class="quality-details">
             <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_lmlo }}</div>
+            <div class="explanation-box">{{ lmlo_quality_explanation }}</div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ lmlo_compression }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ lmlo_symmetry }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ lmlo_blur }}</span></p>
