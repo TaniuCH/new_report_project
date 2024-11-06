@@ -43,16 +43,56 @@ def get_report_variables():
     rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
     lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
     rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
-    lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png')  
+    lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png') 
+
     # TODO: Obtain image width and height dynamically per projection 
     img_width= 443
     img_height= 545
 
-    with open('results.json') as f:
-        results = json.load(f)
+    with open("results.json", "r") as json_file:
+        results = json.load(json_file)
     
+    exam_details = results
     opacities_lesions = results.get('opacities', {}).get('bbox', {})
 
+    # Density 
+    density_rcc = results.get('density', {}).get('bbox', {}).get('rcc', {})
+    density_lcc = results.get('density', {}).get('bbox', {}).get('lcc', {})
+    density_rmlo = results.get('density', {}).get('bbox', {}).get('rmlo', {})
+    density_lmlo = results.get('density', {}).get('bbox', {}).get('lmlo', {})
+
+    # Quality 
+    quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
+    quality_lcc = results.get('quality', {}).get('bbox', {}).get('lcc', {})
+    quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
+    quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
+
+    # Quality features (parenchyma, pectoralis, skin folds) contours 
+    parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    parenchyma_medial_rcc = get_quality_shapes(quality_rcc.get('parenchyma_medial', []) or [], 'parenchyma_medial', img_width, img_height)
+    parenchyma_lateral_rcc = get_quality_shapes(quality_rcc.get('parenchyma_lateral', []) or [], 'parenchyma_lateral', img_width, img_height)
+    pectoralis_rcc = get_quality_shapes(quality_rcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_rcc = get_quality_shapes(quality_rcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_lcc = get_quality_shapes(quality_lcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    parenchyma_medial_lcc = get_quality_shapes(quality_lcc.get('parenchyma_medial', []) or [], 'parenchyma_medial', img_width, img_height)
+    parenchyma_lateral_lcc = get_quality_shapes(quality_lcc.get('parenchyma_lateral', []) or [], 'parenchyma_lateral', img_width, img_height)
+    pectoralis_lcc = get_quality_shapes(quality_lcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_lcc = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_rmlo = get_quality_shapes(quality_rmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_rmlo = get_quality_shapes(quality_rmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_rmlo = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    parenchyma_lmlo = get_quality_shapes(quality_lmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
+    pectoralis_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
+    skin_folds_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+
+    # Diagnostics 
+    # **TODO: obtain the ones we need to show from env file 
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5', ]
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    
     # Fetch opacities lesions
     opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
     opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
@@ -65,80 +105,152 @@ def get_report_variables():
     microcalc_rmlo = results.get('microcalc', {}).get('bbox', {}).get('rmlo', {})
     microcalc_lmlo = results.get('microcalc', {}).get('bbox', {}).get('lmlo', {})
 
-    # Fetch quality indicators for each projection
-    quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
-    quality_lcc = results.get('quality', {}).get('bbox', {}).get('lcc', {})
-    quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
-    quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
-
-    # **TODO: obtain the ones we need to show from env file 
-    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5', ]
-    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
-    
-    # Get lesions for each projection
+    # Opacities boxes  
     opacities_rcc = get_lesion_shapes(opacities_rcc, opacities_types)
     opacities_lcc = get_lesion_shapes(opacities_lcc, opacities_types)
     opacities_rmlo = get_lesion_shapes(opacities_rmlo, opacities_types)
     opacities_lmlo = get_lesion_shapes(opacities_lmlo, opacities_types)
 
+    # Microcalc boxes  
     microcalc_rcc = get_lesion_shapes(microcalc_rcc, microcalc_types, microcalc=True)
     microcalc_lcc = get_lesion_shapes(microcalc_lcc, microcalc_types, microcalc=True)
     microcalc_rmlo = get_lesion_shapes(microcalc_rmlo, microcalc_types, microcalc=True)
     microcalc_lmlo = get_lesion_shapes(microcalc_lmlo, microcalc_types, microcalc=True)
 
-    # Fetch quality features (parenchyma, pectoralis, skin folds) per projection
-    parenchyma_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
-    pectoralis_rcc = get_quality_shapes(quality_rcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_rcc = get_quality_shapes(quality_rcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
-
-    parenchyma_lcc = get_quality_shapes(quality_lcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
-    pectoralis_lcc = get_quality_shapes(quality_lcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_lcc = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
-
-    parenchyma_rmlo = get_quality_shapes(quality_rmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
-    pectoralis_rmlo = get_quality_shapes(quality_rmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_rmlo = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
-
-    parenchyma_lmlo = get_quality_shapes(quality_lmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
-    pectoralis_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
-
     # Group the lesions by projection 
     grouped_boxes, lesion_index_mapping = group_lesions_by_projection(opacities_lesions)
-    # Generate the tables for the right and left breasts
+
+    # Tables for the right and left breasts
     right_breast_table, left_breast_table = create_breast_tables(grouped_boxes, opacities_lesions, lesion_index_mapping)
-    print(f"Index map: {lesion_index_mapping}")
 
     variables = {
-        "rcc_proj_img" : rcc_proj_img,
-        "lcc_proj_img" : lcc_proj_img,
-        "rmlo_proj_img" : rmlo_proj_img,
-        "lmlo_proj_img" : lmlo_proj_img,
-        'breast_image_alt': "Breast Projection Image",
-        'report_title': "Mammography Report",
-        'opacities_rcc' : opacities_rcc,
-        "opacities_lcc": opacities_lcc,
-        "opacities_rmlo" : opacities_rmlo,
-        "opacities_lmlo" : opacities_lmlo,
-        'microcalc_rcc' : microcalc_rcc,
-        "microcalc_lcc": microcalc_lcc,
-        "microcalc_rmlo" : microcalc_rmlo,
-        "microcalc_lmlo" : microcalc_lmlo,
-        "parenchyma_rcc": parenchyma_rcc,
-        "pectoralis_rcc": pectoralis_rcc,
-        "skin_folds_rcc": skin_folds_rcc,
-        "parenchyma_lcc": parenchyma_lcc,
-        "pectoralis_lcc": pectoralis_lcc,
-        "skin_folds_lcc": skin_folds_lcc,
-        "parenchyma_rmlo": parenchyma_rmlo,
-        "pectoralis_rmlo": pectoralis_rmlo,
-        "skin_folds_rmlo": skin_folds_rmlo,
-        "parenchyma_lmlo": parenchyma_lmlo,
-        "pectoralis_lmlo": pectoralis_lmlo,
-        "skin_folds_lmlo": skin_folds_lmlo,
-        "right_breast_table": right_breast_table,
-        "left_breast_table": left_breast_table
+    'report_title': "Mammography Report",
+    "rcc_proj_img": rcc_proj_img,
+    "lcc_proj_img": lcc_proj_img,
+    "rmlo_proj_img": rmlo_proj_img,
+    "lmlo_proj_img": lmlo_proj_img,
+    'breast_image_alt': "Breast Projection Image",
+
+    # General Examination Information
+    "patient_name": exam_details['patient_name'],
+    "patient_birth": exam_details['patient_birth'],
+    "exam_date": exam_details['exam_date'],
+    "exam_type": exam_details["exam_type"],
+    "ref_phys": exam_details['ref_phys'],
+    "operator_name": exam_details['operator_name'],
+    "patient_risk_evaluation": exam_details["patient_risk_evaluation"],
+    "overall_density": exam_details["overall_density"],
+    "udi": exam_details["UDI"],
+    "limitations": exam_details["limitations"],
+    "quality_system_name": exam_details["quality_system_name"],
+    "quality_values": exam_details["quality_values"],
+    "quality_confirmed": exam_details["quality_confirmed"],
+    "density_confirmed": exam_details["density_confirmed"],
+    "opacities_confirmed": exam_details["opacities_confirmed"],
+    "microcalc_confirmed": exam_details["microcalc_confirmed"],
+    "overall_quality":  exam_details["overall_quality"],
+
+    # Density
+    "density_rcc": density_rcc,
+    "density_lcc": density_lcc,
+    "density_rmlo": density_rmlo,
+    "density_lmlo": density_lmlo,
+
+    # b-Quality contours 
+    "parenchyma_rcc": parenchyma_rcc,
+    "pectoralis_rcc": pectoralis_rcc,
+    "skin_folds_rcc": skin_folds_rcc,
+    "parenchyma_lcc": parenchyma_lcc,
+    "pectoralis_lcc": pectoralis_lcc,
+    "skin_folds_lcc": skin_folds_lcc,
+    "parenchyma_rmlo": parenchyma_rmlo,
+    "pectoralis_rmlo": pectoralis_rmlo,
+    "skin_folds_rmlo": skin_folds_rmlo,
+    "parenchyma_lmlo": parenchyma_lmlo,
+    "pectoralis_lmlo": pectoralis_lmlo,
+    "skin_folds_lmlo": skin_folds_lmlo,
+
+    # Quality RCC
+    "class_rcc": exam_details.get('rcc', {}).get('quality', "not available"),
+    "quality_explanation_rcc": "--",
+    "compression_rcc": exam_details.get('rcc', {}).get('compression', "not available"),
+    "symmetry_rcc": exam_details.get('rcc', {}).get('symmetry', "not available"),
+    "blur_rcc": exam_details.get('rcc', {}).get('blur', "not available"),
+    "pnl_rcc": exam_details.get('rcc', {}).get('pnl', "not available"),
+    "pnl_diff_rcc": exam_details.get('rcc', {}).get('pnl', "not available"),
+    "nipple_centered_rcc": exam_details.get('rcc', {}).get('nipple', "not available"),
+    "nipple_rcc": exam_details.get('rcc', {}).get('nipple', "not available"),
+    "medial_parenchyma_rcc": parenchyma_medial_rcc,
+    "lateral_parenchyma_rcc": parenchyma_lateral_rcc ,
+    "pectoralis_rcc": pectoralis_rcc,
+    "skin_folds_rcc": skin_folds_rcc,
+    "breast_volume_rcc": exam_details.get('rcc', {}).get('breastVolume', "not available"),
+    "dose_rcc": exam_details.get('rcc', {}).get('dose', "not available"),
+    "post_surgery_rcc": ' '.join(quality_rcc.get('PostSurgery', [])),
+
+    # Quality LCC 
+    "quality_explanation_lcc": "--",
+    "compression_lcc": exam_details.get('lcc', {}).get('compression', "not available"),
+    "symmetry_lcc": "--",
+    "blur_lcc": "--",
+    "class_lcc": "--",
+    "pnl_lcc": "--",
+    "pnl_diff_lcc": "--",
+    "nipple_centered_lcc": "--",
+    "nipple_lcc": "--",
+    "medial_parenchyma_lcc": parenchyma_medial_lcc,
+    "lateral_parenchyma_lcc": parenchyma_lateral_lcc,
+    "pectoralis_lcc": pectoralis_lcc,
+    "skin_folds_lcc": skin_folds_lcc,
+    "breast_volume_lcc": "--",
+    "dose_lcc": "--",
+    "post_surgery_lcc": ' '.join(quality_lcc.get('PostSurgery', [])),
+
+    "quality_explanation_rmlo": "--",
+    "compression_rmlo": exam_details.get('rmlo', {}).get('compression', "not available"),
+    "symmetry_rmlo": "--",
+    "blur_rmlo": "--",
+    "class_rmlo": "--",
+    "pnl_rmlo": "--",
+    "pnl_diff_rmlo": "--",
+    "nipple_centered_rmlo": "--",
+    "nipple_rmlo": "--",
+    "parenchyma_rmlo": parenchyma_rmlo,
+    "pectMuscle_rmlo": pectoralis_rmlo,
+    "skin_folds_rmlo": skin_folds_rmlo,
+    "breast_volume_rmlo": "--",
+    "dose_rmlo": "--",
+    "post_surgery_rmlo": ' '.join(quality_rmlo.get('PostSurgery', [])),
+
+    "quality_explanation_lmlo": "--",
+    "compression_lmlo": exam_details.get('lmlo', {}).get('compression', "not available"),
+    "symmetry_lmlo": "--",
+    "blur_lmlo": "--",
+    "class_lmlo": "--",
+    "pnl_lmlo": "--",
+    "pnl_diff_lmlo": "--",
+    "nipple_centered_lmlo": "--",
+    "nipple_lmlo": "--",
+    "parenchyma_lmlo": parenchyma_lmlo,
+    "pectMuscle_lmlo": pectoralis_lmlo,
+    "skin_folds_lmlo": skin_folds_lmlo,
+    "breast_volume_lmlo": "--",
+    "dose_lmlo": "--",
+    "post_surgery_lmlo": ' '.join(quality_lmlo.get('PostSurgery', [])),
+
+    # Diagnostics 
+    'opacities_rcc': opacities_rcc,
+    "opacities_lcc": opacities_lcc,
+    "opacities_rmlo": opacities_rmlo,
+    "opacities_lmlo": opacities_lmlo,
+    'microcalc_rcc': microcalc_rcc,
+    "microcalc_lcc": microcalc_lcc,
+    "microcalc_rmlo": microcalc_rmlo,
+    "microcalc_lmlo": microcalc_lmlo,
+    "right_breast_table": right_breast_table,
+    "left_breast_table": left_breast_table
     }
+
 
     return {**translations, **variables}
 
