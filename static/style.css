@@ -490,6 +490,10 @@ h1 {
   justify-content: space-around;
 }
 
+.lesion-tables{
+  width: 45%;
+}
+
 table {
   width: 100%;
   text-align: left;
@@ -500,6 +504,12 @@ table {
 
 table td, table th {
   padding: 4px 12px;
+}
+
+.size-row{
+  padding: 4px 12px;
+  text-align: center;
+  font-size: 14px;
 }
 
 table tr:nth-child(even) {

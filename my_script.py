@@ -411,43 +411,41 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions, lesion_index_ma
     """Creates HTML rows for each lesion based on projection, class, and size."""
     rows = ""
     for lesion in grouped_boxes[breast_side]:
-        # Extract proj details
+        # Extract first projection details
         proj1, birads_key1, index1 = lesion[0]
         size1, extra1 = get_size_and_extra(opacities_lesions, proj1, birads_key1, index1)
         
-        # Check CC or MLO proj and set sizes accordingly
+        # Format cc and mlo sizes conditionally
         if proj1 in ['rcc', 'lcc']:
-            cc_size_w, cc_size_h = f"{size1[0]:.1f}" if size1[0] is not None else '-', f"{size1[1]:.1f}" if size1[1] is not None else '-'
-            mlo_size_w, mlo_size_h = '-', '-'
-        else: 
-            mlo_size_w, mlo_size_h = f"{size1[0]:.1f}" if size1[0] is not None else '-', f"{size1[1]:.1f}" if size1[1] is not None else '-'
-            cc_size_w, cc_size_h = '-', '-'
+            cc_size = f"{size1[0]:.1f} x {size1[1]:.1f}" if size1[0] is not None and size1[1] is not None else f"{size1[0]:.1f}" if size1[0] is not None else f"{size1[1]:.1f}" if size1[1] is not None else '-'
+            mlo_size = '-'
+        else:  # Assume proj1 is MLO (e.g., rmlo or lmlo)
+            mlo_size = f"{size1[0]:.1f} x {size1[1]:.1f}" if size1[0] is not None and size1[1] is not None else f"{size1[0]:.1f}" if size1[0] is not None else f"{size1[1]:.1f}" if size1[1] is not None else '-'
+            cc_size = '-'
 
         # Fetch the table index for the first lesion
         table_index = lesion_index_mapping.get(f"{proj1},{birads_key1},{index1}", index1 + 1)
 
-        # Check a second matched lesion
+        # Check if there's a second matched lesion
         if lesion[1]:
             proj2, birads_key2, index2 = lesion[1]
             size2, extra2 = get_size_and_extra(opacities_lesions, proj2, birads_key2, index2)
             
-            # Update sizes based on the second projection 
+            # Update sizes based on the second projection if applicable
             if proj2 in ['rcc', 'lcc']:
-                cc_size_w = f"{size2[0]:.1f}" if size2[0] is not None else cc_size_w
-                cc_size_h = f"{size2[1]:.1f}" if size2[1] is not None else cc_size_h
+                cc_size = f"{size2[0]:.1f} x {size2[1]:.1f}" if size2[0] is not None and size2[1] is not None else f"{size2[0]:.1f}" if size2[0] is not None else f"{size2[1]:.1f}" if size2[1] is not None else cc_size
             else:  # proj2 is MLO
-                mlo_size_w = f"{size2[0]:.1f}" if size2[0] is not None else mlo_size_w
-                mlo_size_h = f"{size2[1]:.1f}" if size2[1] is not None else mlo_size_h
+                mlo_size = f"{size2[0]:.1f} x {size2[1]:.1f}" if size2[0] is not None and size2[1] is not None else f"{size2[0]:.1f}" if size2[0] is not None else f"{size2[1]:.1f}" if size2[1] is not None else mlo_size
                 
-            extra_info = extra1 or extra2  # Combine extra info 
+            extra_info = extra1 or extra2  # Combine extra info if available
 
             # Matched lesions in one row
             rows += f"""
             <tr>
                 <td>{table_index}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size_w} x {cc_size_h}</td>
-                <td>{mlo_size_w} x {mlo_size_h}</td>
+                <td class="size-row">{cc_size}</td>
+                <td class="size-row">{mlo_size}</td>
                 <td>{extra_info or '-'}</td>
             </tr>
             """
@@ -458,8 +456,8 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions, lesion_index_ma
             <tr>
                 <td>{table_index}</td>
                 <td>{birads_key1}</td>
-                <td>{cc_size_w} x {cc_size_h}</td>
-                <td>{mlo_size_w} x {mlo_size_h}</td>
+                <td class="size-row">{cc_size}</td>
+                <td class="size-row">{mlo_size}</td>
                 <td>{extra_info or '-'}</td>
             </tr>
             """
