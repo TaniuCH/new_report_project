@@ -410,15 +410,15 @@ def generate_rows(breast_side, grouped_boxes, opacities_lesions):
             proj2, birads_key2, index2 = lesion[1]
             size2, extra2 = get_size_and_extra(opacities_lesions, proj2, birads_key2, index2)
             
-            # Place sizes based on projections (CC or MLO)
+            # Sizes based on proj 
             if proj2 in ['rcc', 'lcc']:
                 cc_size = cc_size or size2[0]
             elif proj2 in ['rmlo', 'lmlo']:
                 mlo_size = mlo_size or size2[1]
                 
-            extra_info = extra1 or extra2  # Combine extra info if available
+            extra_info = extra1 or extra2  
 
-            # Create a row for matched lesions
+            # Matched lesions
             rows += f"""
             <tr>
                 <td>{index1}</td>
