@@ -202,6 +202,8 @@
   color: white;
   padding: 2px 10px;
   border-radius: 5px;
+  height: 20px;
+  min-width: 150px;
 }
 
 .quality-details {
@@ -210,6 +212,9 @@
 
 .quality-explanation-box {
   color: white;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .quality-explanation-list{
