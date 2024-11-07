@@ -94,12 +94,12 @@ def get_report_variables():
     skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     # TODO: Get Parenchyma cuts , Nipple profile location and PNL
-    parenchyma_lateral_cuts_rcc = get_cuts(quality_rcc.get('cuts_lateral_list', []),"rcc", img_width, img_height)
-    parenchyma_medial_cuts_rcc = get_cuts(quality_rcc.get('cuts_medial_list', []),"rcc", img_width, img_height)
-    parenchyma_lateral_cuts_lcc = get_cuts(quality_lcc.get('cuts_lateral_list', []), "lcc", img_width, img_height)
-    parenchyma_medial_cuts_lcc = get_cuts(quality_lcc.get('cuts_medial_list', []), "lcc", img_width, img_height)
-    parenchyma_cuts_rmlo = get_cuts(quality_rmlo.get('parenchyma_cuts_list', []), "rmlo", img_width, img_height)
-    parenchyma_cuts_lmlo = get_cuts(quality_lmlo.get('parenchyma_cuts_list', []), "lmlo", img_width, img_height)
+    parenchyma_lateral_cuts_rcc = get_cuts(quality_rcc.get('cuts_lateral_list', []),"rcc")
+    parenchyma_medial_cuts_rcc = get_cuts(quality_rcc.get('cuts_medial_list', []),"rcc")
+    parenchyma_lateral_cuts_lcc = get_cuts(quality_lcc.get('cuts_lateral_list', []), "lcc")
+    parenchyma_medial_cuts_lcc = get_cuts(quality_lcc.get('cuts_medial_list', []), "lcc")
+    parenchyma_cuts_rmlo = get_cuts(quality_rmlo.get('parenchyma_cuts_list', []), "rmlo")
+    parenchyma_cuts_lmlo = get_cuts(quality_lmlo.get('parenchyma_cuts_list', []), "lmlo")
 
     # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
     # pnl_lines_rcc = ? 
@@ -390,7 +390,7 @@ def get_quality_shapes(shapes_list, shape_type, img_width, img_height):
 
     return ''.join(quality_shapes)
 
-def get_cuts(parenchyma_cuts, proj_name, img_width, img_height):
+def get_cuts(parenchyma_cuts, proj_name):
     """
     Generates HTML divs for parenchyma cuts based on provided points and styles.
     """
@@ -400,24 +400,24 @@ def get_cuts(parenchyma_cuts, proj_name, img_width, img_height):
 
     cut_divs = []
     for i, parenchyma_line in enumerate(parenchyma_cuts):
-        # Calculate style properties based on coordinates
+      
         left = f"{100 * (parenchyma_line[2] - 0.04)}%" if 'r' in proj_name else f"{100 * parenchyma_line[2]}%"
         top = f"{100 * parenchyma_line[0]}%"
         width = (f"{100 - 100 * (parenchyma_line[2] - 0.04)}%" if 'r' in proj_name 
                  else f"{100 * (parenchyma_cuts[0][2] + 0.04)}%")
         height = f"{100 * (parenchyma_line[1] - parenchyma_line[0])}%"
         
-        # Define the HTML for each cut
+        # Cuts
         cut_div = f"""
         <div
             class="boundingLine"
-            style="border: 1px dashed red; left: {left}; top: {top}; width: {width}; height: {height};">
+            style="border: 1px dashed red; left: {left}; top: {top}; width: {width}; height: {height}; position: absolute; z-index: 200">
         </div>
         """
         cut_divs.append(cut_div)
 
-    # Wrap all cuts in a parent div and return as a single string
-    return f"""<div style="width: {img_width}px; height: {img_height}px;">
+    # Wrap all cuts 
+    return f"""<div style="width: 100%; height: 100%;">
                 {''.join(cut_divs)}
                </div>"""
 

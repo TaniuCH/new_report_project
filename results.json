@@ -782,7 +782,7 @@
       "nipple_profile": "correct",
       "nipple_deviation": "correct",
       "quality": "moderate",
-      "parenchyma_cuts_list": [[0.8125, 0.953125, 1]],
+      "parenchyma_cuts_list": [[0.5234375, 0.6640625, 0]],
       "symmetry": "moderate",
       "pectoralis_angle": "correct",
       "pectoralis_level": "moderate",
