@@ -48,7 +48,7 @@
 }
 
 .patient-info {
-  width: 25%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -56,7 +56,7 @@
 }
 
 .exam-info {
-  width: 25%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -92,16 +92,15 @@
   font-size: 2em;
   margin-bottom: 10px;
   background: gray;
-  color: #333333;
 }
 
 .quality-overall-container {
-  height: 60px;
   margin-bottom: 10px
 }
 
 .quality-overall {
   border-radius: 5px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,7 +116,7 @@
 .quality-module {
   display: flex;
   flex-direction: column;
-  width: 10%;
+  width: 20%;
   align-items: center;
   height: 100%;
 }
