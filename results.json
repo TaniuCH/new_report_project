@@ -231,18 +231,17 @@
     "bbox": {
       "rmlo": {
         "clips": null,
-        "Infram": "insufficient",
+        "imf": "insufficient",
         "nipple_profile": "correct",
         "nipple_deviation": "insufficient",
         "quality": "moderate",
         "cuts_list": [],
         "symmetry": "moderate",
         "pectoralis_angle": "correct",
-        "PectLevel": "moderate",
-        "PectShape": "convex",
-        "PectoArea": 3580.1084386532666,
+        "pectoralis_level": "moderate",
+        "pectoralis_shape": "convex",
         "elevation": "correct",
-        "skinFolds": null,
+        "skin_folds": null,
         "parenchyma": [
           {
             "box": [
@@ -791,18 +790,17 @@
       },
       "lmlo": {
         "clips": null,
-        "Infram": "insufficient",
+        "imf": "insufficient",
         "nipple_profile": "correct",
         "nipple_deviation": "correct",
         "quality": "moderate",
         "cuts_list": [],
-        "symmetry": "correct",
+        "symmetry": "moderate",
         "pectoralis_angle": "correct",
-        "PectLevel": "correct",
-        "PectShape": "straight",
-        "PectoArea": 2382.3393827321543,
+        "pectoralis_level": "moderate",
+        "pectoralis_shape": "convex",
         "elevation": "correct",
-        "skinFolds": null,
+        "skin_folds": null,
         "parenchyma": [
           {
             "box": [
