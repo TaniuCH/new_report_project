@@ -66,13 +66,15 @@
         <div class="quality-section">
           <div class="quality-label">
             <span class="label-text">{{ rcc_label }}</span><br />
-            <div class="quality-badge orange">
+            <div class="quality-badge {{ quality_class_rcc }}_background">
               <span class="badge-text">{{ quality_class_rcc }}</span>
             </div>          
           </div>
             <div class="quality-details">
-              <p><strong>{{ quality_explanation_label }}:</strong></p>
-              <div class="explanation-box">{{ quality_explanation_rcc }}</div>
+              <div class="quality-explanation-box {{ quality_class_rcc }}_box">
+                <p><strong>{{ quality_explanation_label }}:</strong></p>
+                <div class="quality-explanation-list">{{ quality_explanation_rcc }}</div>
+              </div>
               <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_rcc }} N</span></p>
               <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_rcc }}</span></p>
               <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_rcc }}</span></p>
@@ -117,13 +119,15 @@
         <div class="quality-section">
           <div class="quality-label">
             <span class="label-text">{{ lcc_label }}</span><br />
-            <div class="quality-badge green">
-              <span class="badge-text">{{ quality_lcc }}</span>
-            </div>
+            <div class="quality-badge {{ quality_class_lcc }}_background">
+              <span class="badge-text">{{ quality_class_lcc }}</span>
+            </div>    
           </div>
           <div class="quality-details">
-            <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_lcc }}</div>
+            <div class="quality-explanation-box {{ quality_class_lcc }}_box">
+              <p><strong>{{ quality_explanation_label }}:</strong></p>
+              <div class="quality-explanation-list">{{ quality_explanation_lcc }}</div>
+            </div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_lcc }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_lcc }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_lcc }}</span></p>
@@ -149,13 +153,15 @@
         <div class="quality-section">
           <div class="quality-label">
             <span class="label-text">{{ rmlo_label }}</span><br />
-            <div class="quality-badge orange">
-              <span class="badge-text">{{ quality_rmlo }}</span>
-            </div>
+            <div class="quality-badge {{ quality_class_rmlo }}_background">
+              <span class="badge-text">{{ quality_class_rmlo }}</span>
+            </div>    
           </div>
           <div class="quality-details">
-            <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_rmlo }}</div>
+            <div class="quality-explanation-box {{ quality_class_rmlo }}_box">
+              <p><strong>{{ quality_explanation_label }}:</strong></p>
+              <div class="quality-explanation-list">{{ quality_explanation_rmlo }}</div>
+            </div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_rmlo }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_rmlo }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_rmlo }}</span></p>
@@ -200,13 +206,15 @@
         <div class="quality-section">
           <div class="quality-label">
             <span class="label-text">{{ lmlo_label }}</span><br />
-            <div class="quality-badge green">
-              <span class="badge-text">{{ quality_lmlo }}</span>
-            </div>
+            <div class="quality-badge {{ quality_class_lmlo }}_background">
+              <span class="badge-text">{{ quality_class_lmlo }}</span>
+            </div>    
           </div>
           <div class="quality-details">
-            <p><strong>{{ quality_explanation_label }}:</strong></p>
-            <div class="explanation-box">{{ quality_explanation_lmlo }}</div>
+            <div class="quality-explanation-box {{ quality_class_lmlo }}_box">
+              <p><strong>{{ quality_explanation_label }}:</strong></p>
+              <div class="quality-explanation-list">{{ quality_explanation_lmlo }}</div>
+            </div>
             <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_lmlo }} N</span></p>
             <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_lmlo }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_lmlo }}</span></p>

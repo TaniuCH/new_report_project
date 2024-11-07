@@ -8,8 +8,8 @@
   height: auto;
   width: 100vw;
   background-color: #2f2f2f;
-
 }
+
 
 .report-main-container {
   margin: 20px;
@@ -191,9 +191,10 @@
 }
 
 .quality-badge {
-  border-radius: 5px;
+  border-radius: 15px;
   padding: 5px;
   display: inline-block;
+  margin: 10px;
 }
 
 
@@ -207,9 +208,12 @@
   margin-top: 20px;
 }
 
-.explanation-box {
-  padding: 10px;
+.quality-explanation-box {
   color: white;
+}
+
+.quality-explanation-list{
+  padding: 10px;
 }
 
 .quality-images-container {
@@ -565,6 +569,22 @@ table thead th:first-child {
 
 .insufficient_background {
   background: red;
+}
+
+.perfect_box {
+  border: 1px solid green;
+}
+
+.good_box {
+  border: 1px solid rgb(53, 107, 53);
+}
+
+.moderate_box {
+  border: 1px solid orange;
+}
+
+.insufficient_box {
+  border: 1px solid red;
 }
 
 .A{
