@@ -765,16 +765,16 @@
       "pectoralis_muscle": "correct",
       "cuts_medial_list": [],
       "nipple_centered": "correct",
-      "cuts_lateral_list": [],
+      "cuts_lateral_list": [[0.28125, 0.51953125, 1]],
       "location_nipple": [0.3420540031366692, 0.5700978636741638],
       "compression_class": "correct",
       "pecto_nipple_length": 123.14257936739988,
       "performance_score": 67,
       "volume_prev_diff": "not_evaluated",
       "quality_explanation": ["PNL nicht im definierten Bereich"],
-      "parenchyma_cuts_medial_list": "correct",
+      "parenchyma_cuts_medial": "correct",
       "volume_diff": "moderate",
-      "parenchyma_cuts_lateral_list": "correct"
+      "parenchyma_cuts_lateral": "correct"
     },
     "lmlo": {
       "clips": null,
@@ -782,7 +782,7 @@
       "nipple_profile": "correct",
       "nipple_deviation": "correct",
       "quality": "moderate",
-      "parenchyma_cuts_list": [],
+      "parenchyma_cuts_list": [[0.8125, 0.953125, 1]],
       "symmetry": "moderate",
       "pectoralis_angle": "correct",
       "pectoralis_level": "moderate",
@@ -1387,9 +1387,9 @@
       "performance_score": 67,
       "volume_prev_diff": "not_evaluated",
       "quality_explanation": ["Pectoralis nicht abgebildet", "Mild Skin Folds"],
-      "parenchyma_cuts_medial_list": "correct",
+      "parenchyma_cuts_medial": "correct",
       "volume_diff": "correct",
-      "parenchyma_cuts_lateral_list": "correct"
+      "parenchyma_cuts_lateral": "correct"
     }
   }
 }
