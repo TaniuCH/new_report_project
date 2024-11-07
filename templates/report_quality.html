@@ -16,27 +16,26 @@
         {% if not anonimize %}
         <!-- Patient info -->
         <div class="patient-info">
-          <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
-          <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
-          <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
-          <p>
-            <strong>{{ quality_system_label }}:</strong> {{ quality_system_name }} [{{ quality_values }}]
-          </p>
+          <p class="general_texts"><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
+          <p class="general_texts"><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
+          <p class="general_texts"><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
+          <p class="general_texts"><strong>{{ quality_system_label }}:</strong> {{ quality_system_name }}</p>
         </div>
         <!-- Middle Column more exam info-->
         <div class="exam-info">
-          <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
-          <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
-          <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
+          <p class="general_texts"><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
+          <p class="general_texts"><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
+          <p class="general_texts"><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
+          <p class="general_texts"><strong>{{ quality_values_label }}:</strong> {{ quality_values }}</p>
         </div>
         <!-- Quality Module -->
         <div class="quality-module">
-          <p><strong>{{ overall_quality_label }}</strong></p>
+          <p ><strong>{{ overall_quality_label }}</strong></p>
           <div class="quality-overall-container">
             <div class="quality-overall {{ overall_quality }}_background">{{ overall_quality }}</div>
           </div>
   
-          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} {{ quality_confirmed_icon|safe }}</p>
+          <p class="general_texts"><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} {{ quality_confirmed_icon|safe }}</p>
         </div>
   
         <!-- Right Column (density and module status) -->
