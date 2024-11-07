@@ -32,18 +32,18 @@
         <!-- Quality Module -->
         <div class="quality-module">
           <p><strong>{{ overall_quality_label }}</strong></p>
-          <div class="quality-circle-container">
-            <div class="quality-circle moderate_color">{{ overall_quality }}</div>
+          <div class="quality-overall-container">
+            <div class="quality-overall {{ overall_quality }}_background">{{ overall_quality }}</div>
           </div>
   
-          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} &#8635;</p>
+          <p><strong>{{ quality_label }}:</strong> {{ quality_confirmed }} {{ quality_confirmed_icon|safe }}</p>
         </div>
   
         <!-- Right Column (density and module status) -->
         <div class="density-module">
           <p><strong>{{ overall_density_label }}</strong></p>
-          <div class="density-circle perfect_color">{{ overall_density }}</div>
-          <p><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>
+          <div class="density-circle {{ overall_density }}">{{ overall_density }}</div>
+          <p><strong>{{ density_label }}:</strong> {{density_confirmed}} {{ density_confirmed_icon|safe }} </p>
         </div>
         {% endif %}
       </div>
@@ -58,9 +58,7 @@
         </div>
       </div>
     </div>
-  
-    <p class="header-font">{{quality}}</p>
-  
+   
     <!-- Quality Feats  -->
     <div class="main-features-container">
       <!-- CC Main row container  -->

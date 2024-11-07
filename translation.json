@@ -10,6 +10,8 @@
     "examination_type_label": "Examination Type",
     "referring_physician_label": "Referring Physician",
     "performing_operator_label": "Performing Operator",
+    "confirmed": "Confirmed",
+    "not_confirmed": "Not Confirmed",
     "overall_density_label": "Overall Density",
     "overall_quality_label": "Overall Quality",
     "density_label": "Density",
