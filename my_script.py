@@ -93,7 +93,6 @@ def get_report_variables():
     pectoralis_contours_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
     skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
-    # TODO: Get Parenchyma cuts , Nipple profile location and PNL
     parenchyma_lateral_cuts_rcc = get_cuts(quality_rcc.get('cuts_lateral_list', []),"rcc")
     parenchyma_medial_cuts_rcc = get_cuts(quality_rcc.get('cuts_medial_list', []),"rcc")
     parenchyma_lateral_cuts_lcc = get_cuts(quality_lcc.get('cuts_lateral_list', []), "lcc")
@@ -101,9 +100,9 @@ def get_report_variables():
     parenchyma_cuts_rmlo = get_cuts(quality_rmlo.get('parenchyma_cuts_list', []), "rmlo")
     parenchyma_cuts_lmlo = get_cuts(quality_lmlo.get('parenchyma_cuts_list', []), "lmlo")
 
+    # TODO: Get  Nipple profile location and PNL
     # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
     # pnl_lines_rcc = ? 
-
 
     # Diagnostics 
     # **TODO: obtain the classes to show on report from env file (so the user set this dynamically)
