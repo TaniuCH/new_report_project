@@ -15,13 +15,13 @@
         <div class="header-info">
           {% if not anonimize %}
           <!-- Patient info -->
-          <div class="patient-info">
+          <div class="patient-info patient-info-diagnose">
             <p><strong>{{ patient_name_label }}:</strong> {{ patient_name }}</p>
             <p><strong>{{ birth_date_label }}:</strong> {{ patient_birth }}</p>
             <p><strong>{{ examination_date_label }}:</strong> {{ exam_date }}</p>
           </div>
           <!-- Middle Column more exam info-->
-          <div class="exam-info">
+          <div class="exam-info exam-info-diagnose">
             <p><strong>{{ examination_type_label }}:</strong> {{ exam_type }}</p>
             <p><strong>{{ referring_physician_label }}:</strong> {{ ref_phys }}</p>
             <p><strong>{{ performing_operator_label }}:</strong> {{ operator_name }}</p>
@@ -67,7 +67,7 @@
           </div>
   
           <!-- Right Column (density and module status) -->
-          <div class="density-module">
+          <div class="density-module density-module-diagnose">
             <p class="no-padding-texts"><strong>{{ overall_density_label }}</strong></p>
             <div class="density-circle perfect_color">{{ overall_density }}</div>
             <p class="no-padding-texts"><strong>{{ density_label }}:</strong> {{ density_confirmed }} &#8635;</p>

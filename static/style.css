@@ -43,7 +43,7 @@
   padding: 10px;
 }
 
-.general_texts{
+.general-texts{
   margin: 6px
 }
 
@@ -63,6 +63,15 @@
   justify-content: space-between;
 }
 
+
+.patient-info-diagnose {
+  width: 25%;
+}
+
+.exam-info-diagnose {
+  width: 25%;
+}
+
 .exam-details {
   display: flex;
   justify-content: space-between;
@@ -73,6 +82,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.density-module-diagnose {
+  width: 15%;
 }
 
 .density-status {
