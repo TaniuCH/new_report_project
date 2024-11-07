@@ -62,19 +62,19 @@ def get_report_variables():
         results = json.load(json_file)
     
     exam_details = results
-    opacities_lesions = results.get('opacities', {}).get('bbox', {})
+    opacities_lesions = results.get('opacities', {})
 
     # Density 
-    density_rcc = results.get('density', {}).get('bbox', {}).get('rcc', {})
-    density_lcc = results.get('density', {}).get('bbox', {}).get('lcc', {})
-    density_rmlo = results.get('density', {}).get('bbox', {}).get('rmlo', {})
-    density_lmlo = results.get('density', {}).get('bbox', {}).get('lmlo', {})
+    density_rcc = results.get('density', {}).get('rcc', {})
+    density_lcc = results.get('density', {}).get('lcc', {})
+    density_rmlo = results.get('density', {}).get('rmlo', {})
+    density_lmlo = results.get('density', {}).get('lmlo', {})
 
     # Quality 
-    quality_rcc = results.get('quality', {}).get('bbox', {}).get('rcc', {})
-    quality_lcc = results.get('quality', {}).get('bbox', {}).get('lcc', {})
-    quality_rmlo = results.get('quality', {}).get('bbox', {}).get('rmlo', {})
-    quality_lmlo = results.get('quality', {}).get('bbox', {}).get('lmlo', {})
+    quality_rcc = results.get('quality', {}).get('rcc', {})
+    quality_lcc = results.get('quality', {}).get('lcc', {})
+    quality_rmlo = results.get('quality', {}).get('rmlo', {})
+    quality_lmlo = results.get('quality', {}).get('lmlo', {})
 
     # Quality features Contours (parenchyma, pectoralis, skin folds)  
     parenchyma_contours_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
@@ -94,8 +94,13 @@ def get_report_variables():
     skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     # TODO: Get Parenchyma cuts , Nipple profile location and PNL
-    # parenchyma_lateral_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_lateral', []) or [], 'cuts_lateral', img_width, img_height)
-    # parenchyma_medial_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_medial', []) or [], 'cuts_medial', img_width, img_height)
+    parenchyma_lateral_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_lateral_list', []) or [], 'cuts_lateral_list', img_width, img_height)
+    parenchyma_medial_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_medial_list', []) or [], 'cuts_medial_list', img_width, img_height)
+    parenchyma_lateral_cuts_lcc = get_quality_shapes(quality_lcc.get('cuts_lateral_list', []) or [], 'cuts_lateral_list', img_width, img_height)
+    parenchyma_medial_cuts_lcc = get_quality_shapes(quality_lcc.get('cuts_medial_list', []) or [], 'cuts_medial_list', img_width, img_height)
+    parenchyma_cuts_rmlo = get_quality_shapes(quality_rmlo.get('parenchyma_cuts_list', []) or [], 'parenchyma_cuts_list', img_width, img_height)
+    parenchyma_cuts_lmlo = get_quality_shapes(quality_lmlo.get('parenchyma_cuts_list', []) or [], 'parenchyma_cuts_list', img_width, img_height)
+
     # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
     # pnl_lines_rcc = ? 
 
@@ -106,16 +111,16 @@ def get_report_variables():
     microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     
     # Fetch opacities lesions
-    opacities_rcc = results.get('opacities', {}).get('bbox', {}).get('rcc', {})
-    opacities_lcc = results.get('opacities', {}).get('bbox', {}).get('lcc', {})
-    opacities_rmlo = results.get('opacities', {}).get('bbox', {}).get('rmlo', {})
-    opacities_lmlo = results.get('opacities', {}).get('bbox', {}).get('lmlo', {})
+    opacities_rcc = results.get('opacities', {}).get('rcc', {})
+    opacities_lcc = results.get('opacities', {}).get('lcc', {})
+    opacities_rmlo = results.get('opacities', {}).get('rmlo', {})
+    opacities_lmlo = results.get('opacities', {}).get('lmlo', {})
 
     # Fetch microcalc lesions 
-    microcalc_rcc = results.get('microcalc', {}).get('bbox', {}).get('rcc', {})
-    microcalc_lcc = results.get('microcalc', {}).get('bbox', {}).get('lcc', {})
-    microcalc_rmlo = results.get('microcalc', {}).get('bbox', {}).get('rmlo', {})
-    microcalc_lmlo = results.get('microcalc', {}).get('bbox', {}).get('lmlo', {})
+    microcalc_rcc = results.get('microcalc', {}).get('rcc', {})
+    microcalc_lcc = results.get('microcalc', {}).get('lcc', {})
+    microcalc_rmlo = results.get('microcalc', {}).get('rmlo', {})
+    microcalc_lmlo = results.get('microcalc', {}).get('lmlo', {})
 
     # Opacities boxes  
     opacities_rcc = get_lesion_shapes(opacities_rcc, opacities_types)
@@ -189,6 +194,12 @@ def get_report_variables():
     "parenchyma_contours_lmlo": parenchyma_contours_lmlo,
     "pectoralis_contours_lmlo": pectoralis_contours_lmlo,
     "skin_folds_contours_lmlo": skin_folds_contours_lmlo,
+    "parenchyma_lateral_cuts_rcc": parenchyma_lateral_cuts_rcc,
+    "parenchyma_medial_cuts_rcc": parenchyma_medial_cuts_rcc,
+    "parenchyma_lateral_cuts_lcc": parenchyma_lateral_cuts_lcc,
+    "parenchyma_medial_cuts_lcc": parenchyma_medial_cuts_lcc,
+    "parenchyma_cuts_rmlo": parenchyma_cuts_rmlo,
+    "parenchyma_cuts_lmlo": parenchyma_cuts_lmlo,
 
     # Quality RCC
     "quality_class_rcc": quality_rcc.get('quality', "not available"),
@@ -202,8 +213,8 @@ def get_report_variables():
     "nipple_deviation_rcc": quality_rcc.get('nipple_deviation', "not available"),
     "nipple_angle_rcc": quality_rcc.get('nipple_angle', "not available"),
     "nipple_rcc": quality_rcc.get('nipple_centered', "not available"),
-    "medial_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_medial', "not available") ,
-    "lateral_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_lateral', "not available")  ,
+    "medial_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_medial_list', "not available") ,
+    "lateral_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_lateral_list', "not available")  ,
     "pectoralis_rcc": quality_rcc.get('pectoralis_muscle', "not available") ,
     "skin_folds_location_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -225,8 +236,8 @@ def get_report_variables():
     "nipple_deviation_lcc": quality_lcc.get('nipple_deviation', "not available"),
     "nipple_angle_lcc": quality_lcc.get('nipple_angle', "not available"),
     "nipple_lcc": quality_lcc.get('nipple_centered', "not available"),
-    "medial_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_medial', "not available"),
-    "lateral_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_lateral', "not available"),
+    "medial_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_medial_list', "not available"),
+    "lateral_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_lateral_list', "not available"),
     "pectoralis_lcc": quality_lcc.get('pectoralis_muscle', "not available"),
     "skin_folds_location_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -245,7 +256,7 @@ def get_report_variables():
     "pnl_rmlo": quality_rmlo.get('PNL', "not available"),
     "pnl_diff_rmlo": quality_rmlo.get('pecto_nipple_length', "not available"),
     "nipple_profile_rmlo": quality_rmlo.get('nipple_profile', "not available"),
-    "parenchyma_rmlo": quality_rmlo.get('ParenchymaCuts', "not available"),
+    "parenchyma_rmlo": quality_rmlo.get('parenchyma_cuts', "not available"),
     "pectoralis_rmlo": quality_rmlo.get('pectoralis_muscle', "not available"),
     "skin_folds_location_rmlo" : (quality_rmlo.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_rmlo" : (quality_rmlo.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -269,7 +280,7 @@ def get_report_variables():
     "pnl_lmlo": quality_lmlo.get('PNL', "not available"),
     "pnl_diff_lmlo": quality_lmlo.get('pecto_nipple_length', "not available"),
     "nipple_profile_lmlo": quality_lmlo.get('nipple_profile', "not available"),
-    "parenchyma_lmlo": quality_lmlo.get('ParenchymaCuts', "not available"),
+    "parenchyma_lmlo": quality_lmlo.get('parenchyma_cuts', "not available"),
     "pectoralis_lmlo": quality_lmlo.get('pectoralis_muscle', "not available"),
     "skin_folds_location_lmlo" : (quality_lmlo.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_lmlo" : (quality_lmlo.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -676,6 +687,8 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions, lesion_index_mapp
 def generate_image():
     with open('results.json') as f:
         results = json.load(f)
+
+        # TODO (TANIU) def get_report(data: dict, width: int, height: int, opac_show: list, microcalc_show: list) -> string: '''function which takes ALL necessary data and returns the report in HTML"
     
     # Pass lesion shapes to the template as needed
     variables = get_report_variables()
