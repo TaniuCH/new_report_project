@@ -39,6 +39,7 @@
     "breast_volume_label": "Breast volume",
     "dose_label": "Dose",
     "post_surgery_label": "Post-surgery",
+    "clips_label": "Clips",
     "breast_image_alt": "error getting image",
     "diagnostics": "Diagnostics",
     "right_breast": "Right Breast",
