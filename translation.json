@@ -7,6 +7,7 @@
     "birth_date_label": "Birth Date",
     "examination_date_label": "Examination Date",
     "quality_system_label": "Quality System",
+    "quality_values_label": "Quality Values",
     "examination_type_label": "Examination Type",
     "referring_physician_label": "Referring Physician",
     "performing_operator_label": "Performing Operator",

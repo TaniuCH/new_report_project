@@ -43,6 +43,10 @@
   padding: 10px;
 }
 
+.general_texts{
+  margin: 6px
+}
+
 .patient-info {
   width: 25%;
   display: flex;
@@ -132,13 +136,17 @@
 }
 
 .risk-details {
-  width: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .risk-evaluation {
   font-weight: bold;
   display: flex;
   align-items: center;
+  margin-right: 30px;
 }
 
 .risk-icon {

@@ -152,6 +152,7 @@ def get_report_variables():
     "patient_risk_evaluation": exam_details["patient_risk_evaluation"],
     "udi": exam_details["UDI"],
     "limitations": exam_details["limitations"],
+    "risk_description": exam_details["risk_description"],
 
     # *** DENSITY ***
     "overall_density": exam_details.get("overall_density", '--'),
