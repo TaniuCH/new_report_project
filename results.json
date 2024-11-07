@@ -240,6 +240,7 @@
         "pectoralis_angle": "correct",
         "pectoralis_level": "moderate",
         "pectoralis_shape": "convex",
+        "pectoralis_muscle": "good",
         "elevation": "correct",
         "skin_folds": null,
         "parenchyma": [
@@ -499,18 +500,17 @@
             ]
           }
         ],
-        "PostSurgery": [],
+        "post_surgery": [],
         "center_line": 0.6227106227106227,
-        "BreastVolume": 1953.4799000961243,
+        "breast_volume": 1953.4799000961243,
         "location_imf": [0.999498997995992, 0.8559218559218559],
         "ParenchymaCuts": "correct",
         "PectAngleValue": 17.905758523554994,
-        "GrossBreastArea": 26562.224910372377,
         "location_nipple": [0.3790939827720245, 0.7665485739707947],
-        "compressionClass": "correct",
-        "PectoNippleLength": 141.10964549292356,
+        "compression_class": "correct",
+        "pecto_nipple_length": 141.10964549292356,
         "performance_score": 34,
-        "VolumeLastExamDiff": "not_evaluated",
+        "volume_prev_diff": "not_evaluated",
         "location_pecto_top": [0.8220873203360461, 0],
         "quality_explanation": ["Inframammärer Falte nicht abgebildet"],
         "location_pecto_bottom": [1, 0.54296875]
@@ -522,8 +522,7 @@
         "nipple_deviation": "correct",
         "quality": "good",
         "symmetry": "correct",
-        "PectoArea": 374.3542173995608,
-        "skinFolds": null,
+        "skin_folds": null,
         "parenchyma": [
           {
             "box": [
@@ -768,25 +767,23 @@
             ]
           }
         ],
-        "NippleAngle": -3.3003528504415676,
-        "PostSurgery": [],
+        "nipple_angle": -3.3003528504415676,
+        "post_surgery": [],
         "center_line": 0.5392755392755393,
-        "BreastVolume": 1555.1289883374338,
-        "PectoralisCC": "correct",
-        "CutsListMedial": [],
-        "NippleCentered": "correct",
-        "PectoThickness": 0.08174331773421484,
-        "CutsListLateral": [],
-        "GrossBreastArea": 24299.415576437004,
+        "breast_volume": 1555.1289883374338,
+        "pectoralis_muscle": "correct",
+        "cuts_medial": [],
+        "nipple_centered": "correct",
+        "cuts_lateral": [],
         "location_nipple": [0.3420540031366692, 0.5700978636741638],
-        "compressionClass": "correct",
-        "PectoNippleLength": 123.14257936739988,
+        "compression_class": "correct",
+        "pecto_nipple_length": 123.14257936739988,
         "performance_score": 67,
-        "VolumeLastExamDiff": "not_evaluated",
+        "volume_prev_diff": "not_evaluated",
         "quality_explanation": ["PNL nicht im definierten Bereich"],
-        "ParenchymaCutsMedial": "correct",
-        "VolumeProjectionDiff": "moderate",
-        "ParenchymaCutsLateral": "correct"
+        "parenchyma_cuts_medial": "correct",
+        "volume_diff": "moderate",
+        "parenchyma_cuts_lateral": "correct"
       },
       "lmlo": {
         "clips": null,
@@ -799,6 +796,7 @@
         "pectoralis_angle": "correct",
         "pectoralis_level": "moderate",
         "pectoralis_shape": "convex",
+        "pectoralis_muscle": "correct",
         "elevation": "correct",
         "skin_folds": null,
         "parenchyma": [
@@ -1026,18 +1024,17 @@
             ]
           }
         ],
-        "PostSurgery": [],
+        "post_surgery": [],
         "center_line": 0.595034595034595,
-        "BreastVolume": 1541.5482291871808,
+        "breast_volume": 1541.5482291871808,
         "location_imf": [0, 0.783068783068783],
         "ParenchymaCuts": "correct",
         "PectAngleValue": 12.482489384954482,
-        "GrossBreastArea": 22665.86871414243,
         "location_nipple": [0.6224877502851353, 0.6680323481559753],
-        "compressionClass": "correct",
-        "PectoNippleLength": 137.47133714734716,
+        "compression_class": "correct",
+        "pecto_nipple_length": 137.47133714734716,
         "performance_score": 34,
-        "VolumeLastExamDiff": "not_evaluated",
+        "volume_prev_diff": "not_evaluated",
         "location_pecto_top": [0.13944485128269926, 0],
         "quality_explanation": ["Inframammärer Falte nicht abgebildet"],
         "location_pecto_bottom": [0, 0.51171875]
@@ -1049,8 +1046,7 @@
         "nipple_deviation": "correct",
         "quality": "good",
         "symmetry": "correct",
-        "PectoArea": 0,
-        "skinFolds": [
+        "skin_folds": [
           {
             "box": [
               0.003514850300401162, 0.602391584751565, 0.08156030761483547,
@@ -1386,27 +1382,26 @@
           }
         ],
         "pectoralis": null,
-        "NippleAngle": -4.057523781132142,
-        "PostSurgery": [],
+        "nipple_angle": -4.057523781132142,
+        "post_surgery": [],
         "center_line": 0.5718355718355719,
-        "BreastVolume": 1505.4075838362542,
-        "PectoralisCC": "insufficient",
-        "CutsListMedial": [],
-        "NippleCentered": "correct",
-        "CutsListLateral": [],
-        "GrossBreastArea": 21817.501215018176,
+        "breast_volume": 1505.4075838362542,
+        "pectoralis_muscle": "insufficient",
+        "cuts_medial": [],
+        "nipple_centered": "correct",
+        "cuts_lateral": [],
         "location_nipple": [0.6106362349254812, 0.6070243120193481],
-        "compressionClass": "correct",
-        "PectoNippleLength": 130.09299666969915,
+        "compression_class": "correct",
+        "pecto_nipple_length": 130.09299666969915,
         "performance_score": 67,
-        "VolumeLastExamDiff": "not_evaluated",
+        "volume_prev_diff": "not_evaluated",
         "quality_explanation": [
           "Pectoralis nicht abgebildet",
           "Mild Skin Folds"
         ],
-        "ParenchymaCutsMedial": "correct",
-        "VolumeProjectionDiff": "correct",
-        "ParenchymaCutsLateral": "correct"
+        "parenchyma_cuts_medial": "correct",
+        "volume_diff": "correct",
+        "parenchyma_cuts_lateral": "correct"
       }
     }
   }
