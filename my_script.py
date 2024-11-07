@@ -79,19 +79,19 @@ def get_report_variables():
     # Quality features Contours (parenchyma, pectoralis, skin folds)  
     parenchyma_contours_rcc = get_quality_shapes(quality_rcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
     pectoralis_contours_rcc = get_quality_shapes(quality_rcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_contours_rcc = get_quality_shapes(quality_rcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+    skin_folds_contours_rcc = get_quality_shapes(quality_rcc.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     parenchyma_contours_lcc = get_quality_shapes(quality_lcc.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
     pectoralis_contours_lcc = get_quality_shapes(quality_lcc.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_contours_lcc = get_quality_shapes(quality_lcc.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+    skin_folds_contours_lcc = get_quality_shapes(quality_lcc.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     parenchyma_contours_rmlo = get_quality_shapes(quality_rmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
     pectoralis_contours_rmlo = get_quality_shapes(quality_rmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_contours_rmlo = get_quality_shapes(quality_rmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+    skin_folds_contours_rmlo = get_quality_shapes(quality_rmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     parenchyma_contours_lmlo = get_quality_shapes(quality_lmlo.get('parenchyma', []) or [], 'parenchyma', img_width, img_height)
     pectoralis_contours_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
-    skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skinFolds', []) or [], 'skinFolds', img_width, img_height)
+    skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
     # Diagnostics 
     # **TODO: obtain the ones we need to show from env file 
@@ -191,13 +191,14 @@ def get_report_variables():
     "blur_rcc": quality_rcc.get('blur', "not available"),
     "pnl_rcc": quality_rcc.get('PNL', "not available"),
     "pnl_diff_rcc": quality_rcc.get('PectoNippleLength', "not available"),
-    "nipple_centered_rcc": quality_rcc.get('Nipple', "not available"),
+    "nipple_profile_rcc": quality_rcc.get('nipple_profile', "not available"),
+    "nipple_deviation_rcc": quality_rcc.get('nipple_deviation', "not available"),
     "nipple_rcc": quality_rcc.get('NippleAngle', "not available"),
     "medial_parenchyma_rcc": quality_rcc.get('ParenchymaCutsMedial', "not available") ,
     "lateral_parenchyma_rcc": quality_rcc.get('ParenchymaCutsLateral', "not available")  ,
     "pectoralis_rcc": quality_rcc.get('pectoralis', "not available") ,
-    "skin_folds_location_rcc" : (quality_rcc.get('skinFolds', []) or [{}])[0].get('location', "none"),
-    "skin_folds_severity_rcc" : (quality_rcc.get('skinFolds', []) or [{}])[0].get('severity', "-"),
+    "skin_folds_location_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
+    "skin_folds_severity_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
     "breast_volume_rcc": quality_rcc.get('VolumeProjectionDiff', "not available"),
     "gross_volume_rcc": quality_rcc.get('GrossBreastArea', "not available"),
     "dose_rcc": quality_rcc.get('dose', "not available"),
@@ -212,13 +213,14 @@ def get_report_variables():
     "blur_lcc": quality_lcc.get('blur', "not available"),
     "pnl_lcc": quality_lcc.get('PNL', "not available"),
     "pnl_diff_lcc": quality_lcc.get('PectoNippleLength', "not available"),
-    "nipple_centered_lcc": quality_lcc.get('Nipple', "not available"),
+    "nipple_profile_lcc": quality_lcc.get('nipple_profile', "not available"),
+    "nipple_deviation_lcc": quality_lcc.get('nipple_deviation', "not available"),
     "nipple_lcc": quality_lcc.get('NippleAngle', "not available"),
     "medial_parenchyma_lcc": quality_lcc.get('ParenchymaCutsMedial', "not available"),
     "lateral_parenchyma_lcc": quality_lcc.get('ParenchymaCutsLateral', "not available"),
     "pectoralis_lcc": quality_lcc.get('pectoralis', "not available"),
-    "skin_folds_location_lcc" : (quality_lcc.get('skinFolds', []) or [{}])[0].get('location', "none"),
-    "skin_folds_severity_lcc" : (quality_lcc.get('skinFolds', []) or [{}])[0].get('severity', "-"),
+    "skin_folds_location_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
+    "skin_folds_severity_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
     "breast_volume_lcc": quality_lcc.get('VolumeProjectionDiff', "not available"),
     "gross_volume_lcc": quality_lcc.get('GrossBreastArea', "not available"),
     "dose_lcc": quality_lcc.get('dose', "not available"),
@@ -233,17 +235,21 @@ def get_report_variables():
     "blur_rmlo": quality_rmlo.get('blur', "not available"),
     "pnl_rmlo": quality_rmlo.get('PNL', "not available"),
     "pnl_diff_rmlo": quality_rmlo.get('PectoNippleLength', "not available"),
-    "nipple_centered_rmlo": quality_rmlo.get('Nipple', "not available"),
-    "nipple_rmlo": quality_rmlo.get('NippleAngle', "not available"),
+    "nipple_profile_rmlo": quality_rmlo.get('nipple_profile', "not available"),
     "parenchyma_rmlo": quality_rmlo.get('ParenchymaCuts', "not available"),
     "pectoralis_rmlo": quality_rmlo.get('pectoralis', "not available"),
-    "skin_folds_location_rmlo" : (quality_rmlo.get('skinFolds', []) or [{}])[0].get('location', "none"),
-    "skin_folds_severity_rmlo" : (quality_rmlo.get('skinFolds', []) or [{}])[0].get('severity', "-"),
+    "skin_folds_location_rmlo" : (quality_rmlo.get('skin_folds', []) or [{}])[0].get('location', "none"),
+    "skin_folds_severity_rmlo" : (quality_rmlo.get('skin_folds', []) or [{}])[0].get('severity', "-"),
     "breast_volume_rmlo": quality_rmlo.get('VolumeProjectionDiff', "not available"),
     "gross_volume_rmlo": quality_rmlo.get('GrossBreastArea', "not available"),
     "dose_rmlo": quality_rmlo.get('dose', "not available"),
     "post_surgery_rmlo": ' '.join(quality_rmlo.get('PostSurgery', "no")),
     "clips_rmlo": quality_rmlo.get('clips', "none"),
+    "pectoralis_angle_rmlo": quality_rmlo.get('pectoralis_angle', "not available"),
+    "pectoralis_shape_rmlo": quality_rmlo.get('pectoralis_shape', "not available"),
+    "pectoralis_level_rmlo": quality_rmlo.get('pectoralis_level', "not available"),
+    "imf_rmlo": quality_rmlo.get('imf', "not available"),
+    "elevation_rmlo": quality_rmlo.get('elevation', "not available"),
 
     # Quality LMLO
     "quality_class_lmlo": quality_lmlo.get('quality', "not available"),
@@ -253,19 +259,22 @@ def get_report_variables():
     "blur_lmlo": quality_lmlo.get('blur', "not available"),
     "pnl_lmlo": quality_lmlo.get('PNL', "not available"),
     "pnl_diff_lmlo": quality_lmlo.get('PectoNippleLength', "not available"),
-    "nipple_centered_lmlo": quality_lmlo.get('Nipple', "not available"),
-    "nipple_lmlo": quality_lmlo.get('NippleAngle', "not available"),
+    "nipple_profile_lmlo": quality_lmlo.get('nipple_profile', "not available"),
     "parenchyma_lmlo": quality_lmlo.get('ParenchymaCuts', "not available"),
     "pectoralis_lmlo": quality_lmlo.get('pectoralis', "not available"),
-    "skin_folds_location_lmlo" : (quality_lmlo.get('skinFolds', []) or [{}])[0].get('location', "none"),
-    "skin_folds_severity_lmlo" : (quality_lmlo.get('skinFolds', []) or [{}])[0].get('severity', "-"),
+    "skin_folds_location_lmlo" : (quality_lmlo.get('skin_folds', []) or [{}])[0].get('location', "none"),
+    "skin_folds_severity_lmlo" : (quality_lmlo.get('skin_folds', []) or [{}])[0].get('severity', "-"),
     "breast_volume_lmlo": quality_lmlo.get('VolumeProjectionDiff', "not available"),
     "gross_volume_lmlo": quality_lmlo.get('GrossBreastArea', "not available"),
     "dose_lmlo": quality_lmlo.get('dose', "not available"),
     "post_surgery_lmlo": ' '.join(quality_lmlo.get('PostSurgery', "no")),
     "clips_lmlo": quality_lmlo.get('clips', "none"),
+    "pectoralis_angle_lmlo": quality_lmlo.get('pectoralis_angle', "not available"),
+    "pectoralis_shape_lmlo": quality_lmlo.get('pectoralis_shape', "not available"),
+    "pectoralis_level_lmlo": quality_lmlo.get('pectoralis_level', "not available"),
+    "imf_lmlo": quality_lmlo.get('imf', "not available"),
+    "elevation_lmlo": quality_lmlo.get('elevation', "not available"),
 
-    
     # *** DIAGNOSTICS ***
     "opacities_confirmed": get_module_status(exam_details.get("opacities_confirmed", False)),
     "opacities_confirmed_icon": get_module_icon(exam_details.get("opacities_confirmed", False)),
