@@ -12,6 +12,14 @@ from flask import request
 app = Flask(__name__)
 nest_asyncio.apply()
 
+def get_module_icon(currentStatus):
+    status_bool = currentStatus == "True" if isinstance(currentStatus, str) else bool(currentStatus)
+    return "&#10004;" if status_bool else "&#10008;"
+
+def get_module_status(currentStatus):
+    status_bool = currentStatus == "True" if isinstance(currentStatus, str) else bool(currentStatus)
+    return translations["confirmed"] if status_bool else translations["not_confirmed"]
+
 def get_translations_dict(lang):
     """Fetch translations based on the language."""
     path = os.path.join(os.getcwd(), 'translation.json')
@@ -20,7 +28,8 @@ def get_translations_dict(lang):
     with open(path) as f:
         translations = json.load(f)
         return translations.get(lang, {})
-    
+
+# Load translations
 translations = get_translations_dict('en')
 
 @app.route('/')
@@ -125,11 +134,13 @@ def get_report_variables():
 
     variables = {
     'report_title': "Mammography Report",
+    'breast_image_alt': "Breast Projection Image",
+
+    # Projections images 
     "rcc_proj_img": rcc_proj_img,
     "lcc_proj_img": lcc_proj_img,
     "rmlo_proj_img": rmlo_proj_img,
     "lmlo_proj_img": lmlo_proj_img,
-    'breast_image_alt': "Breast Projection Image",
 
     # General Examination Information
     "patient_name": exam_details['patient_name'],
@@ -139,22 +150,27 @@ def get_report_variables():
     "ref_phys": exam_details['ref_phys'],
     "operator_name": exam_details['operator_name'],
     "patient_risk_evaluation": exam_details["patient_risk_evaluation"],
-    "overall_density": exam_details["overall_density"],
     "udi": exam_details["UDI"],
     "limitations": exam_details["limitations"],
-    "quality_system_name": exam_details["quality_system_name"],
-    "quality_values": exam_details["quality_values"],
-    "quality_confirmed": exam_details["quality_confirmed"],
-    "density_confirmed": exam_details["density_confirmed"],
-    "opacities_confirmed": exam_details["opacities_confirmed"],
-    "microcalc_confirmed": exam_details["microcalc_confirmed"],
-    "overall_quality":  exam_details["overall_quality"],
 
-    # Density
+    # *** DENSITY ***
+    "overall_density": exam_details.get("overall_density", '--'),
+    "density_confirmed": get_module_status(exam_details.get("density_confirmed", False)),
+    "density_confirmed_icon": get_module_icon(exam_details.get("density_confirmed", False)),
+
+
+    # Density per projection
     "density_rcc": density_rcc,
     "density_lcc": density_lcc,
     "density_rmlo": density_rmlo,
     "density_lmlo": density_lmlo,
+
+    # *** QUALITY *** 
+    "quality_system_name": exam_details["quality_system_name"],
+    "quality_values": exam_details["quality_values"],
+    "overall_quality":  exam_details["overall_quality"],
+    "quality_confirmed": get_module_status(exam_details.get("quality_confirmed", False)),
+    "quality_confirmed_icon": get_module_icon(exam_details.get("quality_confirmed", False)),
 
     # b-Quality contours 
     "parenchyma_rcc": parenchyma_rcc,
@@ -238,7 +254,13 @@ def get_report_variables():
     "dose_lmlo": "--",
     "post_surgery_lmlo": ' '.join(quality_lmlo.get('PostSurgery', [])),
 
-    # Diagnostics 
+    # *** DIAGNOSTICS ***
+    "opacities_confirmed": get_module_status(exam_details.get("opacities_confirmed", False)),
+    "opacities_confirmed_icon": get_module_icon(exam_details.get("opacities_confirmed", False)),
+    "microcalc_confirmed": get_module_status(exam_details.get("microcalc_confirmed", False)),
+    "microcalc_confirmed_icon": get_module_icon(exam_details.get("microcalc_confirmed", False)),
+
+    # Diagnostics module per proj 
     'opacities_rcc': opacities_rcc,
     "opacities_lcc": opacities_lcc,
     "opacities_rmlo": opacities_rmlo,
