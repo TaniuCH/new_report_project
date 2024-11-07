@@ -45,21 +45,19 @@ def index():
 
 
 # Variables 
-def get_report_variables():
+def get_report_variables(base_url,
+img_width,
+img_height,
+results,
+opacities_types,
+microcalc_types):
     """Return common variables including images and quality shapes for report rendering."""
-    base_url = request.url_root
+  
 
     rcc_proj_img = base_url + url_for('static', filename='images/rcc.png')  
     lcc_proj_img = base_url + url_for('static', filename='images/lcc.png')  
     rmlo_proj_img = base_url + url_for('static', filename='images/rmlo.png')  
     lmlo_proj_img = base_url + url_for('static', filename='images/lmlo.png') 
-
-    # TODO: Obtain image width and height dynamically per projection 
-    img_width= 443
-    img_height= 545
-
-    with open("results.json", "r") as json_file:
-        results = json.load(json_file)
     
     exam_details = results
     opacities_lesions = results.get('opacities', {})
@@ -103,11 +101,6 @@ def get_report_variables():
     # TODO: Get  Nipple profile location and PNL
     # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
     # pnl_lines_rcc = ? 
-
-    # Diagnostics 
-    # **TODO: obtain the classes to show on report from env file (so the user set this dynamically)
-    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5', ]
-    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     
     # Fetch opacities lesions
     opacities_rcc = results.get('opacities', {}).get('rcc', {})
@@ -713,16 +706,27 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions, lesion_index_mapp
     return right_breast_table, left_breast_table
 
 # GENERATE/EXTRACT REPORT FROM HTML FUNCTIONS 
+# Used to see get the html report 
 @app.route('/generate-image')
 def generate_image():
+
+    # Karol, these are the variables needed  to generate the report
     with open('results.json') as f:
         results = json.load(f)
 
-        # TODO (TANIU) def get_report(data: dict, width: int, height: int, opac_show: list, microcalc_show: list) -> string: '''function which takes ALL necessary data and returns the report in HTML"
-    
-    # Pass lesion shapes to the template as needed
-    variables = get_report_variables()
 
+    base_url = request.url_root
+    # Maybe width and height are not needed once implemented 
+    img_width = 443 
+    img_height = 545
+
+    # These should come from env file (to show or hide lesions in report)
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
+    
+    # This returns the report html 
     return render_template('report_quality.html', **variables)
 
 def generate_image_html2image(template_name, output_file_name, variables):
@@ -742,17 +746,34 @@ def generate_image_html2image(template_name, output_file_name, variables):
     hti.screenshot(html_str=html_string, save_as=output_file_name, size=(1280, 2300))  
     return send_file(output_file_name, as_attachment=True)
 
+
 # Quality HTML2Image Route
 @app.route('/html-2-img-html-to-image')
 def generate_image_html2image_quality():
-    variables = get_report_variables()
-    return generate_image_html2image('report_quality.html', 'quality_report_image_html2image.png', variables)
+    # Same parameters as above route
+    with open('results.json') as f:
+        results = json.load(f)
+    base_url = request.url_root
+    img_width = 443
+    img_height = 545
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
 
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
+    return generate_image_html2image('report_quality.html', 'quality_report_image_html2image.png', variables)
 
 # Diagnostics HTML2Image Route
 @app.route('/html-2-img-diagnostics')
 def generate_image_html2image_diagnostics():
-    variables = get_report_variables()
+    with open('results.json') as f:
+        results = json.load(f)
+    base_url = request.url_root
+    img_width = 443
+    img_height = 545
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
     return generate_image_html2image('report_diagnostics.html', 'diagnostics_report_image_html2image.png', variables)
 
 # Pyppeteer 
@@ -784,6 +805,7 @@ def generate_image_with_pyppeteer(template_name, output_file_name, variables):
 
     return send_file(output_file_name, as_attachment=True)
 
+
 # Pyppeteer Route for Quality and Diagnostics
 @app.route('/pyppeteer-html-to-image')
 def generate_image_pyppeteer():
@@ -791,15 +813,19 @@ def generate_image_pyppeteer():
     report_type = request.args.get('report_type', 'quality')
     
     # Set template and output file name based on report type
-    if report_type == 'diagnostics':
-        template_name = 'report_diagnostics.html'
-        output_file_name = 'diagnostics_report_image_pyppeteer.png'
-    else:
-        template_name = 'report_quality.html'
-        output_file_name = 'quality_report_image_pyppeteer.png'
+    template_name = 'report_diagnostics.html' if report_type == 'diagnostics' else 'report_quality.html'
+    output_file_name = 'diagnostics_report_image_pyppeteer.png' if report_type == 'diagnostics' else 'quality_report_image_pyppeteer.png'
 
-    variables = get_report_variables()
+    with open('results.json') as f:
+        results = json.load(f)
+    base_url = request.url_root
+    img_width = 443
+    img_height = 545
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
 
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
+    
     return generate_image_with_pyppeteer(template_name, output_file_name, variables)
 
 # Quality report HTML
@@ -809,8 +835,14 @@ def report():
 
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
-
-    variables = get_report_variables()
+    with open('results.json') as f:
+        results = json.load(f)
+    base_url = request.url_root
+    img_width = 443
+    img_height = 545
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
 
 
     return render_template('report_quality.html', style_sheet_content=style_sheet_content, **variables)
@@ -822,8 +854,14 @@ def diagnostics():
 
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
-
-    variables = get_report_variables()
+    with open('results.json') as f:
+        results = json.load(f)
+    base_url = request.url_root
+    img_width = 443
+    img_height = 545
+    opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
+    microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
+    variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
 
     return render_template('report_diagnostics.html', style_sheet_content=style_sheet_content, **variables)
 
