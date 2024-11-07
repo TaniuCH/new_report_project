@@ -36,6 +36,8 @@
     "lateral_parenchyma_label": "Lateral Parenchyma",
     "pectoralis_label": "Pectoralis",
     "skin_folds_label": "Skin Folds",
+    "skin_folds_location_label": "Location",
+    "skin_folds_severity_label": "Severity",
     "breast_volume_label": "Breast volume",
     "dose_label": "Dose",
     "post_surgery_label": "Post-surgery",
