@@ -93,8 +93,15 @@ def get_report_variables():
     pectoralis_contours_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
     skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
+    # TODO: Get Parenchyma cuts , Nipple profile location and PNL
+    # parenchyma_lateral_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_lateral', []) or [], 'cuts_lateral', img_width, img_height)
+    # parenchyma_medial_cuts_rcc = get_quality_shapes(quality_rcc.get('cuts_medial', []) or [], 'cuts_medial', img_width, img_height)
+    # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
+    # pnl_lines_rcc = ? 
+
+
     # Diagnostics 
-    # **TODO: obtain the ones we need to show from env file 
+    # **TODO: obtain the classes to show on report from env file (so the user set this dynamically)
     opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5', ]
     microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     
@@ -278,10 +285,27 @@ def get_report_variables():
     "elevation_lmlo": quality_lmlo.get('elevation', "not available"),
 
     # *** DIAGNOSTICS ***
+
+    # TODO: Obtain highest Class for microcalc and opacities per BREAST
+    "overall_right_opacities": "-",  
+    "overall_left_opacities":  "3",
+    "overall_right_microcalc":  "4",
+    "overall_left_microcalc":  "5",
+
     "opacities_confirmed": get_module_status(exam_details.get("opacities_confirmed", False)),
     "opacities_confirmed_icon": get_module_icon(exam_details.get("opacities_confirmed", False)),
     "microcalc_confirmed": get_module_status(exam_details.get("microcalc_confirmed", False)),
     "microcalc_confirmed_icon": get_module_icon(exam_details.get("microcalc_confirmed", False)),
+
+    #  TODO: Get highest class per projection 
+    "high_rcc_opacities": "-",  
+    "high_rcc_microcalc":  "BI-RADS 4",
+    "high_lcc_opacities":  "BI-RADS ",
+    "high_lcc_microcalc":  "5",
+    "high_rmlo_opacities": "-",  
+    "high_rmlo_microcalc":  "-",
+    "high_lmlo_opacities":  "Nothing found",
+    "high_lmlo_microcalc":  "BI-RADS 2",
 
     # Diagnostics module per proj 
     'opacities_rcc': opacities_rcc,

@@ -28,31 +28,21 @@
           </div>
           <!-- diagnose Module -->
           <div class="diagnose-module">
-            <p class="no-padding-texts"><strong>{{ overall_diagnose_label }}</strong></p>
-          
-            <!-- <div class="diagnose-modules-container">
-                        <div class="diagnose-general-container">
-                          <div class="diagnose-general {{right_breast_opacities}}">{{ overall_diagnose }}</div>
-                        
-                        </div>
-                        <div class="diagnose-general-container">
-                          <div class="diagnose-general {{microcalc_general}}">{{ overall_diagnose }}</div>
-                        </div>
-                      </div> -->
-          
+            <p class="no-padding-texts"><strong>{{ overall_diagnose_label }}</strong></p>         
             <div class="findings">
               <div class="column">
                 <h5 class="no-padding-texts">Opacities</h5>
                 <div class="general-findings-box">
                   <div class="box right-box">
                     <span class="label right">R</span>
-                    <p class="text">{{right_breast_opacities}}</p>
+                    <div class="finding-big {{overall_right_opacities}}">{{overall_right_opacities}}</div>
+                    <p class="birads-box">BI-RADS</p>
                   </div>
           
                   <div class="box left-box">
                     <span class="label left">L</span>
-                    <div class="finding-big insufficient">5</div>
-                    <p class="birads-box ">BI-RADS {{left_breast_opacities}}</p>
+                    <div class="finding-big {{overall_left_opacities}}">{{overall_left_opacities}}</div>
+                    <p class="birads-box">BI-RADS</p>
                   </div>
                 </div>
               </div>
@@ -61,12 +51,14 @@
                 <div class="general-findings-box">
                   <div class="box right-box">
                     <span class="label right">R</span>
-                    <div class="finding-big moderate">4</div>
-                    <p class="birads-box moderate">BI-RADS {{right_breast_microcalc}}</p>
+                    <div class="finding-big {{overall_right_microcalc}}">{{overall_right_microcalc}}</div>
+                    <p class="birads-box">BI-RADS</p>
                   </div>
+          
                   <div class="box left-box">
                     <span class="label left">L</span>
-                    <p class="text">{{microcalc_left}}</p>
+                    <div class="finding-big {{overall_left_microcalc}}">{{overall_left_microcalc}}</div>
+                    <p class="birads-box">BI-RADS</p>
                   </div>
                 </div>
           
@@ -105,8 +97,8 @@
               <h4 class="proj-labels">{{ rcc_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ rcc_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ rcc_microcalc }}</p>
+              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_rcc_opacities }}</p>
+              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_rcc_microcalc }}</p>
             </div>
           </div>
           <div class="labels-section">
@@ -114,8 +106,8 @@
               <h4 class="proj-labels">{{ lcc_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ lcc_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ lcc_microcalc }}</p>
+              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_lcc_opacities }}</p>
+              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_lcc_microcalc }}</p>
             </div>
           </div>
         </div>
@@ -148,8 +140,8 @@
               <h4 class="proj-labels">{{ rmlo_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ rmlo_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ rmlo_microcalc }}</p>
+              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_rmlo_opacities }}</p>
+              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_rmlo_microcalc }}</p>
             </div>
           </div>
           <div class="labels-section">
@@ -157,8 +149,8 @@
               <h4 class="proj-labels">{{ lmlo_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ lmlo_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ lmlo_microcalc }}</p>
+              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_lmlo_opacities }}</p>
+              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_lmlo_microcalc }}</p>
             </div>
           </div>
         </div>
