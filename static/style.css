@@ -291,6 +291,16 @@
   border-radius: 50%;
 }
 
+.density_chip-diagnose{
+  height: 44px;
+  width: 44px;
+}
+
+.density-p{
+  font-size: 26px;
+  color: black;
+}
+
 .dens-right {
   right: 1px;
 }

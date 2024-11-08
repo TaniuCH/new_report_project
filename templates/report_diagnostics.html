@@ -114,16 +114,16 @@
         <div class="quality-row">
           <div class="diagnostics-images-container">
             <div class="quality-images-right">
-              <div class="density_chip dens-left {{density_rcc}}">
-                <p><strong>{{density_rcc}}</strong></p>
+              <div class="density_chip density_chip-diagnose dens-left {{density_rcc}}">
+                <p class="density-p"><strong>{{density_rcc}}</strong></p>
               </div>
               <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{opacities_rcc|safe}}
               {{microcalc_rcc|safe}}
             </div>
             <div class="quality-images-left">
-              <div class="density_chip dens-right {{density_lcc}}">
-                <p><strong>{{density_lcc}}</strong></p>
+              <div class="density_chip density_chip-diagnose dens-right {{density_lcc}}">
+                <p class="density-p"><strong>{{density_lcc}}</strong></p>
               </div>
               <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{ opacities_lcc|safe }}
@@ -157,16 +157,16 @@
         <div class="quality-row">
           <div class="diagnostics-images-container">
             <div class="quality-images-right">
-              <div class="density_chip dens-left {{density_rmlo}}">
-                <p><strong>{{density_rmlo}}</strong></p>
+              <div class="density_chip density_chip-diagnose dens-left {{density_rmlo}}">
+                <p class="density-p"><strong>{{density_rmlo}}</strong></p>
               </div>
               <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{opacities_rmlo|safe}}
               {{microcalc_rmlo|safe}}
             </div>
             <div class="quality-images-left">
-              <div class="density_chip dens-right {{density_lmlo}}">
-                <p><strong>{{density_lmlo}}</strong></p>
+              <div class="density_chip density_chip-diagnose dens-right {{density_lmlo}}">
+                <p class="density-p"><strong>{{density_lmlo}}</strong></p>
               </div>
               <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{ opacities_lmlo|safe }}
