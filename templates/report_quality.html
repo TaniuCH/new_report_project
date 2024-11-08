@@ -96,8 +96,8 @@
         <!-- CC proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-left">
-              <p><strong>{{rcc_density}}</strong></p>
+            <div class="density_chip dens-left {{density_rcc}}">
+              <p><strong>{{density_rcc}}</strong></p>
             </div>
             <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
             {{ parenchyma_contours_rcc|safe }}
@@ -107,8 +107,8 @@
             {{parenchyma_medial_cuts_rcc|safe}}
           </div>
           <div class="quality-images-left">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
+            <div class="density_chip dens-right {{density_lcc}}">
+              <p><strong>{{density_lcc}}</strong></p>
             </div>
             <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
             {{ parenchyma_contours_lcc|safe }}
@@ -190,8 +190,8 @@
         <!-- MLO proj Images -->
         <div class="quality-images-container">
           <div class="quality-images-right">
-            <div class="density_chip dens-left">
-              <p><strong>D</strong></p>
+            <div class="density_chip dens-left {{density_rmlo}}">
+              <p><strong>{{density_rmlo}}</strong></p>
             </div>
             <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
             {{ parenchyma_contours_rmlo|safe }}
@@ -201,8 +201,8 @@
   
           </div>
           <div class="quality-images-left">
-            <div class="density_chip dens-right">
-              <p><strong>D</strong></p>
+            <div class="density_chip dens-right {{density_lmlo}}">
+              <p><strong>{{density_lmlo}}</strong></p>
             </div>
             <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
             {{ parenchyma_contours_lmlo|safe }}

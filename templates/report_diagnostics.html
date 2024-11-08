@@ -97,8 +97,8 @@
               <h4 class="proj-labels">{{ rcc_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_rcc_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_rcc_microcalc }}</p>
+              <p class="opacities-module-labels {{ high_rcc_opacities }}"><strong>{{ opacities_label }}:</strong> {{ high_rcc_opacities }}</p>
+              <p class="microcalc-module-labels {{high_rcc_microcalc}}"><strong>{{ microcalc_label }}:</strong> {{ high_rcc_microcalc }}</p>
             </div>
           </div>
           <div class="labels-section">
@@ -106,24 +106,24 @@
               <h4 class="proj-labels">{{ lcc_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_lcc_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_lcc_microcalc }}</p>
+              <p class="opacities-module-labels {{high_lcc_opacities}}"><strong>{{ opacities_label }}:</strong> {{ high_lcc_opacities }}</p>
+              <p class="microcalc-module-labels {{high_lcc_microcalc}}"><strong>{{ microcalc_label }}:</strong> {{ high_lcc_microcalc }}</p>
             </div>
           </div>
         </div>
         <div class="quality-row">
           <div class="diagnostics-images-container">
             <div class="quality-images-right">
-              <div class="density_chip dens-left">
-                <p><strong>D</strong></p>
+              <div class="density_chip dens-left {{density_rcc}}">
+                <p><strong>{{density_rcc}}</strong></p>
               </div>
               <img src="{{ rcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{opacities_rcc|safe}}
               {{microcalc_rcc|safe}}
             </div>
             <div class="quality-images-left">
-              <div class="density_chip dens-right">
-                <p><strong>D</strong></p>
+              <div class="density_chip dens-right {{density_lcc}}">
+                <p><strong>{{density_lcc}}</strong></p>
               </div>
               <img src="{{ lcc_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{ opacities_lcc|safe }}
@@ -140,8 +140,8 @@
               <h4 class="proj-labels">{{ rmlo_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_rmlo_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_rmlo_microcalc }}</p>
+              <p class="opacities-module-labels {{high_rmlo_opacities}}"><strong>{{ opacities_label }}:</strong> {{ high_rmlo_opacities }}</p>
+              <p class="microcalc-module-labels {{high_rmlo_microcalc}}"><strong>{{ microcalc_label }}:</strong> {{ high_rmlo_microcalc }}</p>
             </div>
           </div>
           <div class="labels-section">
@@ -149,27 +149,24 @@
               <h4 class="proj-labels">{{ lmlo_label }}</h4>
             </div>
             <div class="labels-findings">
-              <p class="opacities-module-labels"><strong>{{ opacities_label }}:</strong> {{ high_lmlo_opacities }}</p>
-              <p class="microcalc-module-labels"><strong>{{ microcalc_label }}:</strong> {{ high_lmlo_microcalc }}</p>
+              <p class="opacities-module-labels {{high_lmlo_opacities}}"><strong>{{ opacities_label }}:</strong> {{ high_lmlo_opacities }}</p>
+              <p class="microcalc-module-labels {{high_lmlo_microcalc}}"><strong>{{ microcalc_label }}:</strong> {{ high_lmlo_microcalc }}</p>
             </div>
           </div>
         </div>
         <div class="quality-row">
           <div class="diagnostics-images-container">
             <div class="quality-images-right">
-              <div class="density_chip dens-left">
-                <p><strong>D</strong></p>
+              <div class="density_chip dens-left {{density_rmlo}}">
+                <p><strong>{{density_rmlo}}</strong></p>
               </div>
               <img src="{{ rmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{opacities_rmlo|safe}}
               {{microcalc_rmlo|safe}}
-
-  
-  
             </div>
             <div class="quality-images-left">
-              <div class="density_chip dens-right">
-                <p><strong>D</strong></p>
+              <div class="density_chip dens-right {{density_lmlo}}">
+                <p><strong>{{density_lmlo}}</strong></p>
               </div>
               <img src="{{ lmlo_proj_img }}" alt="{{ breast_image_alt }}" class="projection_image" />
               {{ opacities_lmlo|safe }}
