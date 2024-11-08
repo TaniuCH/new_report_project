@@ -205,9 +205,11 @@
 
 .quality-badge {
   border-radius: 15px;
-  padding: 5px;
+  padding: 2px;
   display: inline-block;
   margin: 10px;
+  width: 50%;
+  text-transform: capitalize;
 }
 
 
@@ -311,6 +313,10 @@
 
 .values {
   color: white;
+}
+
+.quality-values{
+  text-transform: uppercase;
 }
 
 
@@ -600,19 +606,19 @@ table thead th:first-child {
 }
 
 .perfect_box {
-  border: 1px solid green;
+  border: 2px solid green;
 }
 
 .good_box {
-  border: 1px solid rgb(53, 107, 53);
+  border: 2px solid rgb(53, 107, 53);
 }
 
 .moderate_box {
-  border: 1px solid orange;
+  border: 2px solid orange;
 }
 
 .insufficient_box {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 
 .A{
@@ -643,5 +649,17 @@ table thead th:first-child {
 }
 
 .birads_5 {
+  color: red;
+}
+
+.correct {
+  color: rgb(26, 204, 26);
+}
+
+.mild{
+  color: orange;
+}
+
+.severe{
   color: red;
 }

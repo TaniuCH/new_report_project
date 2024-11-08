@@ -94,10 +94,10 @@ microcalc_types):
     pectoralis_contours_lmlo = get_quality_shapes(quality_lmlo.get('pectoralis', []) or [], 'pectoralis', img_width, img_height)
     skin_folds_contours_lmlo = get_quality_shapes(quality_lmlo.get('skin_folds', []) or [], 'skinFolds', img_width, img_height)
 
-    parenchyma_lateral_cuts_rcc = get_cuts(quality_rcc.get('cuts_lateral_list', []),"rcc")
-    parenchyma_medial_cuts_rcc = get_cuts(quality_rcc.get('cuts_medial_list', []),"rcc")
-    parenchyma_lateral_cuts_lcc = get_cuts(quality_lcc.get('cuts_lateral_list', []), "lcc")
-    parenchyma_medial_cuts_lcc = get_cuts(quality_lcc.get('cuts_medial_list', []), "lcc")
+    parenchyma_lateral_cuts_rcc = get_cuts(quality_rcc.get('parenchyma_cuts_lateral_list', []),"rcc")
+    parenchyma_medial_cuts_rcc = get_cuts(quality_rcc.get('parenchyma_cuts_medial_list', []),"rcc")
+    parenchyma_lateral_cuts_lcc = get_cuts(quality_lcc.get('parenchyma_cuts_lateral_list', []), "lcc")
+    parenchyma_medial_cuts_lcc = get_cuts(quality_lcc.get('parenchyma_cuts_medial_list', []), "lcc")
     parenchyma_cuts_rmlo = get_cuts(quality_rmlo.get('parenchyma_cuts_list', []), "rmlo")
     parenchyma_cuts_lmlo = get_cuts(quality_lmlo.get('parenchyma_cuts_list', []), "lmlo")
 
@@ -200,6 +200,7 @@ microcalc_types):
     "quality_class_rcc": quality_rcc.get('quality', "not available"),
     "quality_explanation_rcc": quality_rcc.get('quality_explanation', "not available"),
     "compression_rcc": quality_rcc.get('compression_class', "not available"),
+    "compression_value_rcc": quality_rcc.get("compression_n", "-"),
     "symmetry_rcc": quality_rcc.get('symmetry', "not available"),
     "blur_rcc": quality_rcc.get('blur', "not available"),
     "pnl_rcc": quality_rcc.get('PNL', "not available"),
@@ -208,8 +209,8 @@ microcalc_types):
     "nipple_deviation_rcc": quality_rcc.get('nipple_deviation', "not available"),
     "nipple_angle_rcc": quality_rcc.get('nipple_angle', "not available"),
     "nipple_rcc": quality_rcc.get('nipple_centered', "not available"),
-    "medial_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_medial_list', "not available") ,
-    "lateral_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_lateral_list', "not available")  ,
+    "medial_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_medial', "not available") ,
+    "lateral_parenchyma_rcc": quality_rcc.get('parenchyma_cuts_lateral', "not available")  ,
     "pectoralis_rcc": quality_rcc.get('pectoralis_muscle', "not available") ,
     "skin_folds_location_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_rcc" : (quality_rcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -223,6 +224,7 @@ microcalc_types):
     "quality_class_lcc": quality_lcc.get('quality', "not available"),
     "quality_explanation_lcc": quality_lcc.get('quality_explanation', "not available"),
     "compression_lcc": quality_lcc.get('compression_class', "not available"),
+    "compression_value_lcc": quality_lcc.get("compression_n", "-"),
     "symmetry_lcc": quality_lcc.get('symmetry', "not available"),
     "blur_lcc": quality_lcc.get('blur', "not available"),
     "pnl_lcc": quality_lcc.get('PNL', "not available"),
@@ -231,8 +233,8 @@ microcalc_types):
     "nipple_deviation_lcc": quality_lcc.get('nipple_deviation', "not available"),
     "nipple_angle_lcc": quality_lcc.get('nipple_angle', "not available"),
     "nipple_lcc": quality_lcc.get('nipple_centered', "not available"),
-    "medial_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_medial_list', "not available"),
-    "lateral_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_lateral_list', "not available"),
+    "medial_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_medial', "not available"),
+    "lateral_parenchyma_lcc": quality_lcc.get('parenchyma_cuts_lateral', "not available"),
     "pectoralis_lcc": quality_lcc.get('pectoralis_muscle', "not available"),
     "skin_folds_location_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('location', "none"),
     "skin_folds_severity_lcc" : (quality_lcc.get('skin_folds', []) or [{}])[0].get('severity', "-"),
@@ -246,6 +248,7 @@ microcalc_types):
     "quality_class_rmlo": quality_rmlo.get('quality', "not available"),
     "quality_explanation_rmlo": quality_rmlo.get('quality_explanation', "not available"),
     "compression_rmlo": quality_rmlo.get('compression_class', "not available"),
+    "compression_value_rmlo": quality_rmlo.get("compression_n", "-"),
     "symmetry_rmlo": quality_rmlo.get('symmetry', "not available"),
     "blur_rmlo": quality_rmlo.get('blur', "not available"),
     "pnl_rmlo": quality_rmlo.get('PNL', "not available"),
@@ -270,6 +273,7 @@ microcalc_types):
     "quality_class_lmlo": quality_lmlo.get('quality', "not available"),
     "quality_explanation_lmlo": quality_lmlo.get('quality_explanation', "not available"),
     "compression_lmlo": quality_lmlo.get('compression_class', "not available"),
+    "compression_value_lmlo": quality_lmlo.get("compression_n", "-"),
     "symmetry_lmlo": quality_lmlo.get('symmetry', "not available"),
     "blur_lmlo": quality_lmlo.get('blur', "not available"),
     "pnl_lmlo": quality_lmlo.get('PNL', "not available"),
