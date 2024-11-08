@@ -62,11 +62,14 @@ microcalc_types):
     exam_details = results
     opacities_lesions = results.get('opacities', {})
 
-    # Density 
-    density_rcc = results.get('density', {}).get('rcc', {})
-    density_lcc = results.get('density', {}).get('lcc', {})
-    density_rmlo = results.get('density', {}).get('rmlo', {})
-    density_lmlo = results.get('density', {}).get('lmlo', {})
+    # Density
+    density_data = results.get('density', {})  
+
+    density_rcc = density_data.get('rcc', "-")
+    density_lcc = density_data.get('lcc', "-")
+    density_rmlo = density_data.get('rmlo', "-")
+    density_lmlo = density_data.get('lmlo', "-")
+
 
     # Quality 
     quality_rcc = results.get('quality', {}).get('rcc', {})
@@ -98,7 +101,7 @@ microcalc_types):
     parenchyma_cuts_rmlo = get_cuts(quality_rmlo.get('parenchyma_cuts_list', []), "rmlo")
     parenchyma_cuts_lmlo = get_cuts(quality_lmlo.get('parenchyma_cuts_list', []), "lmlo")
 
-    # TODO: Get  Nipple profile location and PNL
+    # TODO: Karol? Get  Nipple profile location and PNL
     # nipple_location_rcc = get_quality_shapes(quality_rcc.get('location_nipple', []) or [], 'location_nipple', img_width, img_height)
     # pnl_lines_rcc = ? 
     
@@ -289,7 +292,7 @@ microcalc_types):
 
     # *** DIAGNOSTICS ***
 
-    # TODO: Obtain highest Class for microcalc and opacities per BREAST
+    # TODO: Karol Obtain highest Class for microcalc and opacities per BREAST (dont know whats best for this to take dynamic colors)
     "overall_right_opacities": "-",  
     "overall_left_opacities":  "3",
     "overall_right_microcalc":  "4",
@@ -300,15 +303,15 @@ microcalc_types):
     "microcalc_confirmed": get_module_status(exam_details.get("microcalc_confirmed", False)),
     "microcalc_confirmed_icon": get_module_icon(exam_details.get("microcalc_confirmed", False)),
 
-    #  TODO: Get highest class per projection 
+    #  TODO: Karol Get highest class per projection 
     "high_rcc_opacities": "-",  
-    "high_rcc_microcalc":  "BI-RADS 4",
-    "high_lcc_opacities":  "BI-RADS ",
-    "high_lcc_microcalc":  "5",
+    "high_rcc_microcalc":  "birads_5",
+    "high_lcc_opacities":  "birads_5",
+    "high_lcc_microcalc":  "birads_5",
     "high_rmlo_opacities": "-",  
     "high_rmlo_microcalc":  "-",
-    "high_lmlo_opacities":  "Nothing found",
-    "high_lmlo_microcalc":  "BI-RADS 2",
+    "high_lmlo_opacities":  "-",
+    "high_lmlo_microcalc":  "birads_2",
 
     # Diagnostics module per proj 
     'opacities_rcc': opacities_rcc,
@@ -710,17 +713,18 @@ def create_breast_tables(new_grouped_boxes, opacities_lesions, lesion_index_mapp
 @app.route('/generate-image')
 def generate_image():
 
-    # Karol, these are the variables needed  to generate the report
+    # TODO: Karol, these are the variables needed  to generate the report
     with open('results.json') as f:
         results = json.load(f)
 
 
     base_url = request.url_root
-    # Maybe width and height are not needed once implemented 
+
+    # TODO: Get proj size. Maybe width and height are not needed once implemented 
     img_width = 443 
     img_height = 545
 
-    # These should come from env file (to show or hide lesions in report)
+    # TODO: Get from env file (to show or hide lesions in report)
     opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
     microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
 

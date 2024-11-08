@@ -18,10 +18,10 @@
   "opacities_confirmed": "True",
   "microcalc_confirmed": "False",
   "density": {
-    "rcc": { "density": "B" },
-    "lcc": { "density": "C" },
-    "rmlo": { "density": "B" },
-    "lmlo": { "density": "C" }
+    "rcc": "B",
+    "lcc": "C",
+    "rmlo": "B",
+    "lmlo": "C"
   },
   "opacities": {
     "rcc": {

@@ -556,7 +556,7 @@ table thead th:first-child {
   border-left: none;
 }
 
-/* QUALITY AND CLASSES COLORS */
+/* CLASSES COLORS */
 .perfect {
   color: rgb(9, 80, 9);
 }
@@ -620,3 +620,18 @@ table thead th:first-child {
   background: red;
 }
 
+.birads_2 {
+  color: rgb(9, 80, 9);
+}
+
+.birads_3 {
+  color: rgb(53, 107, 53);
+}
+
+.birads_4 {
+  color: orange;
+}
+
+.birads_5 {
+  color: red;
+}
