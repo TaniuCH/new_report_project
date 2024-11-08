@@ -79,7 +79,7 @@
               <p><strong>{{ symmetry_label }}:</strong> <span class="quality-values {{ symmetry_rcc }}">{{ symmetry_rcc }}</span></p>
               <p><strong>{{ blur_label }}:</strong> <span class="quality-values {{ blur_rcc }}">{{ blur_rcc }}</span></p>
               <p><strong>{{ pnl }}:</strong> <span class="quality-values {{ pnl_rcc }}">{{ pnl_rcc }} ({{ pnl_diff_rcc }}mm)</span></p>
-              <p><strong>{{ pnl_diff_label }}:</strong> <span class="quality-values {{ compression_rcc }}">{{ pnl_diff_rcc }}</span></p>
+              <p><strong>{{ pnl_diff_label }}:</strong> <span class="quality-values {{ pnl_rcc }}">{{ pnl_diff_rcc }}</span></p>
               <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="quality-values {{ nipple_centered_rcc }}">{{ nipple_centered_rcc }}</span></p>
               <p><strong>{{ mamilla_profile_label }}:</strong> <span class="quality-values {{ nipple_rcc }}">{{ nipple_rcc }}</span></p>
               <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="quality-values {{ medial_parenchyma_rcc }}">{{ medial_parenchyma_rcc }}</span></p>
@@ -136,7 +136,7 @@
             <p><strong>{{ symmetry_label }}:</strong> <span class="quality-values {{ symmetry_lcc }}">{{ symmetry_lcc }}</span></p>
             <p><strong>{{ blur_label }}:</strong> <span class="quality-values {{ blur_lcc }}">{{ blur_lcc }}</span></p>
             <p><strong>{{ pnl }}:</strong> <span class="quality-values {{ pnl_lcc }}">{{ pnl_lcc }} ({{ pnl_diff_lcc }}mm)</span></p>
-            <p><strong>{{ pnl_diff_label }}:</strong> <span class="quality-values {{ compression_lcc }}">{{ pnl_diff_lcc }}</span></p>
+            <p><strong>{{ pnl_diff_label }}:</strong> <span class="quality-values {{ pnl_lcc }}">{{ pnl_diff_lcc }}</span></p>
             <p><strong>{{ mamilla_deviation_label }}:</strong> <span class="quality-values {{ nipple_centered_lcc }}">{{ nipple_centered_lcc }}</span></p>
             <p><strong>{{ mamilla_profile_label }}:</strong> <span class="quality-values {{ nipple_lcc }}">{{ nipple_lcc }}</span></p>
             <p><strong>{{ medial_parenchyma_label }}:</strong> <span class="quality-values {{ medial_parenchyma_lcc }}">{{ medial_parenchyma_lcc }}</span></p>
@@ -167,18 +167,18 @@
               <p><strong>{{ quality_explanation_label }}:</strong></p>
               <div class="quality-explanation-list">{{ quality_explanation_rmlo }}</div>
             </div>
-            <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_rmlo }} ({{compression_value_rmlo}}N)</span></p>
-            <p><strong>{{ elevation_label }}:</strong> {{ elevation_rmlo }}</p>
-            <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_rmlo }}</span></p>
-            <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_rmlo }}</span></p>
-            <p><strong>{{ mamilla_profile_label }}:</strong> <span class="orange">{{ nipple_profile_lmlo }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_rmlo }}</span> <span class="values">{{ pnl_rmlo }}&nbsp;mm</span></p>
-            <p><strong>{{ parenchyma_label }}:</strong> <span class="green">{{ parenchyma_rmlo }}</span></p>
-            <p><strong>{{ pectoralis_angle_label }}:</strong> <span class="red">{{ pectoralis_angle_rmlo }}</span></p>
-            <p><strong>{{ pectoralis_relax_label }}:</strong> <span class="red">{{ pectoralis_shape_rmlo }}</span></p>
-            <p><strong>{{ pectoralis_nipple_level_label }}:</strong> <span class="red">{{ pectoralis_level_rmlo }}</span></p>
-            <p><strong>{{ imf_label }}:</strong> <span class="red">{{ imf_rmlo }}</span></p>
-            <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ skin_folds_location_rmlo }} {{ skin_folds_severity_rmlo }}</span></p>
+            <p><strong>{{ compression_label }}:</strong> <span class="quality-values {{compression_rmlo}}">{{ compression_rmlo }} ({{compression_value_rmlo}}N)</span></p>
+            <p><strong>{{ elevation_label }}:</strong> <span class="quality-values {{elevation_rmlo}}">{{ elevation_rmlo }}</span></p>
+            <p><strong>{{ symmetry_label }}:</strong> <span class="quality-values {{symmetry_rmlo}}">{{ symmetry_rmlo }}</span></p>
+            <p><strong>{{ blur_label }}:</strong> <span class="quality-values {{blur_rmlo}}">{{ blur_rmlo }}</span></p>
+            <p><strong>{{ mamilla_profile_label }}:</strong> <span class="quality-values {{nipple_profile_lmlo}}">{{ nipple_profile_lmlo }}</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="quality-values {{pnl_class_rmlo}}">{{ pnl_class_rmlo }}</span> <span class="values">{{ pnl_rmlo }}&nbsp;mm</span></p>
+            <p><strong>{{ parenchyma_label }}:</strong> <span class="quality-values {{parenchyma_rmlo}}">{{ parenchyma_rmlo }}</span></p>
+            <p><strong>{{ pectoralis_angle_label }}:</strong> <span class="quality-values {{pectoralis_angle_rmlo}}">{{ pectoralis_angle_rmlo }}</span></p>
+            <p><strong>{{ pectoralis_relax_label }}:</strong> <span class="quality-values {{pectoralis_shape_rmlo}}">{{ pectoralis_shape_rmlo }}</span></p>
+            <p><strong>{{ pectoralis_nipple_level_label }}:</strong> <span class="quality-values {{pectoralis_level_rmlo}}">{{ pectoralis_level_rmlo }}</span></p>
+            <p><strong>{{ imf_label }}:</strong> <span class="quality-values {{imf_rmlo}}">{{ imf_rmlo }}</span></p>
+            <p><strong>{{ skin_folds_label }}:</strong> <span class="quality-values {{skin_folds_severity_rmlo}}">{{ skin_folds_location_rmlo }} {{ skin_folds_severity_rmlo }}</span></p>
             <br/>
             <p><strong>{{ breast_volume_label }}:</strong>{{ breast_volume_rmlo }} {{ gross_volume_rmlo }} cm³</p>
             <p><strong>{{ dose_label }}:</strong> {{ dose_rmlo }}</p>
@@ -226,23 +226,23 @@
               <p><strong>{{ quality_explanation_label }}:</strong></p>
               <div class="quality-explanation-list">{{ quality_explanation_lmlo }}</div>
             </div>
-            <p><strong>{{ compression_label }}:</strong> <span class="green">{{ compression_lmlo }} ({{compression_value_lmlo}}N)</span></p>
-            <p><strong>{{ elevation_label }}:</strong> {{ elevation_rmlo }}</p>
-            <p><strong>{{ symmetry_label }}:</strong> <span class="green">{{ symmetry_lmlo }}</span></p>
-            <p><strong>{{ blur_label }}:</strong> <span class="green">{{ blur_lmlo }}</span></p>
-            <p><strong>{{ mamilla_profile_label }}:</strong> <span class="orange">{{ nipple_profile_lmlo }}</span></p>
-            <p><strong>{{ pnl }}:</strong> <span class="green">{{ pnl_class_lmlo }}</span> <span class="values">{{ pnl_lmlo }}&nbsp;mm</span></p>
-            <p><strong>{{ parenchyma_label }}:</strong> <span class="green">{{ parenchyma_lmlo }}</span></p>
-            <p><strong>{{ pectoralis_angle_label }}:</strong> <span class="red">{{ pectoralis_angle_rmlo }}</span></p>
-            <p><strong>{{ pectoralis_relax_label }}:</strong> <span class="red">{{ pectoralis_shape_rmlo }}</span></p>
-            <p><strong>{{ pectoralis_nipple_level_label }}:</strong> <span class="red">{{ pectoralis_level_rmlo }}</span></p>
-            <p><strong>{{ imf_label }}:</strong> <span class="red">{{ imf_rmlo }}</span></p>
-            <p><strong>{{ skin_folds_label }}:</strong> <span class="green">{{ skin_folds_location_lmlo }} {{ skin_folds_severity_lmlo }}</span></p>
+            <p><strong>{{ compression_label }}:</strong> <span class="quality-values {{compression_lmlo}}">{{ compression_lmlo }} ({{compression_value_lmlo}}N)</span></p>
+            <p><strong>{{ elevation_label }}:</strong> <span class="quality-values {{elevation_lmlo}}">{{ elevation_lmlo }}</span></p>
+            <p><strong>{{ symmetry_label }}:</strong> <span class="quality-values {{symmetry_lmlo}}">{{ symmetry_lmlo }}</span></p>
+            <p><strong>{{ blur_label }}:</strong> <span class="quality-values {{blur_lmlo}}">{{ blur_lmlo }}</span></p>
+            <p><strong>{{ mamilla_profile_label }}:</strong> <span class="quality-values {{nipple_profile_lmlo}}">{{ nipple_profile_lmlo }}</span></p>
+            <p><strong>{{ pnl }}:</strong> <span class="quality-values {{pnl_class_lmlo}}">{{ pnl_class_lmlo }}</span> <span class="values">{{ pnl_lmlo }}&nbsp;mm</span></p>
+            <p><strong>{{ parenchyma_label }}:</strong> <span class="quality-values {{parenchyma_lmlo}}">{{ parenchyma_lmlo }}</span></p>
+            <p><strong>{{ pectoralis_angle_label }}:</strong> <span class="quality-values {{pectoralis_angle_lmlo}}">{{ pectoralis_angle_lmlo }}</span></p>
+            <p><strong>{{ pectoralis_relax_label }}:</strong> <span class="quality-values {{pectoralis_shape_lmlo}}">{{ pectoralis_shape_lmlo }}</span></p>
+            <p><strong>{{ pectoralis_nipple_level_label }}:</strong> <span class="quality-values {{pectoralis_level_lmlo}}">{{ pectoralis_level_lmlo }}</span></p>
+            <p><strong>{{ imf_label }}:</strong> <span class="quality-values {{imf_lmlo}}">{{ imf_lmlo }}</span></p>
+            <p><strong>{{ skin_folds_label }}:</strong> <span class="quality-values {{skin_folds_severity_lmlo}}">{{ skin_folds_location_lmlo }} {{ skin_folds_severity_lmlo }}</span></p>
             <br/>
             <p><strong>{{ breast_volume_label }}:</strong>{{ breast_volume_lmlo }} {{ gross_volume_lmlo }} cm³</p>
             <p><strong>{{ dose_label }}:</strong> {{ dose_lmlo }}</p>
             <p><strong>{{ post_surgery_label }}:</strong> {{ post_surgery_lmlo }}</p>
-            <p><strong>{{ clips_label }}:</strong> {{ clips_rmlo }}</p>
+            <p><strong>{{ clips_label }}:</strong> {{ clips_lmlo }}</p>
           </div>  
         </div>
       </div>
