@@ -843,11 +843,18 @@ def report():
 
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
+
+    # TODO: Karol, these are the variables needed  to generate the report
+
+
+
     with open('results.json') as f:
         results = json.load(f)
     base_url = request.url_root
+    # TODO: Get proj size. Maybe width and height are not needed once implemented 
     img_width = 443
     img_height = 545
+    # TODO: Get from env file (to show or hide lesions in report)
     opacities_types = ['vessels', 'birads2', 'birads3', 'birads4', 'birads5']
     microcalc_types = ['birads2', 'birads3', 'birads4', 'birads5', 'lesionKnown']
     variables = get_report_variables(base_url, img_width, img_height, results, opacities_types, microcalc_types)
