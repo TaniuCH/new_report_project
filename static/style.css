@@ -652,6 +652,10 @@ table thead th:first-child {
   color: red;
 }
 
+.sharp{
+  color: rgb(26, 204, 26);
+}
+
 .correct {
   color: rgb(26, 204, 26);
 }
