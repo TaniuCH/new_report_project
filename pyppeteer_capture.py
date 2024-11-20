@@ -1,27 +1,30 @@
+import sys
 import asyncio
 from pyppeteer import launch
-import sys
-import os
 
-async def html_to_image_pyppeteer(html_file_path, output_path):
-    with open(html_file_path, 'r', encoding='utf-8') as html_file:
-        html_string = html_file.read()
-
+async def capture_html_as_image(html_file_path, output_file_name):
     browser = await launch(headless=True)
     page = await browser.newPage()
 
-    # Set the content from the HTML string
-    await page.setContent(html_string)
+    # Open the HTML file in the browser
+    await page.goto(f'file://{html_file_path}')
+    
+    # Wait for the content to load (adjust as necessary)
+    await page.waitForSelector('body')  
 
-    await page.waitForSelector('body') 
-    await page.waitFor(1000) 
-
-    await page.screenshot({'path': os.path.abspath(output_path), 'fullPage': True})
+    # Take a screenshot of the page
+    await page.screenshot({'path': output_file_name})
     await browser.close()
 
-if __name__ == '__main__':
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python pyppeteer_capture.py <html_file_path> <output_image_path>")
+        sys.exit(1)
+    
     html_file_path = sys.argv[1]
-    output_path = sys.argv[2]
+    output_image_path = sys.argv[2]
 
-    # Use asyncio.run to execute the async function
-    asyncio.run(html_to_image_pyppeteer(html_file_path, output_path))
+    asyncio.get_event_loop().run_until_complete(capture_html_as_image(html_file_path, output_image_path))
+
+if __name__ == '__main__':
+    main()
