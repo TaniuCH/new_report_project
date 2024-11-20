@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ report_title }}</title>
+    <style>
+        {{ style_sheet_content | safe }}
+    </style>
+</head>
+<body class="body-style">
+  <div class="scorecard_container">
+
+    <!-- 1st row (Age , Risk and Density ) -->
+    <!-- Age / risk  -->
+     <div class="age_risk_container">
+        <div class="age_container">
+            <p class="age_label">{{age_label}}</p>
+            <p class="value age">{{patient_age}}y</p> 
+        </div>
+        <div class="risk_container {{module_risk}}">
+            <div class="risk_label_container">
+                <p class="label">{{risk_label}}</p>
+                <p class="label_year">({{year_label}})</p>    
+            </div>      
+            <p class="value risk {{risk_class}}">{{overall_risk}}</p>
+        </div>
+    </div>
+    <!-- Density  -->
+    <div class="density_container {{module_density}}">
+        <p class="label">{{density_label}}</p>
+        <div class="density_value">
+            <p class="value density {{density_class}}">{{higher_density}}</p>
+        </div>    
+    </div>
+
+    <!-- 2nd row Quality  -->
+    <div class="quality_container {{module_quality}}">
+      <p class="label">{{quality_label}}</p>
+      <p class="value quality {{quality_class}}">{{lower_quality}}</p>
+    </div>
+
+    <!-- 3rd row Diagnostics -->
+    <div class="diagnose_container {{module_diagnostics}}">
+      <p class="label">{{diagnostics_label}}</p>
+      <div class="diagnostics_class_container {{diagnostic_class}}">
+        <p class="birads">BI-RADS</p>
+      <p class="value diagnostic">{{higher_diagnostics}}</p>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

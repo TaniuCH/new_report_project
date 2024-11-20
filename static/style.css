@@ -1,669 +1,236 @@
-.body-style {
-  /* font-family: Arial, sans-serif; */
-  /* font-family: 'Garamond', 'Georgia', serif; */
-  font-family: 'Inter', sans-serif;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;  
   margin: 0;
-  padding: 0;
-  min-width: 1400px;
-  height: auto;
-  width: 100vw;
-  background-color: #2f2f2f;
-}
-
-
-.report-main-container {
-  margin: 20px;
   padding: 10px;
-  background-color: #4a4a4a;
+  border-radius: 10px;
+  gap: 10px;
+  height: 96vh;
 }
 
-.header-container {
-  width: 100%;
-  color: white;
-  border-radius: 5px;
-  height: auto;
-  overflow: visible;
-}
-
-.header-title {
-  padding: 20px 10px;
-  font-size: 1.5em;
-  font-weight: bold;
-  background: #5d5d5d;
-  margin: 10px 0;
-  border-radius: 5px;
-}
-
-.header-info {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  border: 3px solid #959595;
-  border-radius: 5px;
-  padding: 10px;
-}
-
-.general-texts{
-  margin: 6px
-}
-
-.patient-info {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.exam-info {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-
-.patient-info-diagnose {
-  width: 25%;
-}
-
-.exam-info-diagnose {
-  width: 25%;
-}
-
-.exam-details {
-  display: flex;
-  justify-content: space-between;
-}
-
-.density-module {
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.density-module-diagnose {
-  width: 15%;
-}
-
-.density-status {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.density-circle {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  margin-bottom: 10px;
-  background: gray;
-}
-
-.quality-overall-container {
-  margin-bottom: 10px
-}
-
-.quality-overall {
-  border-radius: 5px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  margin-bottom: 10px;
-  padding: 2px 6px;
-  background: gray;
-  text-transform: uppercase;
-
-}
-
-
-.quality-module {
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  align-items: center;
+.scorecard_container {
+  border: 8px solid white;
   height: 100%;
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
-.risk-info {
-  display: flex;
-  padding: 4px 10px;
-  background: #5d5d5d;
-  border-radius: 5px;
-  margin: 8px 0;
+
+.age_risk_container{
+  grid-column: 1 span;
+  grid-row: 1;
+  }
+
+.age_container {
+ border:1px solid ;
+ display: flex ;
   align-items: center;
-}
-
-.risk-label {
-  width: 10%;
-}
-
-.risk-details {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.risk-evaluation {
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  margin-right: 30px;
-}
-
-.risk-icon {
-  font-size: 1.5em;
-}
-
-.risk-description {
-  color: #cccccc;
-}
-
-.header-font {
-  font-size: 1.5em;
-}
-
-.main-features-container {
-  width: 100%;
-  margin: 20px auto;
-  background-color: #4a4a4a;
-  color: white;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-.quality-row {
-  width: 100%;
-  border-radius: 5px;
-  display: flex;
-}
-
-.quality-section {
-  width: 25%;
-  padding: 20px;
-}
-
-.quality-label {
-  text-align: center;
-}
-
-.label-text {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-.quality-badge {
-  border-radius: 15px;
-  padding: 2px;
-  display: inline-block;
-  margin: 10px;
-  width: 50%;
-  text-transform: capitalize;
-}
-
-
-.badge-text {
-  color: white;
-  padding: 2px 10px;
-  border-radius: 5px;
-  height: 20px;
-  min-width: 150px;
-}
-
-.quality-details {
-  margin-top: 20px;
-}
-
-.quality-explanation-box {
-  color: white;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.quality-explanation-list{
-  padding: 10px;
-}
-
-.quality-images-container {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  overflow: hidden;
-  background-color: black;
-  height: 800px;
-  display: flex;
-  border-radius: 5px;
-  position: relative;
-}
-
-.quality-images-right {
-  max-width: 100%;
-  max-height: 100%;
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative
-}
-
-.quality-images-left {
-  max-width: 100%;
-  max-height: 100%;
-  z-index: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-}
-
-.projection_image {
-  max-width: 100%;
-  max-height: 100%;
-  z-index: 1;
-  display: block;
-  object-fit: contain;
-}
-
-
-.density_chip {
-  margin: 4px;
-  top: 4px;
-  height: 34px;
-  width: 34px;
-  z-index: 9;
-  position: absolute;
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-}
-
-.density_chip-diagnose{
-  height: 44px;
-  width: 44px;
-}
-
-.density-p{
-  font-size: 26px;
+  background: cyan;
   color: black;
 }
 
-.dens-right {
-  right: 1px;
-}
-
-.dens-left {
-  left: 1px;
-}
-
-.values {
-  color: white;
-}
-
-.quality-values{
-  text-transform: uppercase;
+.risk_container{
+  border-right: 1px solid gray;
 }
 
 
-.limitations-info {
-  margin-left: 0;
+.density_container {
+ grid-column: span 2;
+ grid-row: 1;
 }
 
-.footer-info {
-  padding: 0;
+.quality_container {
+  grid-column: span 2;
+  grid-row: 2;
+  border-top: 1px solid gray;
+
+
 }
 
+.diagnose_container {
+  grid-column: span 2;
+  grid-row: 3;
+  border-top: 1px solid gray;
 
-.disclaimer {
-  font-style: italic;
-  color: gray;
-  font-size: 12px;
+
 }
 
-
-.diagnostics-images-container {
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  overflow: hidden;
-  background-color: black;
-  max-height: 1800px;
+.scorecard > div {
   display: flex;
-  border-radius: 5px;
-  position: relative;
-}
-
-.diagnose-module {
-  display: flex;
-  width: 30%;
-  align-items: center;
-  height: 100%;
-  justify-content: space-around;
-  flex-direction: column;
-}
-
-.diagnose-modules-container {
-  display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: space-between;
-}
-
-.diagnose-general-container {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 50%;
-
 }
 
-.diagnose-general {
-  border-radius: 5px;
-  width: 70%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  border:1px solid gray
-}
-
-
-.container {
-  text-align: center;
-}
-
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.findings {
-  display: flex;
-  justify-content: space-around;
-  gap: 30px;
-  margin-top: 10px;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.box {
-  width: 100px;
-  height: 110px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  color: #ffffff;
-  font-size: 12px;
-  text-align: center;
-}
-
-.right-box{
-  border: 2px solid #888;
-  border-right: 1px dashed #888;
-
-}
-
-.left-box{
-  border: 2px solid #888;
-  border-left: 1px dashed #888;
-}
-
-
-.birads-box{
-  font-size: 12px;
-  color: #cccccc;
-  position: absolute;
-  left: 5px;
-  bottom: 5px;
+.scorecard h1, .scorecard p {
   margin: 0;
-  padding: 0;
-}
-
-.finding-big{
-  font-size: 80px;
-  font-weight: bold;
-}
-
-.text{
-  color: #cccccc;
 }
 
 .label {
-  font-size: 10px;
-  color: #cccccc;
-  position: absolute;
-  top: 5px;
-}
-
-.left{
-  right: 5px;
-}
-
-.right{
-  left: 5px;
-}
-
-.general-findings-box{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.no-padding-texts{
-  padding: 4px 0;
-  margin: 0 4px;
-}
-
-
-.proj-labels{
-  margin: 4px;
-  color: #cccccc;
-}
-
-.labels-section-container-mlo{
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  padding-left: 10px;
-  margin-top: 20px;
-}
-
-
-.label-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.labels-section-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  padding-left: 10px;
-}
-
-.labels-section {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.labels-findings {
-  display: flex;
-  flex-direction: column;
-}
-
-.opacities-module-labels{
-  margin: 0 8px;
-}
-
-.microcalc-module-labels{
-  margin: 8px;
-}
-
-.lesion-table-container{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-}
-
-.lesion-tables{
-  width: 45%;
-}
-
-table {
-  width: 100%;
-  text-align: left;
-  background: #4a4a4a;
-  border: 1px solid #5a5a5a;
-  font-size: 18px;
-}
-
-table td, table th {
-  padding: 4px 12px;
-}
-
-.size-row{
-  padding: 4px 12px;
-  text-align: center;
-  font-size: 14px;
-}
-
-table tr:nth-child(even) {
-  background: #616060;
-}
-
-table thead {
-  background: #808080;
-  font-size: 15px;
+  font-size: 64px;
   font-weight: bold;
-  color: #FFFFFF;
-  text-transform: uppercase;  
+  margin: 0px 10px;
+  text-transform: uppercase;
 }
 
-table thead th:first-child {
-  border-left: none;
+.value {
+  font-weight: bold;
+  margin: 4px
 }
 
-/* CLASSES COLORS */
-.perfect {
-  color: rgb(9, 80, 9);
+/* Age */
+.age_label{
+  font-size: 44px;
+  margin: 0px 10px;
+  text-transform: uppercase;
 }
 
-.good {
-  color: rgb(53, 107, 53);
+.age{
+  font-size: 64px;
+  font-weight: bold;
+  margin: 0px 10px;
 }
 
-.moderate {
+/* Risk Classes */
+.risk_label_container{
+  display: flex;
+  align-items: flex-start;
+  align-items: center;
+}
+
+.risk{
+  font-size: 150px;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+
+}
+
+.label_year{
+  font-size: 40px;
+  margin: 0px ;
+}
+
+.risk-normal {
+  color: green;
+}
+
+.risk-increased {
   color: orange;
 }
 
-.insufficient {
+.risk-high {
   color: red;
 }
 
-.perfect_background {
+/* Density Classes */
+.density {
+  font-size: 210px;
+  border-radius: 50%;
+  height: 220px;
+  width: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.density_value{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.density-A {
   background: green;
 }
 
-.good_background {
+.density-B {
   background: rgb(53, 107, 53);
 }
 
-.moderate_background {
+.density-C {
   background: orange;
 }
 
-.insufficient_background {
+.density-D {
   background: red;
 }
 
-.perfect_box {
-  border: 2px solid green;
+/* Quality Classes */
+.quality{
+  font-size: 200px;
+  text-transform: uppercase;
+  display: flex  ;
+  align-items: center;
+  justify-content: center;
+ }
+
+
+.quality-perfect {
+  color: green;
 }
 
-.good_box {
-  border: 2px solid rgb(53, 107, 53);
-}
-
-.moderate_box {
-  border: 2px solid orange;
-}
-
-.insufficient_box {
-  border: 2px solid red;
-}
-
-.A{
-  background: green;
-}
-
-.B{
-  background: rgb(53, 107, 53);
-}
-.C{
-  background: orange;
-}
-
-.D{
-  background: red;
-}
-
-.birads_2 {
-  color: rgb(9, 80, 9);
-}
-
-.birads_3 {
+.quality-good {
   color: rgb(53, 107, 53);
 }
 
-.birads_4 {
+.quality-moderate {
   color: orange;
 }
 
-.birads_5 {
+.quality-insufficient {
   color: red;
 }
 
-.sharp{
-  color: rgb(26, 204, 26);
+/* Diagnostics Classes */
+.diagnostic{
+  font-size: 270px;
+ }
+
+ .birads{
+  font-size: 70px;
+ }
+
+ .diagnostics_class_container{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+ }
+
+.diagnostics-2 {
+  background-color: rgb(9, 80, 9);
 }
 
-.correct {
-  color: rgb(26, 204, 26);
+.diagnostics-3 {
+  background-color: rgb(53, 107, 53); 
 }
 
-.mild{
-  color: orange;
+.diagnostics-4 {
+  background-color: orange;
 }
 
-.severe{
-  color: red;
+.diagnostics-5 {
+  background-color: red;
+}
+.risk-none{
+background-color: gray
+}
+
+.density-none{
+background-color: gray
+}
+
+.quality-none{
+background-color: gray
+}
+
+.diagnostics-none{
+background-color: gray
 }
