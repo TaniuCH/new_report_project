@@ -13,7 +13,7 @@ async def capture_html_as_image(html_file_path, output_file_name):
     await page.waitForSelector('body')  
 
     # Take a screenshot of the page
-    await page.screenshot({'path': output_file_name})
+    await page.screenshot({'path': output_file_name,  "fullPage": True})
     await browser.close()
 
 def main():

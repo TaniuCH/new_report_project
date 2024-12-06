@@ -1,6 +1,4 @@
-from flask import Flask, render_template, send_file, url_for
-from html2image import Html2Image
-from pyppeteer import launch
+from flask import Flask, render_template, send_file
 import os
 import json
 import nest_asyncio
@@ -116,10 +114,8 @@ def report():
 @app.route('/pyppeteer-scorecard')
 def generate_image_pyppeteer():
     """Generate an image from rendered HTML for the scorecard report using Pyppeteer."""
-    report_type = request.args.get('report_type', 'scorecard')
     
-    # Set template and output file name based on report type
-    template_name = 'score_card.html'  # Use score_card.html for generating the image
+    template_name = 'score_card.html'  
     output_file_name = 'scorecard_report_image_pyppeteer.png'
 
     with open('results.json') as f:
@@ -139,14 +135,11 @@ def generate_image_pyppeteer():
 def generate_image_with_pyppeteer(template_name, output_file_name, variables):
     """Generate an image from HTML using Pyppeteer with the specified template and variables."""
     
-    # Ensure you're loading the correct CSS content for styling
     with open(os.path.join('static', 'style.css')) as f:
         style_sheet_content = f.read()
 
-    # Render the HTML string with variables
     html_string = render_template(template_name, style_sheet_content=style_sheet_content, **variables)
 
-    # Write the rendered HTML to a temporary file
     with tempfile.NamedTemporaryFile(suffix=".html", delete=False) as temp_html_file:
         temp_html_file.write(html_string.encode('utf-8'))
         temp_html_path = os.path.abspath(temp_html_file.name)

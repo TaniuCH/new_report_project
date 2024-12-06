@@ -17,20 +17,24 @@
             <p class="age_label">{{age_label}}</p>
             <p class="value age">{{patient_age}}y</p> 
         </div>
-        <div class="risk_container {{module_risk}}">
+        <div class="{{module_risk}}">
             <div class="risk_label_container">
                 <p class="label">{{risk_label}}</p>
                 <p class="label_year">({{year_label}})</p>    
-            </div>      
+            </div>
+            <div class="risk_container">     
             <p class="value risk {{risk_class}}">{{overall_risk}}</p>
+          </div>
         </div>
     </div>
     <!-- Density  -->
     <div class="density_container {{module_density}}">
         <p class="label">{{density_label}}</p>
         <div class="density_value">
-            <p class="value density {{density_class}}">{{higher_density}}</p>
+          <div class="density_value_circle {{density_class}}">
+            <p class="value density">{{higher_density}}</p>
         </div>    
+      </div>    
     </div>
 
     <!-- 2nd row Quality  -->

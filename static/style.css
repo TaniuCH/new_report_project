@@ -11,19 +11,71 @@ body {
   padding: 10px;
   border-radius: 10px;
   gap: 10px;
-  height: 99vh;
+  border: 8px solid white;
+  height: 900px;
+  overflow-y: auto;
 }
 
 .scorecard_container {
-  border: 8px solid white;
-  height: 98%;
-  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
 }
 
+.scorecard > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.value {
+  font-weight: bold;
+  margin: 4px
+}
+
+/* Results */
+.label {
+  font-size: 74px;
+  font-weight: bold;
+  margin: 0px 6px;
+  text-transform: uppercase;
+}
+
+.age{
+  font-size: 64px;
+  font-weight: bold;
+  margin: 0px 10px;
+}
+
+.risk{
+  font-size: 110px;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.density {
+  font-size: 245px;
+  line-height: 200px;
+}
+
+.quality{
+  font-size: 110px;
+  text-transform: uppercase;
+  display: flex  ;
+  align-items: center;
+  justify-content: center;
+ }
+
+.diagnostic{
+  font-size: 300px;
+  margin: 0;
+  line-height: 220px;
+ }
+
+/* Risk & Age */
 .age_risk_container{
   grid-column: 1 span;
   grid-row: 1;
@@ -38,72 +90,16 @@ body {
 }
 
 .risk_container{
-  border-right: 1px solid gray;
-}
-
-
-.density_container {
- grid-column: span 2;
- grid-row: 1;
- display: flex;
- flex-direction: column;
- justify-content: space-between;
-}
-
-.quality_container {
-  grid-column: span 2;
-  grid-row: 2;
-  border-top: 1px solid gray;
+  height: 100%;
   display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-}
-
-.diagnose_container {
-  grid-column: span 2;
-  grid-row: 3;
-  border-top: 1px solid gray;
-  display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-
-}
-
-.scorecard > div {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
 }
 
-.scorecard h1, .scorecard p {
-  margin: 0;
-}
-
-.label {
-  font-size: 8vh;
-  font-weight: bold;
-  margin: 0px 10px;
-  text-transform: uppercase;
-}
-
-.value {
-  font-weight: bold;
-  margin: 4px
-}
-
-/* Age */
 .age_label{
-  font-size: 7vh;
+  font-size: 30px;
   margin: 0px 10px;
   text-transform: uppercase;
-}
-
-.age{
-  font-size: 10vh;
-  font-weight: bold;
-  margin: 0px 10px;
 }
 
 /* Risk Classes */
@@ -111,14 +107,6 @@ body {
   display: flex;
   align-items: flex-start;
   align-items: center;
-}
-
-.risk{
-  font-size: 10vh;
-  display: flex;
-  justify-content: center;
-  text-transform: uppercase;
-
 }
 
 .label_year{
@@ -138,17 +126,25 @@ body {
   color: red;
 }
 
-/* Density Classes */
-.density {
-  font-size: 22vh;
+/* Density  */
+.density_container {
+  grid-column: span 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid gray;
+ }
+
+ .density_value_circle{
   border-radius: 50%;
-  height: 23vh;
-  width: 23vh;
+  height: 244px;
+  width: 244px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
+ 
 .density_value{
   display: flex;
   align-items: center;
@@ -171,15 +167,15 @@ body {
   background: red;
 }
 
-/* Quality Classes */
-.quality{
-  font-size: 14vh;
-  text-transform: uppercase;
-  display: flex  ;
-  align-items: center;
-  justify-content: center;
- }
-
+/* Quality  */
+.quality_container {
+  grid-column: span 2;
+  grid-row: 2;
+  border-top: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 .quality-perfect {
   color: green;
@@ -197,12 +193,16 @@ body {
   color: red;
 }
 
-/* Diagnostics Classes */
-.diagnostic{
-  font-size: 29vh;
-  margin: 0;
-  line-height: 22vh;
- }
+/* Diagnostics */
+.diagnose_container {
+  grid-column: span 2;
+  grid-row: 3;
+  border-top: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
 
  .birads{
   font-size: 6vh;
@@ -213,7 +213,7 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  margin: 10px;
+  margin: 6px;
   border-radius: 5px;
  }
 
