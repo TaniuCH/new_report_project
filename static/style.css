@@ -6,13 +6,13 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;  
+  overflow: hidden;
   margin: 0;
   padding: 10px;
   border-radius: 10px;
   gap: 10px;
   border: 8px solid white;
-  height: 900px;
+  height: 960px;
   overflow-y: auto;
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 .age{
-  font-size: 64px;
+  font-size: 50px;
   font-weight: bold;
   margin: 0px 10px;
 }
@@ -62,6 +62,7 @@ body {
 }
 
 .quality{
+  height: 100%;
   font-size: 110px;
   text-transform: uppercase;
   display: flex  ;
@@ -76,21 +77,20 @@ body {
  }
 
 /* Risk & Age */
-.age_risk_container{
-  grid-column: 1 span;
-  grid-row: 1;
-  }
-
 .age_container {
  border:1px solid ;
  display: flex ;
   align-items: center;
-  background: cyan;
+  background: #47b5b5;
   color: black;
+  position: absolute;
+  right: 18px;
+  top: 18px;
 }
 
-.risk_container{
+.risk_value_container{
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,38 +103,69 @@ body {
 }
 
 /* Risk Classes */
+.risk_container{
+  grid-column: span 2;
+  grid-row: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-left: 2px solid rgb(194, 194, 194);
+}
+
+.risk_container_hide{
+  grid-column: span 2;
+  grid-row: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-left: none
+}
+
+
 .risk_label_container{
   display: flex;
   align-items: flex-start;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .label_year{
   font-size: 3vh;
-  margin: 0px ;
+  margin: 0px 6px;
 }
 
 .risk-normal {
-  color: green;
+  color: rgb(96, 170, 77);
 }
 
 .risk-increased {
-  color: orange;
+  color: rgb(255, 152, 0);
 }
 
 .risk-high {
-  color: red;
+  color: rgb(204, 66, 56);;
 }
 
 /* Density  */
 .density_container {
-  grid-column: span 2;
+  grid-column: 1 span;
   grid-row: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-left: 1px solid gray;
- }
+}
+
+.density_container_hide {
+  grid-column: 2 span;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
  .density_value_circle{
   border-radius: 50%;
@@ -144,64 +175,120 @@ body {
   justify-content: center;
   align-items: center;
 }
- 
+
 .density_value{
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 6px;
 }
 
 .density-A {
-  background: green;
+  background: rgb(71, 186, 93);
 }
 
 .density-B {
-  background: rgb(53, 107, 53);
+  background: rgb(96, 170, 77);
 }
 
 .density-C {
-  background: orange;
+  background: rgb(255, 152, 0);
 }
 
 .density-D {
-  background: red;
+  background: rgb(204, 66, 56);
 }
 
 /* Quality  */
+.module_title_container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class_projections{
+  display: flex  ;
+  justify-content: space-around;
+  align-items: center;
+  margin: 6px;
+  min-width: 320px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.class_projections_hide_hide{
+  position: absolute;
+  right: 18px;
+  top: 80px;
+  display: flex  ;
+  justify-content: space-around;
+  align-items: center;
+  margin: 6px;
+  min-width: 320px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+
 .quality_container {
   grid-column: span 2;
   grid-row: 2;
-  border-top: 1px solid gray;
+  border-top: 4px solid rgb(194, 194, 194);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.quality_container_hide_hide{
+  grid-column: span 2;
+  grid-row: 1 span;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none
+}
+
+.quality_container_hide_hide_hide{
+  grid-column: span 2;
+  grid-row: 3 span;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none
+}
+
 .quality-perfect {
-  color: green;
+  color: rgb(71, 186, 93);
 }
 
 .quality-good {
-  color: rgb(53, 107, 53);
+  color: rgb(96, 170, 77);
 }
 
 .quality-moderate {
-  color: orange;
+  color: rgb(255, 152, 0);
 }
 
 .quality-insufficient {
-  color: red;
+  color: rgb(204, 66, 56);
 }
 
 /* Diagnostics */
 .diagnose_container {
   grid-column: span 2;
   grid-row: 3;
-  border-top: 1px solid gray;
+  border-top: 4px solid rgb(194, 194, 194);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+}
+.diagnose_container_hide_hide {
+  grid-column: span 2;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-top: 4px solid rgb(194, 194, 194);
 }
 
  .birads{
@@ -218,20 +305,45 @@ body {
  }
 
 .diagnostics-2 {
-  background-color: rgb(9, 80, 9);
+  background-color: rgb(96, 170, 77);
 }
 
 .diagnostics-3 {
-  background-color: rgb(53, 107, 53); 
+  background-color: rgb(255, 152, 0);
 }
 
 .diagnostics-4 {
-  background-color: orange;
+  background-color: rgb(255, 107, 0);
 }
 
 .diagnostics-5 {
-  background-color: red;
+  background-color: rgb(221, 48, 47)red;
 }
+
+.diagnostics-known {
+  background-color: rgb(47, 137, 221);
+}
+
+.color_diagnostics-2{
+  color: rgb(96, 170, 77);
+}
+
+.color_diagnostics-3{
+  color: rgb(255, 152, 0);
+}
+
+.color_diagnostics-4{
+  color: rgb(255, 107, 0);
+}
+
+.color_diagnostics-5{
+  color: rgb(221, 48, 47);
+}
+
+.color_diagnostics-known{
+  color: rgb(47, 137, 221);
+}
+
 .risk-none{
 background-color: gray
 }
@@ -246,4 +358,8 @@ background-color: gray
 
 .diagnostics-none{
 background-color: gray
+}
+
+.hide{
+  display: none;
 }

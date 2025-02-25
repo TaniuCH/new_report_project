@@ -10,45 +10,53 @@
 <body class="body-style">
   <div class="scorecard_container">
 
-    <!-- 1st row (Age , Risk and Density ) -->
-    <!-- Age / risk  -->
-     <div class="age_risk_container">
-        <div class="age_container">
-            <p class="age_label">{{age_label}}</p>
-            <p class="value age">{{patient_age}}y</p> 
-        </div>
-        <div class="{{module_risk}}">
-            <div class="risk_label_container">
-                <p class="label">{{risk_label}}</p>
-                <p class="label_year">({{year_label}})</p>    
-            </div>
-            <div class="risk_container">     
-            <p class="value risk {{risk_class}}">{{overall_risk}}</p>
-          </div>
-        </div>
-    </div>
-    <!-- Density  -->
-    <div class="density_container {{module_density}}">
-        <p class="label">{{density_label}}</p>
-        <div class="density_value">
-          <div class="density_value_circle {{density_class}}">
-            <p class="value density">{{higher_density}}</p>
-        </div>    
-      </div>    
+    <div class="age_container">
+      <!-- <p class="age_label">{{age_label}}</p> -->
+      <!-- <p class="age_label">{{dob_label}}</p>
+      <p class="value age">12.08.1966</p> -->
+      <p class="value age">({{patient_age}}y)</p>
     </div>
 
+    <!-- 1st row (Age , Risk and Density ) -->
+        <!-- Density  -->
+    <div class="density_container density_container_{{module_risk}} {{module_density}}">
+      <p class="label">{{density_label}}</p>
+      <div class="density_value">
+        <div class="density_value_circle {{density_class}}">
+          <p class="value density">{{higher_density}}</p>
+      </div>
+      </div>
+    </div>
+      <!-- Age / risk  -->
+     <div class="risk_container risk_container_{{module_density}} {{module_risk}}">
+        <div class="risk_label_container">
+            <p class="label">{{risk_label}}</p>
+            <p class="label_year">({{year_label}})</p>
+        </div>
+        <div class="risk_value_container">
+          <p class="value risk {{risk_class}}">{{overall_risk}}</p>
+        </div>
+    </div>
+
+
     <!-- 2nd row Quality  -->
-    <div class="quality_container {{module_quality}}">
-      <p class="label">{{quality_label}}</p>
+    <div class="quality_container quality_container_{{module_risk}}_{{module_density}} quality_container_{{module_risk}}_{{module_density}}_{{module_diagnostics}}">
+      <div class="module_title_container">
+        <p class="label">{{quality_label}}</p>
+        <p class="class_projections {{quality_class}} class_projections_{{module_risk}}_{{module_density}}">{{lower_quality_proj}}</p>
+      </div>
       <p class="value quality {{quality_class}}">{{lower_quality}}</p>
     </div>
 
     <!-- 3rd row Diagnostics -->
-    <div class="diagnose_container {{module_diagnostics}}">
-      <p class="label">{{diagnostics_label}}</p>
+    <div class="diagnose_container diagnose_container_{{module_risk}}_{{module_density}} {{module_diagnostics}}">
+      <div class="module_title_container">
+        <p class="label">{{diagnostics_label}}</p>
+        <p class="class_projections color_{{diagnostic_class}}">{{higher_diagnostics_proj}}</p>
+      </div>
       <div class="diagnostics_class_container {{diagnostic_class}}">
         <p class="birads">BI-RADS</p>
-      <p class="value diagnostic">{{higher_diagnostics}}</p>
+        <p class="value diagnostic">{{higher_diagnostics}}</p>
       </div>
 
     </div>
